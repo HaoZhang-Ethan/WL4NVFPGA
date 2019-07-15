@@ -1,0 +1,7 @@
+0. 产生预备文件
+1. 产生FPGA arch 文件，用于描述BRAM位置      XxY.arch
+2. 产生随机激励输入
+3. 产生Pin_set_1	用于ACE 抓取Pin词典
+4. 产生Pin_set_2	用于初始化VPR 中 Log_pin
+5. 产生ace文件池
+6. 分析ace文件得到Pin_dict

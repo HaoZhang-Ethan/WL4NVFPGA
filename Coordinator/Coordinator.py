@@ -1,0 +1,425 @@
+#-*-coding:utf-8-*-
+
+import os
+
+
+
+
+benchmark_src_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/"
+benchmark_res_path = "/home/zhlab/BRAM/s_run/LU8PEEng/res"
+benchmark_pre_info_src_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/"
+benchmark = "LU8PEEng"
+update_path = "/home/zhlab/BRAM/my_scrip/runing_mem/update"
+write_num_path_pre = "/home/zhlab/BRAM/s_run/LU8PEEng/res/address/"
+benchmark_BRAM_path = "/home/zhlab/BRAM/s_run/LU8PEEng/res/BRAM/"
+trigger_path = "/home/zhlab/BRAM/my_scrip/trigger/trigger"
+place_res_path = "/home/zhlab/BRAM/s_run/LU8PEEng/res/place_res/"
+# MAX_WRITE_NUM = 1000
+ratio = 0.25
+vpr = "/home/zhlab/BRAM/vtr/vtr_place_7_5/vpr/vpr"
+xml = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml"
+blif = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.blif"
+nodisply = "--nodisp"
+place = "-place"
+place_file = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.place"
+time = 0
+begin_limit = 0
+
+
+
+#
+CONF = 64
+COL = 2
+ROW = 256
+MEM_COL = CONF
+MEM_ROW = COL * ROW
+MAX_WRITE_NUM = 100000             #BRAM的最大写次数
+TEST_NUM = 2
+MAX_ADD_PIN = 15
+CLK = 5000
+MAX_INIT = 200
+
+BIT_DICT = {}
+for i in range(0,MAX_ADD_PIN+1):
+    BIT_DICT[pow(2,i)]= i
+
+
+# 获取每个BRAM位置坐标
+
+class INIT_POS:
+    def __init__(self):
+        self.name = ""
+        self.x = -1
+        self.y = -1
+
+
+class INIT_LIST_POS:
+    def __init__(self):
+        self.init_num = 0
+        self.init_lists = []
+        for i in range(MAX_INIT):
+            self.init_lists.append(INIT_POS())
+
+def GET_BRAM_POS(benchmark_src_path,benchmark_pre_info_src_path,benchmark):
+    NO = -1
+    INIT_BEGIN = 1
+    INIT_NAME = 2
+
+
+    init_info_file_path = benchmark_src_path+benchmark+".info"
+    placement_file_path = benchmark_pre_info_src_path+benchmark+".place"
+    pos_info_path = benchmark_src_path+benchmark+"_pos.info"
+
+    Flag = NO
+    flag = NO
+    inits = INIT_LIST_POS()
+    # 对实例命名 统计实例个数
+    init_info_file = open(init_info_file_path)
+    for line_ in init_info_file:
+        if (flag == INIT_NAME):
+            inits.init_lists[inits.init_num].name =line_.replace("\n","")
+            inits.init_num += 1
+            flag = NO
+        if (Flag == INIT_BEGIN):
+            if (line_.find("INIT_NAME")!=-1):
+                flag = INIT_NAME
+        if (line_.find("INIT_BEGIN")!=-1):
+            Flag = INIT_BEGIN
+    init_info_file.close()
+    # 给实例设置坐标值
+    placement_file = open(placement_file_path)
+    for line_ in placement_file:
+        tmp_info = line_.split()
+        if (len(tmp_info) == 5 and tmp_info[3] == '0'):
+            # print(tmp_info[0])
+            for i in range (inits.init_num):
+                if (tmp_info[0] == inits.init_lists[i].name):
+                    inits.init_lists[i].x = tmp_info[1]
+                    inits.init_lists[i].y = tmp_info[2]
+    placement_file.close()
+    pos_info = open(pos_info_path, "w")
+    pos_info.write("init_num\n")
+    pos_info.write(str(inits.init_num)+"\n")
+    for i in range(inits.init_num):
+        pos_info.write(inits.init_lists[i].name+" "+str(inits.init_lists[i].x)+" "+str(inits.init_lists[i].y)+"\n")
+    pos_info.close()
+
+def BUILD_INIT_POS_DICT(pos_dict,benchmark_src_path,benchmark):
+    pos_file_path = benchmark_src_path+benchmark+"_pos.info"
+    pos_file = open(pos_file_path)
+    flag = 0
+    init_num = 0
+    for line in pos_file:
+        line_ = line.split()
+        if (len(line_)==3):
+            # print(line_)
+            mem_name = line_[1]+"_"+line_[2]+"mem"
+            pos_dict[line_[0]] = mem_name
+
+
+
+
+class INIT:
+    def __init__(self):
+        self.init_name = ""
+        self.write_enable = ""
+        self.mode = ""
+        self.real_add_num = 0
+        self.add_num = 0
+        self.A = ["0" for i in range(MAX_ADD_PIN)]  # pin口引脚
+        self.S_Array = [[0] * (TEST_NUM* CLK) for i in range((MAX_ADD_PIN + 1))]
+        self.hit_add_dict = {}
+    def my_init(self,dict_num):
+        for i in range (dict_num):
+            self.hit_add_dict[i] = 0
+
+class INIT_LIST:
+    def __init__(self):
+        self.init_num = 0
+        self.init_list = []
+        for i in range (0,MAX_INIT):#构造实例列表 每个实例可以代表一个BRAM块 构造500块
+            self.init_list.append(INIT())
+# def CREAT_INIT(inits):
+#     info_file_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/LU8PEEng.info_"
+#     NO = -1
+#     Flag = NO
+#     flag = NO
+#     INIT_BEGIN = 1
+#     INIT_NAME = 2
+#     INIT_MODE = 3
+#     WE = 4
+#     ADDRESS_BEGIN = 5
+#     file = open(info_file_path)
+#     init_count = 0
+#     for line in file:
+#         if (line.find("INIT_END") != -1):
+#             inits.init_num = init_count
+#             break
+#         if (flag == ADDRESS_BEGIN):
+#             if (line.find("ADDRESS_END") != -1):
+#                 inits.init_list[init_count].real_add_num = real_pin_used
+#                 init_count += 1
+#                 flag = NO
+#                 continue
+#             else:
+#                 tmp_begin = line.find("]=")
+#                 key_info = line.replace("\n", "")[tmp_begin + 2:len(line)]
+#                 if key_info == "":
+#                     real_pin_used -= 1
+#                 inits.init_list[init_count].A[pin_count] = key_info
+#                 pin_count += 1
+#                 continue
+#         elif (flag == WE):
+#             inits.init_list[init_count].write_enable = line.replace("\n", "").replace(" ","")
+#             flag = NO
+#             continue
+#         elif (flag == INIT_MODE):
+#             inits.init_list[init_count].mode = line.replace("\n", "")
+#             tmp_mode_end = inits.init_list[init_count].mode.find("x")
+#             add_range = inits.init_list[init_count].mode[4:tmp_mode_end]
+#             inits.init_list[init_count].my_init(int(add_range))
+#             inits.init_list[init_count].add_num = BIT_DICT[int(add_range)]
+#             flag = NO
+#             continue
+#         elif (flag == INIT_NAME):
+#             inits.init_list[init_count].init_name = line.replace("\n", "")
+#             flag = NO
+#             continue
+#         if (Flag == INIT_BEGIN):
+#             if (line.find("INIT_NAME") != -1):
+#                 flag = INIT_NAME
+#             elif (line.find("INIT_MODE") != -1):
+#                 flag = INIT_MODE
+#             elif (line.find("WE") != -1):
+#                 flag = WE
+#             elif (line.find("ADDRESS_BEGIN") != -1):
+#                 flag = ADDRESS_BEGIN
+#                 pin_count = 0
+#                 real_pin_used = MAX_ADD_PIN
+#         if (line.find("INIT_BEGIN") != -1):
+#             Flag = INIT_BEGIN
+#     print("get address pin info")
+#
+
+def GET_ADDR_WRITE_NUM(inits):
+    info_file_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/LU8PEEng.info_"
+    add_pre_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/ace_pool/"
+    addr_hit_num_path = "/home/zhlab/BRAM/s_run/LU8PEEng/res/address/"
+    NO = -1
+    Flag = NO
+    flag = NO
+    INIT_BEGIN = 1
+    INIT_NAME = 2
+    INIT_MODE = 3
+    WE = 4
+    ADDRESS_BEGIN = 5
+    file = open(info_file_path)
+    init_count = 0
+    for line in file:
+        if (line.find("INIT_END") != -1):
+            inits.init_num = init_count
+            break
+        if (flag == ADDRESS_BEGIN):
+            if (line.find("ADDRESS_END") != -1):
+                inits.init_list[init_count].real_add_num = real_pin_used
+                init_count += 1
+                flag = NO
+                continue
+            else:
+                tmp_begin = line.find("]=")
+                key_info = line.replace("\n", "")[tmp_begin + 2:len(line)]
+                if key_info == "":
+                    real_pin_used -= 1
+                inits.init_list[init_count].A[pin_count] = key_info
+                pin_count += 1
+                continue
+        elif (flag == WE):
+            inits.init_list[init_count].write_enable = line.replace("\n", "").replace(" ","")
+            flag = NO
+            continue
+        elif (flag == INIT_MODE):
+            inits.init_list[init_count].mode = line.replace("\n", "")
+            tmp_mode_end = inits.init_list[init_count].mode.find("x")
+            add_range = inits.init_list[init_count].mode[4:tmp_mode_end]
+            inits.init_list[init_count].my_init(int(add_range))
+            inits.init_list[init_count].add_num = BIT_DICT[int(add_range)]
+            flag = NO
+            continue
+        elif (flag == INIT_NAME):
+            inits.init_list[init_count].init_name = line.replace("\n", "")
+            flag = NO
+            continue
+        if (Flag == INIT_BEGIN):
+            if (line.find("INIT_NAME") != -1):
+                flag = INIT_NAME
+            elif (line.find("INIT_MODE") != -1):
+                flag = INIT_MODE
+            elif (line.find("WE") != -1):
+                flag = WE
+            elif (line.find("ADDRESS_BEGIN") != -1):
+                flag = ADDRESS_BEGIN
+                pin_count = 0
+                real_pin_used = MAX_ADD_PIN
+        if (line.find("INIT_BEGIN") != -1):
+            Flag = INIT_BEGIN
+    print("get address pin info")
+
+    for init_num in range(inits.init_num):
+        tmp_res = [""] * CLK
+        for i in range(0, 2):
+            s_file_path = add_pre_path + str(i) + ".ace"
+            s_file = open(s_file_path)
+            for line in s_file:
+                line_ = line.replace("\n", "").split()
+                if (line_[0] == inits.init_list[init_num].write_enable):
+                    tmp_res.clear()
+                    tmp_res = line_[1:len(line_)]
+                    tmp_res = list(map(int, tmp_res))
+                    if (i == 0):
+                        inits.init_list[init_num].S_Array[MAX_ADD_PIN][:CLK] = tmp_res
+                        continue
+                    else:
+                        inits.init_list[init_num].S_Array[MAX_ADD_PIN][CLK:] = tmp_res
+                        continue
+                for init_pin_num in range(0, inits.init_list[init_num].add_num):
+                    if (line_[0] == inits.init_list[init_num].A[init_pin_num]):
+                        tmp_res.clear()
+                        tmp_res = line_[1:len(line_)]
+                        tmp_res = list(map(int, tmp_res))
+                        if (i == 0):
+                            inits.init_list[init_num].S_Array[init_pin_num][:CLK] = tmp_res
+                            continue
+                        else:
+                            inits.init_list[init_num].S_Array[init_pin_num][CLK:] = tmp_res
+                            continue
+            s_file.close()
+    print("get pin status")
+    for init_num in range(inits.init_num):
+        for pin_num in range (inits.init_list[init_num].real_add_num):
+            if (inits.init_list[init_num].A[pin_num] == "gnd"):
+                inits.init_list[init_num].S_Array[pin_num] = [0]*len(inits.init_list[init_num].S_Array[15])
+                # for tmp_i in range (len(inits.init_list[init_num].S_Array[pin_num])):
+                #     inits.init_list[init_num].S_Array[pin_num][tmp_i] = 0
+                # print("")
+            elif (inits.init_list[init_num].A[pin_num] == "vcc"):
+                inits.init_list[init_num].S_Array[pin_num] = [1] * len(inits.init_list[init_num].S_Array[15])
+                # for tmp_i in range(len(inits.init_list[init_num].S_Array[pin_num])):
+                #     inits.init_list[init_num].S_Array[pin_num][tmp_i] = 1
+                # print("")
+
+    print("get pin status")
+
+
+
+    for init_num in range(inits.init_num):
+        for clk_ in range(CLK * TEST_NUM):
+            if inits.init_list[init_num].S_Array[MAX_ADD_PIN][clk_] == 1:
+                add_acc_ = ""
+                for real_add_num in range(0, inits.init_list[init_num].add_num):
+                    add_acc_ += str(inits.init_list[init_num].S_Array[real_add_num][clk_])
+                hit_add = int(add_acc_, 2)
+                # print(hit_add)
+                inits.init_list[init_num].hit_add_dict[hit_add] += 1
+    print("get hit_add_dict")
+
+    for init_num in range(0, init_count):
+        all_no_flag = 0
+        count_add_hit_num_file_path = addr_hit_num_path + str(init_num) +".hit"
+        count_add_hit_num_file = open(count_add_hit_num_file_path, 'w')
+        count_add_hit_num_file.write("mem_name\n")
+        count_add_hit_num_file.write(inits.init_list[init_num].init_name+"\n")
+        count_add_hit_num_file.write("mem_mode\n")
+        count_add_hit_num_file.write(inits.init_list[init_num].mode + "\n")
+        count_add_hit_num_file.write("add_begin\n")
+        tmp_mode_end = inits.init_list[init_num].mode.find("x")
+        add_range = inits.init_list[init_num].mode[4:tmp_mode_end]
+        add_range = int(add_range)
+        for i in range(add_range):
+            if (inits.init_list[init_num].hit_add_dict[i] != 0):
+                count_add_hit_num_file.write(str(i) + " " + str(inits.init_list[init_num].hit_add_dict[i]) + "\n")
+                all_no_flag = 1
+        if (all_no_flag == 0):
+            count_add_hit_num_file.write("0 0\n")
+        count_add_hit_num_file.close()
+
+
+
+#检测是否写到上限
+def trigger(benchmark_BRAM_path,trigger_path,pos_dict,up_limit):
+    for mem in pos_dict.values():
+        mem_file_path = benchmark_BRAM_path + mem
+        command_trigger = trigger_path +" " + mem_file_path +" "+ str(int(up_limit))
+        # print(command_trigger)
+        res = str(os.system(command_trigger))
+        # print(res)
+        # print(len(res))
+        # print("")
+        if (len(res) > 2):
+            return 0
+    return 1
+
+
+cur_limit_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/cur_limit.txt"
+# cur_limit_file = open(cur_limit_path, 'w')
+
+
+sythesis_time = 0
+times = 0
+cur_limit = begin_limit + ratio * MAX_WRITE_NUM
+times = 614
+cur_limit = 75000
+sythesis_time = 216
+while(cur_limit < MAX_WRITE_NUM +1):
+        cur_limit_file = open(cur_limit_path, 'w')
+        cur_limit_file.write("cur_limit = "+str(int(cur_limit)));
+        cur_limit_file.write("\ntimes = " +str(times));
+        cur_limit_file.write("\nsythesis_time = " + str(sythesis_time));
+        cur_limit_file.close()
+        cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place + " " + "***" + str(int(cur_limit))+">>"+benchmark_res_path+"vpr.out"
+        os.system(cmd)
+        flag = os.path.exists(place_file)
+        if (flag == 1):
+            cmd_transfrom = "python /home/zhlab/BRAM/SRC_07_09/Simulator/S_transform.py"
+            os.system(cmd_transfrom)
+            mv_place_pin = "mv /home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.place_pin /home/zhlab/BRAM/s_run/LU8PEEng/res/place_pin/"
+            mv_place_pin = mv_place_pin + str(sythesis_time) + ".place_pin"
+            os.system(mv_place_pin)
+            GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path,benchmark)
+            pos_dict = {}
+            BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
+            inits = INIT_LIST()
+            GET_ADDR_WRITE_NUM(inits)
+            update_Flag = 1
+            while (update_Flag):
+                print("times  =  " + str(times))
+                times += 1
+                for init_ in range(inits.init_num):
+                    write_num_path = write_num_path_pre+str(init_)+".hit"
+                    write_num = open(write_num_path)
+                    name_flag = 0
+                    init_name = ""
+                    for line_ in write_num:
+                        if(name_flag == 1):
+                            init_name = line_.replace("\n","")
+                            break
+                        if(line_.find("mem_name")!=-1):
+                            name_flag = 1
+                    write_num.close()
+                    BRAM_file_path = pos_dict[init_name]
+                    print("Hit = "+str(init_)+  "      BRAM_POS = " + BRAM_file_path)
+                    BRAM_file_path = benchmark_BRAM_path + BRAM_file_path
+                    command = update_path +" " + write_num_path + " " +BRAM_file_path + " "+ str(int(cur_limit))
+                    # print(command)
+                    res = str(os.system(command))
+                    print(res)
+                    if(int(res) != 0):
+                        print("Write_over")
+                        update_Flag = 0
+
+            mv_place_cmd = "mv " + place_file + " " +place_res_path + str(sythesis_time)+".place"
+            os.system(mv_place_cmd)
+            sythesis_time += 1
+
+        if(flag != 1):
+            cur_limit = cur_limit + ratio * MAX_WRITE_NUM
+
