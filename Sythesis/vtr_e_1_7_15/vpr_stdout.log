@@ -1,0 +1,549 @@
+________________________________________________________________________
+                       VPR - The Next Generation                        
+                     Version 0.A15.0 (Linux X86/64)                     
+            This is free open source code under MIT license.            
+________________________________________________________________________
+
+VPR FPGA Placement and Routing.
+Version: Version 7.0
+Compiled: Jul 15 2019.
+University of Toronto
+vpr@eecg.utoronto.ca
+This is free open source code under MIT license.
+
+Architecture file: /home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml
+Circuit name: /home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.blif
+
+Building complex block graph.
+WARNING(1): io[0].clock[0] unconnected pin in architecture.
+Loop for doall = 0, init_parse took 7e-06 seconds.
+Loop for doall = 0 took 0.088921 seconds.
+Loop for doall = 1, init_parse took 0.016062 seconds.
+Loop for doall = 1 took 0.110778 seconds.
+Swept away 1601 nets with no fanout.
+Net is a constant generator: top^mem_local_be~0.
+WARNING(2): logical_block #8263 with output top^mem_local_be~0 has only 0 pin.
+WARNING(3): Block contains output -- may be a constant generator.
+Net is a constant generator: top^burst_begin.
+WARNING(4): logical_block #29592 with output top^burst_begin has only 0 pin.
+WARNING(5): Block contains output -- may be a constant generator.
+Net is a constant generator: top^mem_local_be~1.
+WARNING(6): logical_block #29593 with output top^mem_local_be~1 has only 0 pin.
+WARNING(7): Block contains output -- may be a constant generator.
+Net is a constant generator: top^mem_local_be~2.
+WARNING(8): logical_block #29594 with output top^mem_local_be~2 has only 0 pin.
+WARNING(9): Block contains output -- may be a constant generator.
+Net is a constant generator: top^mem_local_be~3.
+WARNING(10): logical_block #29595 with output top^mem_local_be~3 has only 0 pin.
+WARNING(11): Block contains output -- may be a constant generator.
+Net is a constant generator: top^mem_local_be~4.
+WARNING(12): logical_block #29596 with output top^mem_local_be~4 has only 0 pin.
+WARNING(13): Block contains output -- may be a constant generator.
+Net is a constant generator: top^mem_local_be~5.
+WARNING(14): logical_block #29597 with output top^mem_local_be~5 has only 0 pin.
+WARNING(15): Block contains output -- may be a constant generator.
+Net is a constant generator: top^mem_local_be~6.
+WARNING(16): logical_block #29598 with output top^mem_local_be~6 has only 0 pin.
+WARNING(17): Block contains output -- may be a constant generator.
+Net is a constant generator: top^mem_local_be~7.
+WARNING(18): logical_block #29599 with output top^mem_local_be~7 has only 0 pin.
+WARNING(19): Block contains output -- may be a constant generator.
+Net is a constant generator: gnd.
+WARNING(20): logical_block #29692 with output gnd has only 0 pin.
+WARNING(21): Block contains output -- may be a constant generator.
+Net is a constant generator: n25320.
+WARNING(22): logical_block #33072 with output n25320 has only 0 pin.
+WARNING(23): Block contains output -- may be a constant generator.
+Net is a constant generator: n38547.
+WARNING(24): logical_block #34197 with output n38547 has only 0 pin.
+WARNING(25): Block contains output -- may be a constant generator.
+Net is a constant generator: n38551.
+WARNING(26): logical_block #34198 with output n38551 has only 0 pin.
+WARNING(27): Block contains output -- may be a constant generator.
+Net is a constant generator: n38555.
+WARNING(28): logical_block #34199 with output n38555 has only 0 pin.
+WARNING(29): Block contains output -- may be a constant generator.
+Net is a constant generator: n38559.
+WARNING(30): logical_block #34200 with output n38559 has only 0 pin.
+WARNING(31): Block contains output -- may be a constant generator.
+Net is a constant generator: n38563.
+WARNING(32): logical_block #34201 with output n38563 has only 0 pin.
+WARNING(33): Block contains output -- may be a constant generator.
+Net is a constant generator: n38567.
+WARNING(34): logical_block #34202 with output n38567 has only 0 pin.
+WARNING(35): Block contains output -- may be a constant generator.
+Net is a constant generator: n38571.
+WARNING(36): logical_block #34203 with output n38571 has only 0 pin.
+WARNING(37): Block contains output -- may be a constant generator.
+Net is a constant generator: n38575.
+WARNING(38): logical_block #34204 with output n38575 has only 0 pin.
+WARNING(39): Block contains output -- may be a constant generator.
+Net is a constant generator: n38579.
+WARNING(40): logical_block #34205 with output n38579 has only 0 pin.
+WARNING(41): Block contains output -- may be a constant generator.
+Net is a constant generator: n38583.
+WARNING(42): logical_block #34206 with output n38583 has only 0 pin.
+WARNING(43): Block contains output -- may be a constant generator.
+Net is a constant generator: n38587.
+WARNING(44): logical_block #34207 with output n38587 has only 0 pin.
+WARNING(45): Block contains output -- may be a constant generator.
+Net is a constant generator: n38591.
+WARNING(46): logical_block #34208 with output n38591 has only 0 pin.
+WARNING(47): Block contains output -- may be a constant generator.
+Net is a constant generator: n38595.
+WARNING(48): logical_block #34209 with output n38595 has only 0 pin.
+WARNING(49): Block contains output -- may be a constant generator.
+Net is a constant generator: n38599.
+WARNING(50): logical_block #34210 with output n38599 has only 0 pin.
+WARNING(51): Block contains output -- may be a constant generator.
+Net is a constant generator: n38603.
+WARNING(52): logical_block #34211 with output n38603 has only 0 pin.
+WARNING(53): Block contains output -- may be a constant generator.
+Net is a constant generator: n38607.
+WARNING(54): logical_block #34212 with output n38607 has only 0 pin.
+WARNING(55): Block contains output -- may be a constant generator.
+Net is a constant generator: n38611.
+WARNING(56): logical_block #34213 with output n38611 has only 0 pin.
+WARNING(57): Block contains output -- may be a constant generator.
+Net is a constant generator: n38615.
+WARNING(58): logical_block #34214 with output n38615 has only 0 pin.
+WARNING(59): Block contains output -- may be a constant generator.
+Net is a constant generator: n38619.
+WARNING(60): logical_block #34215 with output n38619 has only 0 pin.
+WARNING(61): Block contains output -- may be a constant generator.
+Net is a constant generator: n38623.
+WARNING(62): logical_block #34216 with output n38623 has only 0 pin.
+WARNING(63): Block contains output -- may be a constant generator.
+Net is a constant generator: n38627.
+WARNING(64): logical_block #34217 with output n38627 has only 0 pin.
+WARNING(65): Block contains output -- may be a constant generator.
+Net is a constant generator: n38631.
+WARNING(66): logical_block #34218 with output n38631 has only 0 pin.
+WARNING(67): Block contains output -- may be a constant generator.
+Net is a constant generator: n38635.
+WARNING(68): logical_block #34219 with output n38635 has only 0 pin.
+WARNING(69): Block contains output -- may be a constant generator.
+Net is a constant generator: n38639.
+WARNING(70): logical_block #34220 with output n38639 has only 0 pin.
+WARNING(71): Block contains output -- may be a constant generator.
+Net is a constant generator: n38643.
+WARNING(72): logical_block #34221 with output n38643 has only 0 pin.
+WARNING(73): Block contains output -- may be a constant generator.
+Net is a constant generator: n38647.
+WARNING(74): logical_block #34222 with output n38647 has only 0 pin.
+WARNING(75): Block contains output -- may be a constant generator.
+Net is a constant generator: n38651.
+WARNING(76): logical_block #34223 with output n38651 has only 0 pin.
+WARNING(77): Block contains output -- may be a constant generator.
+Net is a constant generator: n38655.
+WARNING(78): logical_block #34224 with output n38655 has only 0 pin.
+WARNING(79): Block contains output -- may be a constant generator.
+Net is a constant generator: n38659.
+WARNING(80): logical_block #34225 with output n38659 has only 0 pin.
+WARNING(81): Block contains output -- may be a constant generator.
+Net is a constant generator: n40078.
+WARNING(82): logical_block #34494 with output n40078 has only 0 pin.
+WARNING(83): Block contains output -- may be a constant generator.
+Net is a constant generator: n40082.
+WARNING(84): logical_block #34495 with output n40082 has only 0 pin.
+WARNING(85): Block contains output -- may be a constant generator.
+Net is a constant generator: n40086.
+WARNING(86): logical_block #34496 with output n40086 has only 0 pin.
+WARNING(87): Block contains output -- may be a constant generator.
+Net is a constant generator: n40090.
+WARNING(88): logical_block #34497 with output n40090 has only 0 pin.
+WARNING(89): Block contains output -- may be a constant generator.
+Net is a constant generator: n40094.
+WARNING(90): logical_block #34498 with output n40094 has only 0 pin.
+WARNING(91): Block contains output -- may be a constant generator.
+Net is a constant generator: n40098.
+WARNING(92): logical_block #34499 with output n40098 has only 0 pin.
+WARNING(93): Block contains output -- may be a constant generator.
+Net is a constant generator: n40102.
+WARNING(94): logical_block #34500 with output n40102 has only 0 pin.
+WARNING(95): Block contains output -- may be a constant generator.
+Net is a constant generator: n40106.
+WARNING(96): logical_block #34501 with output n40106 has only 0 pin.
+WARNING(97): Block contains output -- may be a constant generator.
+Net is a constant generator: n40110.
+WARNING(98): logical_block #34502 with output n40110 has only 0 pin.
+WARNING(99): Block contains output -- may be a constant generator.
+Net is a constant generator: n40114.
+WARNING(100): logical_block #34503 with output n40114 has only 0 pin.
+WARNING(101): Block contains output -- may be a constant generator.
+Net is a constant generator: n40118.
+WARNING(102): logical_block #34504 with output n40118 has only 0 pin.
+WARNING(103): Block contains output -- may be a constant generator.
+Net is a constant generator: n40122.
+WARNING(104): logical_block #34505 with output n40122 has only 0 pin.
+WARNING(105): Block contains output -- may be a constant generator.
+Net is a constant generator: n40126.
+WARNING(106): logical_block #34506 with output n40126 has only 0 pin.
+WARNING(107): Block contains output -- may be a constant generator.
+Net is a constant generator: n40130.
+WARNING(108): logical_block #34507 with output n40130 has only 0 pin.
+WARNING(109): Block contains output -- may be a constant generator.
+Net is a constant generator: n40134.
+WARNING(110): logical_block #34508 with output n40134 has only 0 pin.
+WARNING(111): Block contains output -- may be a constant generator.
+Net is a constant generator: n40138.
+WARNING(112): logical_block #34509 with output n40138 has only 0 pin.
+WARNING(113): Block contains output -- may be a constant generator.
+Net is a constant generator: n40142.
+WARNING(114): logical_block #34510 with output n40142 has only 0 pin.
+WARNING(115): Block contains output -- may be a constant generator.
+Net is a constant generator: n40146.
+WARNING(116): logical_block #34511 with output n40146 has only 0 pin.
+WARNING(117): Block contains output -- may be a constant generator.
+Net is a constant generator: n40150.
+WARNING(118): logical_block #34512 with output n40150 has only 0 pin.
+WARNING(119): Block contains output -- may be a constant generator.
+Net is a constant generator: n40154.
+WARNING(120): logical_block #34513 with output n40154 has only 0 pin.
+WARNING(121): Block contains output -- may be a constant generator.
+Net is a constant generator: n40158.
+WARNING(122): logical_block #34514 with output n40158 has only 0 pin.
+WARNING(123): Block contains output -- may be a constant generator.
+Net is a constant generator: n40166.
+WARNING(124): logical_block #34516 with output n40166 has only 0 pin.
+WARNING(125): Block contains output -- may be a constant generator.
+Net is a constant generator: n40174.
+WARNING(126): logical_block #34518 with output n40174 has only 0 pin.
+WARNING(127): Block contains output -- may be a constant generator.
+Net is a constant generator: n40198.
+WARNING(128): logical_block #34520 with output n40198 has only 0 pin.
+WARNING(129): Block contains output -- may be a constant generator.
+Net is a constant generator: n40202.
+WARNING(130): logical_block #34521 with output n40202 has only 0 pin.
+WARNING(131): Block contains output -- may be a constant generator.
+Net is a constant generator: n40206.
+WARNING(132): logical_block #34522 with output n40206 has only 0 pin.
+WARNING(133): Block contains output -- may be a constant generator.
+Net is a constant generator: n40210.
+WARNING(134): logical_block #34523 with output n40210 has only 0 pin.
+WARNING(135): Block contains output -- may be a constant generator.
+Net is a constant generator: n40214.
+WARNING(136): logical_block #34524 with output n40214 has only 0 pin.
+WARNING(137): Block contains output -- may be a constant generator.
+Net is a constant generator: n40218.
+WARNING(138): logical_block #34525 with output n40218 has only 0 pin.
+WARNING(139): Block contains output -- may be a constant generator.
+Net is a constant generator: n40222.
+WARNING(140): logical_block #34526 with output n40222 has only 0 pin.
+WARNING(141): Block contains output -- may be a constant generator.
+Net is a constant generator: n40226.
+WARNING(142): logical_block #34527 with output n40226 has only 0 pin.
+WARNING(143): Block contains output -- may be a constant generator.
+Net is a constant generator: n40230.
+WARNING(144): logical_block #34528 with output n40230 has only 0 pin.
+WARNING(145): Block contains output -- may be a constant generator.
+Net is a constant generator: n40234.
+WARNING(146): logical_block #34529 with output n40234 has only 0 pin.
+WARNING(147): Block contains output -- may be a constant generator.
+0 unconnected blocks in input netlist.
+Removed 3612 LUT buffers.
+Sweeped away 3612 nodes.
+BLIF circuit stats:
+	73 LUTs of size 0
+	1 LUTs of size 1
+	1246 LUTs of size 2
+	3157 LUTs of size 3
+	2719 LUTs of size 4
+	4345 LUTs of size 5
+	11134 LUTs of size 6
+	114 of type input
+	102 of type output
+	6630 of type latch
+	22675 of type names
+	1409 of type dual_port_ram
+	0 of type single_port_ram
+	8 of type multiply
+Timing analysis: ON
+Circuit netlist file: /home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.net
+Circuit placement file: /home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.place
+Circuit routing file: /home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.route
+Circuit SDC file: /home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.sdc
+Operation: RUN_FLOW
+
+Packer: DISABLED
+Placer: ENABLED
+Router: DISABLED
+PlacerOpts.place_freq: PLACE_ONCE
+PlacerOpts.place_algorithm: PATH_TIMING_DRIVEN_PLACE
+PlacerOpts.pad_loc_type: FREE
+PlacerOpts.place_cost_exp: 1.000000
+PlacerOpts.inner_loop_recompute_divider: 0
+PlacerOpts.recompute_crit_iter: 1
+PlacerOpts.timing_tradeoff: 0.500000
+PlacerOpts.td_place_exp_first: 1.000000
+PlacerOpts.td_place_exp_last: 8.000000
+PlaceOpts.seed: 1
+AnnealSched.type: AUTO_SCHED
+AnnealSched.inner_num: 1.000000
+
+RoutingArch.directionality: UNI_DIRECTIONAL
+RoutingArch.switch_block_type: WILTON
+RoutingArch.Fs: 3
+
+Begin parsing packed FPGA netlist file.
+Finished parsing packed FPGA netlist file.
+Netlist generated from file '/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.net'.
+n38615 is a constant generator.
+n38611 is a constant generator.
+n38619 is a constant generator.
+n38623 is a constant generator.
+n38627 is a constant generator.
+n38631 is a constant generator.
+n38583 is a constant generator.
+n38595 is a constant generator.
+n38603 is a constant generator.
+n38607 is a constant generator.
+n38599 is a constant generator.
+n38571 is a constant generator.
+n38579 is a constant generator.
+n38575 is a constant generator.
+n38587 is a constant generator.
+n38591 is a constant generator.
+n38563 is a constant generator.
+n38567 is a constant generator.
+n40206 is a constant generator.
+n38651 is a constant generator.
+n38647 is a constant generator.
+n38643 is a constant generator.
+n38635 is a constant generator.
+n38639 is a constant generator.
+n40202 is a constant generator.
+n38559 is a constant generator.
+n40226 is a constant generator.
+n40222 is a constant generator.
+n40210 is a constant generator.
+n40214 is a constant generator.
+n40218 is a constant generator.
+n40230 is a constant generator.
+n40130 is a constant generator.
+n38547 is a constant generator.
+n38555 is a constant generator.
+n25320 is a constant generator.
+n38655 is a constant generator.
+n40234 is a constant generator.
+n40094 is a constant generator.
+n40078 is a constant generator.
+n40118 is a constant generator.
+n40110 is a constant generator.
+n40102 is a constant generator.
+n40134 is a constant generator.
+n40086 is a constant generator.
+n40126 is a constant generator.
+n40138 is a constant generator.
+n40090 is a constant generator.
+n40122 is a constant generator.
+n40106 is a constant generator.
+n40114 is a constant generator.
+n40098 is a constant generator.
+n40082 is a constant generator.
+n38659 is a constant generator.
+n40174 is a constant generator.
+n40158 is a constant generator.
+n40166 is a constant generator.
+n40142 is a constant generator.
+n40146 is a constant generator.
+n40150 is a constant generator.
+n40154 is a constant generator.
+n38551 is a constant generator.
+n40198 is a constant generator.
+top^mem_local_be~1 is a constant generator.
+top^mem_local_be~2 is a constant generator.
+top^mem_local_be~0 is a constant generator.
+top^burst_begin is a constant generator.
+top^mem_local_be~6 is a constant generator.
+top^mem_local_be~7 is a constant generator.
+top^mem_local_be~4 is a constant generator.
+top^mem_local_be~5 is a constant generator.
+gnd is a constant generator.
+top^mem_local_be~3 is a constant generator.
+
+Netlist num_nets: 16278
+Netlist num_blocks: 2373
+Netlist <EMPTY> blocks: 0.
+Netlist clb blocks: 2104.
+Netlist mult_36 blocks: 8.
+Netlist memory blocks: 45.
+Netlist inputs pins: 114
+Netlist output pins: 102
+
+The circuit will be mapped into a 60 x 60 array of clbs.
+
+Resource usage...
+	Netlist      0	blocks of type: <EMPTY>
+	Architecture 4	blocks of type: <EMPTY>
+	Netlist      216	blocks of type: io
+	Architecture 1920	blocks of type: io
+	Netlist      2104	blocks of type: clb
+	Architecture 2700	blocks of type: clb
+	Netlist      8	blocks of type: mult_36
+	Architecture 105	blocks of type: mult_36
+	Netlist      45	blocks of type: memory
+	Architecture 80	blocks of type: memory
+
+
+SDC file '/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.sdc' blank or not found.
+
+Defaulting to: constrain all 0 inputs and 0 outputs on the netlist clock.
+Optimize this clock to run as fast as possible.
+Computing delta_io_to_io lookup matrix, may take a few seconds, please wait...
+Computing delta_io_to_clb lookup matrix, may take a few seconds, please wait...
+Computing delta_clb_to_io lookup matrix, may take a few seconds, please wait...
+Computing delta_clb_to_clb lookup matrix, may take a few seconds, please wait...
+
+There are 62254 point to point connections in this circuit.
+
+Initial placement cost: 1.00755 bb_cost: 11779.1 td_cost: 2.43886e-05 delay_cost: 9.46621e-05
+
+--------- --------- ----------- ----------- ----------- ----------- -------- -------- ------- ------- ------- --------- -------
+        T      Cost  Av BB Cost  Av TD Cost  Av Tot Del  P to P Del    d_max  Ac Rate Std Dev R limit     Exp Tot Moves   Alpha
+--------- --------- ----------- ----------- ----------- ----------- -------- -------- ------- ------- ------- --------- -------
+  0.07684   0.98885     11733.3  1.8119e-05 9.43526e-05 1.52058e-09 319.0812   0.9992  0.0059 61.0000  1.0000     31643  0.5000
+  0.03842   0.99718     11694.7 1.79415e-05 9.41269e-05  1.5165e-09 326.1322   0.9980  0.0051 61.0000  1.0000     63286  0.5000
+  0.01921   0.99146     11713.5 1.82748e-05 9.41223e-05 1.51799e-09 314.0556   0.9964  0.0064 61.0000  1.0000     94929  0.5000
+  0.00961   0.99668     11720.6 1.82716e-05 9.45428e-05 1.51782e-09 312.1756   0.9932  0.0060 61.0000  1.0000    126572  0.5000
+  0.00480   0.98813     11686.2 1.78461e-05 9.40089e-05  1.5213e-09 313.4136   0.9854  0.0067 61.0000  1.0000    158215  0.5000
+  0.00240    0.9867     11669.8 1.80882e-05 9.38616e-05  1.5294e-09 317.6719   0.9716  0.0046 61.0000  1.0000    189858  0.5000
+  0.00120   0.97991     11522.5 1.72989e-05 9.26802e-05 1.50016e-09 311.2149   0.9373  0.0064 61.0000  1.0000    221501  0.9000
+  0.00108    1.0025     11521.8 1.79562e-05 9.25175e-05 1.48115e-09 290.7943   0.9258  0.0055 61.0000  1.0000    253144  0.9000
+  0.00097    0.9842     11510.7 1.78528e-05 9.23649e-05 1.50469e-09 295.2950   0.9230  0.0062 61.0000  1.0000    284787  0.9000
+  0.00088   0.98609     11427.4 1.74702e-05 9.17013e-05 1.47519e-09 287.0852   0.9057  0.0051 61.0000  1.0000    316430  0.9000
+  0.00079    0.9901     11427.8 1.76269e-05  9.1654e-05 1.47943e-09 285.8185   0.8999  0.0056 61.0000  1.0000    348073  0.9000
+  0.00071   0.99257       11387 1.76192e-05 9.14171e-05 1.48062e-09 281.1184   0.8927  0.0061 61.0000  1.0000    379716  0.9000
+  0.00064   0.98336     11334.3 1.76083e-05  9.0782e-05 1.48423e-09 279.2079   0.8787  0.0067 61.0000  1.0000    411359  0.9000
+  0.00057   0.99794     11284.2 1.75779e-05  9.0494e-05 1.44414e-09 270.9245   0.8593  0.0056 61.0000  1.0000    443002  0.9000
+  0.00052   0.98118     11286.4 1.71152e-05 9.01323e-05 1.46906e-09 280.0303   0.8513  0.0060 61.0000  1.0000    474645  0.9000
+  0.00047    0.9935     11185.8 1.77026e-05 8.96062e-05 1.44933e-09 259.3905   0.8318  0.0076 61.0000  1.0000    506288  0.9000
+  0.00042   0.99135     11101.6 1.76592e-05 8.86367e-05 1.42724e-09 250.9305   0.8056  0.0051 61.0000  1.0000    537931  0.9000
+  0.00038   0.98787     11036.2 1.75737e-05 8.80405e-05 1.42786e-09 245.4747   0.7815  0.0058 61.0000  1.0000    569574  0.9500
+  0.00036   0.98748     10964.2 1.72899e-05  8.7281e-05 1.41811e-09 243.5876   0.7710  0.0066 61.0000  1.0000    601217  0.9500
+  0.00034   0.98163     10902.1   1.718e-05 8.67852e-05 1.40272e-09 238.5968   0.7576  0.0091 61.0000  1.0000    632860  0.9500
+  0.00032   0.97867     10764.4 1.66428e-05 8.54984e-05 1.38902e-09 238.2533   0.7268  0.0053 61.0000  1.0000    664503  0.9500
+  0.00031   0.98493     10640.3 1.76023e-05 8.43507e-05 1.37787e-09 216.0611   0.7004  0.0082 61.0000  1.0000    696146  0.9500
+  0.00029   0.97822     10500.4 1.68965e-05 8.30471e-05 1.34947e-09 216.5246   0.6712  0.0113 61.0000  1.0000    727789  0.9500
+  0.00028   0.98601     10304.6 1.66495e-05  8.1274e-05 1.31158e-09 200.9368   0.6453  0.0083 61.0000  1.0000    759432  0.9500
+  0.00026    0.9863     10140.5 1.72356e-05 7.98063e-05 1.30626e-09 189.5591   0.6135  0.0059 61.0000  1.0000    791075  0.9500
+  0.00025   0.97314     10040.4 1.59581e-05 7.85178e-05 1.28049e-09 200.4440   0.5926  0.0145 61.0000  1.0000    822718  0.9500
+  0.00024   0.97473     9713.49 1.57683e-05 7.55274e-05 1.23939e-09 185.3512   0.5346  0.0081 61.0000  1.0000    854361  0.9500
+  0.00023   0.98074     9555.55 1.54892e-05 7.41849e-05 1.20541e-09 181.3450   0.5055  0.0124 61.0000  1.0000    886004  0.9500
+  0.00021   0.96162     9119.99 1.46739e-05 7.04421e-05 1.17036e-09 178.1776   0.4558  0.0121 61.0000  1.0000    917647  0.9500
+  0.00020   0.96626      8773.2 1.39057e-05 6.77279e-05 1.12161e-09 171.9794   0.4123  0.0216 61.0000  1.0000    949290  0.9500
+  0.00019   0.97008     8319.03 1.01693e-05 6.42848e-05 1.05082e-09 170.2848   0.3749  0.0194 59.3095  1.1972    980933  0.9500
+  0.00018   0.98749     8133.94 6.47585e-06 6.30813e-05 1.01283e-09 159.0023   0.3674  0.0093 55.4504  1.6475   1012576  0.9500
+  0.00017    0.9907     8035.71 4.43833e-06 6.31192e-05  9.8782e-10 154.9572   0.3704  0.0051 51.4236  2.1172   1044219  0.9500
+  0.00017   0.98749     8128.32 3.59135e-06  6.4425e-05 1.03366e-09 144.7636   0.3925  0.0093 47.8420  2.5351   1075862  0.9500
+  0.00016   0.98465     8033.26 3.20573e-06 6.39364e-05 1.03237e-09 135.3315   0.3886  0.0080 45.5712  2.8000   1107505  0.9500
+  0.00015   0.98901     7899.45 2.88058e-06 6.32805e-05 1.01776e-09 131.6807   0.3783  0.0062 43.2296  3.0732   1139148  0.9500
+  0.00014   0.98813     7838.74 2.61013e-06  6.3221e-05 1.01477e-09 129.0588   0.3883  0.0046 40.5602  3.3846   1170791  0.9500
+  0.00014   0.98672     7737.97 2.44188e-06 6.23896e-05  1.0141e-09 126.1534   0.3802  0.0086 38.4620  3.6294   1202434  0.9500
+  0.00013   0.98738     7606.11 2.21087e-06 6.21622e-05 1.00618e-09 126.8651   0.3933  0.0063 36.1624  3.8977   1234077  0.9500
+  0.00012   0.98716     7524.43 2.11546e-06 6.15536e-05 9.98175e-10 123.6287   0.3961  0.0063 34.4734  4.0948   1265720  0.9500
+  0.00012   0.98294     7292.91 1.97913e-06 5.99997e-05  9.7744e-10 123.1790   0.3817  0.0083 32.9591  4.2714   1297363  0.9500
+  0.00011   0.98207      6959.3 1.88448e-06 5.78178e-05  9.4525e-10 122.3986   0.3670  0.0103 31.0385  4.4955   1329006  0.9500
+  0.00010   0.99414     6739.92 1.78421e-06 5.60411e-05 9.03407e-10 121.4930   0.3708  0.0051 28.7727  4.7599   1360649  0.9500
+  0.00010   0.97666     6531.45 1.74283e-06 5.47936e-05 9.04601e-10 120.2873   0.3651  0.0088 26.7814  4.9922   1392292  0.9500
+  0.00009   0.99261     6400.21 1.67142e-06 5.41082e-05 8.71578e-10 118.7833   0.3716  0.0064 24.7748  5.2263   1423935  0.9500
+  0.00009   0.98274     6149.15 1.62622e-06  5.2079e-05 8.57003e-10 118.2347   0.3604  0.0094 23.0790  5.4241   1455578  0.9500
+  0.00009    0.9871     5949.37 1.56929e-06 5.06995e-05 8.20833e-10 117.1428   0.3583  0.0072 21.2418  5.6385   1487221  0.9500
+  0.00008   0.98019     5704.01 1.53516e-06 4.89751e-05 8.10131e-10 116.2200   0.3564  0.0067 19.5072  5.8408   1518864  0.9500
+  0.00008   0.98025     5415.71   1.498e-06 4.66994e-05 7.71478e-10 116.0743   0.3521  0.0080 17.8773  6.0310   1550507  0.9500
+  0.00007   0.97564     5134.05 1.47195e-06 4.42764e-05 7.41038e-10 116.0339   0.3352  0.0109 16.3056  6.2143   1582150  0.9500
+  0.00007   0.98528     4901.23 1.44615e-06 4.26494e-05  6.9562e-10 114.7140   0.3449  0.0060 14.5964  6.4138   1613793  0.9500
+  0.00007   0.98757     4755.82 1.42518e-06 4.15843e-05 6.78246e-10 113.8629   0.3432  0.0071 13.2080  6.5757   1645436  0.9500
+  0.00006   0.98435     4573.44 1.39955e-06 4.00321e-05 6.57923e-10 114.3385   0.3661  0.0071 11.9295  6.7249   1677079  0.9500
+  0.00006   0.98523      4407.7 1.38611e-06 3.89614e-05 6.39367e-10 112.4774   0.3373  0.0068 11.0481  6.8277   1708722  0.9500
+  0.00006   0.98554     4231.09 1.37003e-06 3.76666e-05 6.18926e-10 111.8522   0.3615  0.0069  9.9137  6.9601   1740365  0.9500
+  0.00005   0.99127     4126.41 1.35541e-06 3.70877e-05 6.00389e-10 111.0625   0.3432  0.0061  9.1358  7.0508   1772008  0.9500
+  0.00005   0.98761     3991.84 1.34115e-06 3.59242e-05 5.91548e-10 110.9751   0.3438  0.0051  8.2518  7.1540   1803651  0.9500
+  0.00005   0.99027     3877.74 1.32104e-06 3.50224e-05 5.71777e-10 111.6502   0.3691  0.0048  7.4580  7.2466   1835294  0.9500
+  0.00005    0.9965     3806.39 1.31335e-06 3.44242e-05 5.55766e-10 111.1968   0.3918  0.0021  6.9291  7.3083   1866937  0.9500
+  0.00004   0.99177     3740.42 1.30115e-06 3.40588e-05 5.48994e-10 111.1319   0.3750  0.0032  6.5952  7.3472   1898580  0.9500
+  0.00004   0.99305     3698.35 1.29397e-06 3.37931e-05 5.46407e-10 110.9090   0.3630  0.0033  6.1665  7.3972   1930223  0.9500
+  0.00004   0.99348     3649.25 1.28423e-06 3.34948e-05 5.41767e-10 109.9143   0.3971  0.0031  5.6916  7.4526   1961866  0.9500
+  0.00004   0.99526     3590.72 1.28141e-06 3.30483e-05 5.34375e-10 109.9028   0.3845  0.0018  5.4472  7.4812   1993509  0.9500
+  0.00004   0.99328      3537.5 1.28214e-06 3.27089e-05 5.29684e-10 108.7405   0.3651  0.0031  5.1451  7.5164   2025152  0.9500
+  0.00003   0.99615     3492.02 1.27655e-06 3.25023e-05 5.23707e-10 108.7405   0.3969  0.0018  4.7596  7.5614   2056795  0.9500
+  0.00003   0.99713     3464.09 1.27083e-06 3.22618e-05 5.21376e-10 108.8825   0.3909  0.0012  4.5543  7.5853   2088438  0.9500
+  0.00003   0.99697     3438.36 1.26586e-06  3.1994e-05 5.19215e-10 108.9947   0.3825  0.0023  4.3306  7.6114   2120081  0.9500
+  0.00003   0.99735     3401.25 1.26344e-06 3.16589e-05 5.12876e-10 109.1967   0.3657  0.0016  4.0817  7.6405   2151724  0.9500
+  0.00003   0.99793     3378.94 1.26267e-06 3.15782e-05 5.06763e-10 108.8527   0.4318  0.0008  3.7783  7.6759   2183367  0.9500
+  0.00003    0.9962     3356.53 1.25831e-06 3.14051e-05 5.07044e-10 108.8293   0.4240  0.0020  3.7474  7.6795   2215010  0.9500
+  0.00002   0.99542     3317.77 1.25766e-06 3.12152e-05 5.02597e-10 108.6507   0.4022  0.0018  3.6875  7.6865   2246653  0.9500
+  0.00002   0.99966     3308.56 1.25722e-06 3.11761e-05 4.99716e-10 108.1777   0.3978  0.0007  3.5480  7.7027   2278296  0.9500
+  0.00002   0.99575     3268.66 1.25569e-06 3.08594e-05 5.00093e-10 108.5037   0.3844  0.0021  3.3982  7.7202   2309939  0.9500
+  0.00002   0.99844     3246.69   1.252e-06 3.07344e-05 4.95306e-10 108.9494   0.3716  0.0008  3.2091  7.7423   2341582  0.9500
+  0.00002   0.99895     3228.42 1.24829e-06 3.05442e-05 4.92454e-10 109.0850   0.4602  0.0007  2.9894  7.7679   2373225  0.9500
+  0.00002   0.99775     3209.69 1.24941e-06 3.03729e-05 4.91508e-10 109.2478   0.3517  0.0012  3.0498  7.7609   2404868  0.9500
+  0.00002   0.99876     3191.88 1.24634e-06 3.03368e-05 4.85768e-10 109.2478   0.4345  0.0007  2.7805  7.7923   2436511  0.9500
+  0.00002   0.99883     3180.58  1.2482e-06  3.0301e-05 4.86923e-10 108.7057   0.4207  0.0006  2.7652  7.7941   2468154  0.9500
+  0.00002   0.99863     3166.23 1.24947e-06 3.02302e-05 4.87868e-10 108.4346   0.4087  0.0004  2.7118  7.8003   2499797  0.9500
+  0.00002   0.99829     3154.85 1.24793e-06 3.00611e-05 4.84146e-10 108.5701   0.4015  0.0008  2.6270  7.8102   2531440  0.9500
+  0.00001   0.99888     3143.91 1.24512e-06 3.00753e-05 4.84557e-10 108.8412   0.3930  0.0008  2.5258  7.8220   2563083  0.9500
+  0.00001   0.99763     3123.44 1.24797e-06 2.99273e-05 4.80758e-10 108.4346   0.3863  0.0010  2.4071  7.8358   2594726  0.9500
+  0.00001    0.9988     3108.09 1.24617e-06 2.97812e-05 4.79839e-10 108.4346   0.3656  0.0004  2.2778  7.8509   2626369  0.9500
+  0.00001   0.99916     3098.12 1.24609e-06 2.96313e-05 4.77074e-10 108.4346   0.3542  0.0004  2.1084  7.8707   2658012  0.9500
+  0.00001   0.99922     3090.57 1.24576e-06 2.96344e-05 4.75705e-10 108.3681   0.4718  0.0004  1.9275  7.8918   2689655  0.9500
+  0.00001    0.9995     3087.45 1.24473e-06 2.96372e-05 4.76579e-10 108.4346   0.4639  0.0004  1.9888  7.8846   2721298  0.9500
+  0.00001   0.99924      3080.6 1.24529e-06 2.96535e-05 4.75815e-10 108.3681   0.3223  0.0007  2.0364  7.8791   2752941  0.9500
+  0.00001    0.9994     3069.01 1.24415e-06 2.95682e-05 4.76029e-10 108.4346   0.4387  0.0003  1.7967  7.9071   2784584  0.9500
+  0.00001   0.99946     3062.91 1.24406e-06 2.95315e-05 4.74153e-10 108.3681   0.4275  0.0003  1.7943  7.9073   2816227  0.9500
+  0.00001   0.99922     3057.66 1.24398e-06 2.94364e-05 4.73178e-10 108.4346   0.4159  0.0004  1.7719  7.9100   2847870  0.9500
+  0.00001   0.99975     3051.01 1.24357e-06 2.93905e-05 4.73036e-10 108.4346   0.4109  0.0002  1.7292  7.9149   2879513  0.9500
+  0.00001   0.99951     3047.38 1.24335e-06 2.94272e-05 4.72795e-10 108.4346   0.3993  0.0003  1.6789  7.9208   2911156  0.9500
+  0.00001   0.99977      3042.5 1.24308e-06  2.9435e-05 4.73024e-10 108.4346   0.3867  0.0002  1.6106  7.9288   2942799  0.9500
+  0.00001   0.99947     3039.37 1.24272e-06 2.94002e-05 4.72382e-10 108.4346   0.3738  0.0002  1.5248  7.9388   2974442  0.9500
+  0.00001   0.99931     3035.08 1.24228e-06 2.94117e-05 4.72238e-10 108.4346   0.3634  0.0003  1.4239  7.9505   3006085  0.9500
+  0.00001   0.99942     3029.95  1.2417e-06  2.9388e-05 4.72926e-10 108.4346   0.3479  0.0004  1.3148  7.9633   3037728  0.9500
+  0.00001   0.99953     3025.45 1.24131e-06 2.93431e-05 4.72081e-10 108.4346   0.3365  0.0002  1.1937  7.9774   3069371  0.9500
+  0.00001   0.99946     3022.47 1.24071e-06 2.93588e-05 4.72385e-10 108.4346   0.3241  0.0002  1.0702  7.9918   3101014  0.9500
+  0.00001   0.99972     3019.21 1.24053e-06 2.93309e-05 4.71912e-10 108.4346   0.3139  0.0002  1.0000  8.0000   3132657  0.9500
+  0.00001   0.99951     3015.87 1.24044e-06 2.93158e-05 4.71828e-10 108.4346   0.3101  0.0002  1.0000  8.0000   3164300  0.9500
+  0.00001   0.99961     3012.35 1.24047e-06 2.93222e-05 4.71027e-10 108.4346   0.2978  0.0002  1.0000  8.0000   3195943  0.9500
+  0.00001    0.9998     3009.43 1.24063e-06  2.9289e-05 4.70238e-10 108.4346   0.2839  0.0002  1.0000  8.0000   3227586  0.9500
+  0.00000   0.99979      3005.4 1.24066e-06 2.92732e-05 4.69911e-10 108.4346   0.2733  0.0001  1.0000  8.0000   3259229  0.9500
+  0.00000   0.99966     3002.87 1.24063e-06 2.92517e-05 4.69405e-10 108.4346   0.2670  0.0002  1.0000  8.0000   3290872  0.9500
+  0.00000    0.9999     3000.48 1.24063e-06 2.92605e-05 4.69408e-10 108.4346   0.2435  0.0001  1.0000  8.0000   3322515  0.9500
+  0.00000   0.99967     2997.47 1.24062e-06 2.92165e-05 4.68983e-10 108.4346   0.2400  0.0002  1.0000  8.0000   3354158  0.9500
+  0.00000   0.99992     2995.74 1.24063e-06 2.92191e-05  4.6858e-10 108.4346   0.2333  0.0000  1.0000  8.0000   3385801  0.9500
+  0.00000   0.99957     2993.74 1.24064e-06  2.9209e-05 4.69458e-10 108.4346   0.2232  0.0001  1.0000  8.0000   3417444  0.9500
+  0.00000    0.9998     2991.61 1.24063e-06 2.91837e-05 4.68648e-10 108.4346   0.2203  0.0002  1.0000  8.0000   3449087  0.9500
+  0.00000   0.99971     2989.15 1.24062e-06 2.91979e-05 4.68641e-10 108.4346   0.2126  0.0002  1.0000  8.0000   3480730  0.9500
+  0.00000   0.99985      2987.6 1.24062e-06 2.92014e-05 4.69457e-10 108.4346   0.1968  0.0000  1.0000  8.0000   3512373  0.9500
+  0.00000   0.99984     2985.36 1.24062e-06 2.91736e-05 4.69068e-10 108.4346   0.1896  0.0001  1.0000  8.0000   3544016  0.9500
+  0.00000   0.99979     2983.85 1.24063e-06 2.91717e-05 4.68343e-10 108.4346   0.1776  0.0001  1.0000  8.0000   3575659  0.9500
+  0.00000   0.99996     2982.61 1.24063e-06 2.91848e-05 4.68855e-10 108.4346   0.1737  0.0000  1.0000  8.0000   3607302  0.9500
+  0.00000   0.99974     2980.61 1.24063e-06 2.91395e-05 4.68241e-10 108.4346   0.1645  0.0001  1.0000  8.0000   3638945  0.9500
+  0.00000   0.99998     2979.49 1.24063e-06 2.91706e-05 4.68403e-10 108.4346   0.1610  0.0000  1.0000  8.0000   3670588  0.9500
+  0.00000   0.99993     2978.78 1.24063e-06 2.91701e-05 4.68579e-10 108.4346   0.1519  0.0000  1.0000  8.0000   3702231  0.9500
+  0.00000   0.99996     2977.32 1.24063e-06 2.91802e-05 4.68076e-10 108.4346   0.1472  0.0000  1.0000  8.0000   3733874  0.8000
+  0.00000   0.99967     2975.31 1.24063e-06 2.91689e-05 4.68905e-10 108.4346   0.1257  0.0001  1.0000  8.0000   3765517  0.8000
+  0.00000   0.99975     2973.03 1.24063e-06 2.91532e-05 4.68401e-10 108.4346   0.1011  0.0001  1.0000  8.0000   3797160  0.8000
+  0.00000    0.9999     2971.84 1.24063e-06 2.91259e-05 4.68227e-10 108.4346   0.0856  0.0000  1.0000  8.0000   3828803  0.8000
+  0.00000   0.99987     2970.81 1.24063e-06 2.91421e-05    4.68e-10 108.4346   0.0735  0.0000  1.0000  8.0000   3860446  0.8000
+  0.00000   0.99989     2970.13 1.24063e-06 2.91475e-05 4.68109e-10 108.4346   0.0606  0.0000  1.0000  8.0000   3892089  0.8000
+  0.00000   0.99994     2969.63 1.24063e-06 2.91346e-05 4.68043e-10 108.4346   0.0523  0.0000  1.0000  8.0000   3923732  0.8000
+  0.00000   0.99997     2969.39 1.24063e-06 2.91334e-05 4.67824e-10 108.4346   0.0428  0.0000  1.0000  8.0000   3955375  0.8000
+  0.00000   0.99999     2969.21 1.24063e-06 2.91316e-05 4.67857e-10 108.4346   0.0396  0.0000  1.0000  8.0000   3987018  0.8000
+  0.00000   0.99998     2969.15 1.24063e-06 2.91307e-05  4.6795e-10            0.0079  0.0000  1.0000  8.0000   4018661
+
+BB estimate of min-dist (placement) wirelength: 295896
+bb_cost recomputed from scratch: 2969.11
+timing_cost recomputed from scratch: 1.24063e-06
+delay_cost recomputed from scratch: 2.91262e-05
+
+Completed placement consistency check successfully.
+
+Swaps called: 4021034
+
+Placement estimated critical path delay: 108.435 ns
+Placement cost: 0.999977, bb_cost: 2969.11, td_cost: 1.24063e-06, delay_cost: 2.91262e-05
+Placement total # of swap attempts: 4021034
+	Swap reject rate: 0
+	Swap accept rate: 0
+	Swap abort rate: 0
+Placement took 82.993 seconds.
+The entire flow of VPR took 84.9999 seconds.

@@ -3730,6 +3730,7 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 	int add_range = (*p_log_brams).BRAM_LIST[log_bram_id].add_range;
 	Array tmp_Array;
 	memcpy(tmp_Array.Array,(*(*p_phy_brams).BRAM_LIST[phy_bram_id].p_Array).Array,MAX_ROW_B*MAX_COL_B*sizeof(long int));
+	//读取cell信息，获取最小写单元的当前写次数
 	for (add_counter = 0 ; add_counter<add_range;add_counter++)
 	{
 		int tmp_row = (*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+add_counter)).relocation_table_x;
@@ -3754,6 +3755,16 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 	addr_pin tmp_pin;
 	addr_pin res_pin;
 	tmp_pin=(*p_log_brams).BRAM_LIST[log_bram_id].C_port;
+	
+	int valid_real_pin_num = 0; //有效的实际连线数量
+	for (l_num = 0;l_num<valid_add_num;l_num++)
+	{
+		if(strlen(tmp_pin.pins[l_num].pin_name)>6)
+		{
+			valid_real_pin_num++;
+		}
+	}
+
 	for (l_num = 0;l_num < valid_add_num ;l_num++)
 	{
 		int tmp_block_num = zh_pow(2,l_num+1);
@@ -3787,7 +3798,7 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 			long double total_num = w_wirte +b_wirte + 0.00001;
 			float exp_write_ratio = b_wirte/total_num;
 			l_vecs.l_vec[l_num].w_node = exp_write_ratio;		//期望写率
-			// l_vecs.l_vec[l_num].b_node = w_wirte/total_num;		
+			l_vecs.l_vec[l_num].b_node = (1-exp_write_ratio);//w_wirte/total_num;		
 			int v_add_num = 0;
 			int tmp_v_add_num = 0;
 			v_add_num = (*p_log_brams).BRAM_LIST[log_bram_id].valid_add_num;
@@ -3797,46 +3808,92 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 			char tmp_name[MAX_name_len]="";
 			char Min_name[MAX_name_len] = "";
 			int pin_flag = -1;
-			for (tmp_v_add_num = 0; tmp_v_add_num < v_add_num;tmp_v_add_num ++)
+			if((valid_add_num - l_num) > valid_real_pin_num)//满足有效的实际线要全部链接
 			{
-				int tmp_pin_flag = -1;
-				strcpy(tmp_name,tmp_pin.pins[tmp_v_add_num].pin_name);
-				if(strlen(tmp_name)>6)
+				for (tmp_v_add_num = 0; tmp_v_add_num < v_add_num;tmp_v_add_num ++)
 				{
-					tmp_diff = fabs(exp_write_ratio - tmp_pin.pins[tmp_v_add_num].pin_ratio);
-					tmp_pin_flag = 2;
-				}
-				else
-				{
-					float tmp_diff_0 = fabs(exp_write_ratio - 0);
-					float tmp_diff_1 = fabs(exp_write_ratio - 1);
-					if(tmp_diff_0<tmp_diff_1)
+					if(tmp_pin.pins[tmp_v_add_num].used !=1)
 					{
-						tmp_diff = tmp_diff_0;
-						strcpy(tmp_name,"gnd");
-						tmp_pin_flag = 0;
+						int tmp_pin_flag = -1;
+						strcpy(tmp_name,tmp_pin.pins[tmp_v_add_num].pin_name);
+						if(strlen(tmp_name)>6)
+						{
+							tmp_diff = fabs(exp_write_ratio - tmp_pin.pins[tmp_v_add_num].pin_ratio);
+							tmp_pin_flag = 2;
+						}
+						else
+						{
+							float tmp_diff_0 = fabs(exp_write_ratio - 0);
+							float tmp_diff_1 = fabs(exp_write_ratio - 1);
+							if(tmp_diff_0<tmp_diff_1)
+							{
+								tmp_diff = tmp_diff_0;
+								strcpy(tmp_name,"gnd");
+								tmp_pin_flag = 0;
+							}
+							else
+							{
+								tmp_diff = tmp_diff_1;
+								strcpy(tmp_name,"vcc");
+								tmp_pin_flag = 1;
+							}
+						}			
+						if(tmp_diff<Diff)
+						{
+							Diff = tmp_diff;
+							Min_num_pos = tmp_v_add_num;
+							strcpy(Min_name,tmp_name);
+							pin_flag = tmp_pin_flag;
+							strcpy((*tmp_D_port).pins[l_num].pin_name,Min_name);
+						}
 					}
 					else
 					{
-						tmp_diff = tmp_diff_1;
-						strcpy(tmp_name,"vcc");
-						tmp_pin_flag = 1;
-					}	
-				}	
-				// tmp_diff = exp_write_ratio - (*p_log_brams).BRAM_LIST[log_bram_id]
-				if(tmp_diff<Diff)
-				{
-					Diff = tmp_diff;
-					Min_num_pos = tmp_v_add_num;
-					strcpy(Min_name,tmp_name);
-					pin_flag = tmp_pin_flag;
-					strcpy((*tmp_D_port).pins[tmp_v_add_num].pin_name,Min_name);
+						continue;
+					}
 				}
+
+			}
+			else
+			{
+				for (tmp_v_add_num = 0; tmp_v_add_num < v_add_num;tmp_v_add_num ++)
+				{
+					if(tmp_pin.pins[tmp_v_add_num].used !=1)
+					{
+						int tmp_pin_flag = -1;
+						strcpy(tmp_name,tmp_pin.pins[tmp_v_add_num].pin_name);
+						if(strlen(tmp_name)>6)
+						{
+							tmp_diff = fabs(exp_write_ratio - tmp_pin.pins[tmp_v_add_num].pin_ratio);
+							tmp_pin_flag = 2;
+						}
+						else
+						{
+							continue;
+						}
+						
+	
+						if(tmp_diff<Diff)
+						{
+							Diff = tmp_diff;
+							Min_num_pos = tmp_v_add_num;
+							strcpy(Min_name,tmp_name);
+							pin_flag = tmp_pin_flag;
+							strcpy((*tmp_D_port).pins[0].pin_name,Min_name);
+						}
+					}
+					else
+					{
+						continue;
+					}
+				}
+				
 			}
 			tmp_pin.pins[Min_num_pos].used = 1;
 			if (pin_flag == 2)
 			{
 				l_vecs.l_vec[0].w_node = tmp_pin.pins[Min_num_pos].pin_ratio;
+				valid_real_pin_num--;
 			}
 			else if (pin_flag == 1)
 			{
@@ -3850,6 +3907,7 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 		}
 		else
 		{
+			
 			long double w_wirte = 0;
 			long double b_wirte = 0;
 			int tmp_i = 0;
@@ -3921,52 +3979,94 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 			char tmp_name[MAX_name_len]="";
 			char Min_name[MAX_name_len] = "";
 			int pin_flag = -1;
-			for (tmp_v_add_num = 0; tmp_v_add_num < v_add_num;tmp_v_add_num ++)
+			
+			if((valid_add_num - l_num) > valid_real_pin_num)//满足有效的实际线要全部链接
 			{
-				if(tmp_pin.pins[tmp_v_add_num].used !=1)
+				for (tmp_v_add_num = 0; tmp_v_add_num < v_add_num;tmp_v_add_num ++)
 				{
-					int tmp_pin_flag = -1;
-					strcpy(tmp_name,tmp_pin.pins[tmp_v_add_num].pin_name);
-					if(strlen(tmp_name)>6)
+					if(tmp_pin.pins[tmp_v_add_num].used !=1)
 					{
-						tmp_diff = fabs(exp_write_ratio - tmp_pin.pins[tmp_v_add_num].pin_ratio);
-						tmp_pin_flag = 2;
-					}
-					else
-					{
-						float tmp_diff_0 = fabs(exp_write_ratio - 0);
-						float tmp_diff_1 = fabs(exp_write_ratio - 1);
-						if(tmp_diff_0<tmp_diff_1)
+						int tmp_pin_flag = -1;
+						strcpy(tmp_name,tmp_pin.pins[tmp_v_add_num].pin_name);
+						if(strlen(tmp_name)>6)
 						{
-							tmp_diff = tmp_diff_0;
-							strcpy(tmp_name,"gnd");
-							tmp_pin_flag = 0;
+							tmp_diff = fabs(exp_write_ratio - tmp_pin.pins[tmp_v_add_num].pin_ratio);
+							tmp_pin_flag = 2;
 						}
 						else
 						{
-							tmp_diff = tmp_diff_1;
-							strcpy(tmp_name,"vcc");
-							tmp_pin_flag = 1;
+							float tmp_diff_0 = fabs(exp_write_ratio - 0);
+							float tmp_diff_1 = fabs(exp_write_ratio - 1);
+							if(tmp_diff_0<tmp_diff_1)
+							{
+								tmp_diff = tmp_diff_0;
+								strcpy(tmp_name,"gnd");
+								tmp_pin_flag = 0;
+							}
+							else
+							{
+								tmp_diff = tmp_diff_1;
+								strcpy(tmp_name,"vcc");
+								tmp_pin_flag = 1;
+							}
+						}			
+						if(tmp_diff<Diff)
+						{
+							Diff = tmp_diff;
+							Min_num_pos = tmp_v_add_num;
+							strcpy(Min_name,tmp_name);
+							pin_flag = tmp_pin_flag;
+							strcpy((*tmp_D_port).pins[l_num].pin_name,Min_name);
 						}
-					}			
-					if(tmp_diff<Diff)
+					}
+					else
 					{
-						Diff = tmp_diff;
-						Min_num_pos = tmp_v_add_num;
-						strcpy(Min_name,tmp_name);
-						pin_flag = tmp_pin_flag;
-						strcpy((*tmp_D_port).pins[tmp_v_add_num].pin_name,Min_name);
+						continue;
 					}
 				}
-				else
-				{
-					continue;
-				}
+
 			}
+			else
+			{
+				for (tmp_v_add_num = 0; tmp_v_add_num < v_add_num;tmp_v_add_num ++)
+				{
+					if(tmp_pin.pins[tmp_v_add_num].used !=1)
+					{
+						int tmp_pin_flag = -1;
+						strcpy(tmp_name,tmp_pin.pins[tmp_v_add_num].pin_name);
+						if(strlen(tmp_name)>6)
+						{
+							tmp_diff = fabs(exp_write_ratio - tmp_pin.pins[tmp_v_add_num].pin_ratio);
+							tmp_pin_flag = 2;
+						}
+						else
+						{
+							continue;
+						}
+						
+	
+						if(tmp_diff<Diff)
+						{
+							Diff = tmp_diff;
+							Min_num_pos = tmp_v_add_num;
+							strcpy(Min_name,tmp_name);
+							pin_flag = tmp_pin_flag;
+							strcpy((*tmp_D_port).pins[l_num].pin_name,Min_name);
+						}
+					}
+					else
+					{
+						continue;
+					}
+				}
+				
+			}
+			
 			tmp_pin.pins[Min_num_pos].used = 1;
 			if (pin_flag == 2)
 			{
 				l_vecs.l_vec[l_num].w_node = tmp_pin.pins[Min_num_pos].pin_ratio;
+				valid_real_pin_num--;
 			}
 			else if (pin_flag == 1)
 			{
