@@ -1,0 +1,5 @@
+toggle nets : toggles the nets in the circuit visible/invisible.
+toggle rr
+congestion
+
+CLB : it will be highlighted in green, while its fanin and fanout are highlighted in blue and red, respectively.

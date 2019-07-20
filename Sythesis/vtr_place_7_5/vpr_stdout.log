@@ -6,7 +6,7 @@ ________________________________________________________________________
 
 VPR FPGA Placement and Routing.
 Version: Version 7.0
-Compiled: Jul 12 2019.
+Compiled: Jul 20 2019.
 University of Toronto
 vpr@eecg.utoronto.ca
 This is free open source code under MIT license.
@@ -16,10 +16,10 @@ Circuit name: /home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.blif
 
 Building complex block graph.
 WARNING(1): io[0].clock[0] unconnected pin in architecture.
-Loop for doall = 0, init_parse took 8e-06 seconds.
-Loop for doall = 0 took 0.087095 seconds.
-Loop for doall = 1, init_parse took 0.015817 seconds.
-Loop for doall = 1 took 0.111357 seconds.
+Loop for doall = 0, init_parse took 9e-06 seconds.
+Loop for doall = 0 took 0.088444 seconds.
+Loop for doall = 1, init_parse took 0.01636 seconds.
+Loop for doall = 1 took 0.110724 seconds.
 Swept away 1601 nets with no fanout.
 Net is a constant generator: top^mem_local_be~0.
 WARNING(2): logical_block #8263 with output top^mem_local_be~0 has only 0 pin.

@@ -16,4 +16,4 @@ void char_replace(char * S, char A ,char B);
 int log_2_n(int old);
 int zh_pow(int x,int y);
 long int zh_pow_long(long int x,long int y);
-int d_2_b(int n,int *A);
+int d_2_b(int n,int bit_num,int *A);

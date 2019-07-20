@@ -436,7 +436,8 @@ void try_place(struct s_placer_opts placer_opts,
 
 	initial_placement(placer_opts.pad_loc_type, placer_opts.pad_loc_file,placer_opts);
 	init_draw_coords((float) width_fac);
-
+	// char tmp_name[200] = "/home/zhlab/BRAM/s_run/LU8PEEng/res/test";
+	// print_place_pin(tmp_name,placer_opts.p_log_brams);
 	/* Storing the number of pins on each type of block makes the swap routine *
 	 * slightly more efficient.                                                */
 
@@ -1505,19 +1506,35 @@ static enum swap_result try_swap(float t, float *cost, float *bb_cost, float *ti
 			float tmp_from_cost = 0.0;
 			float tmp_to_cost = 0.0;
 			
-			int log_bram_id_from = block[grid[tmp_x_from][tmp_y_from].blocks[tmp_z_from]].log_bram_ID;
-			int phy_bram_id_from = grid[tmp_x_to][tmp_y_to].BRAM_ID;
+			int block_id_from = grid[tmp_x_from][tmp_y_from].blocks[tmp_z_from];
+			if(block_id_from == OPEN){
+				vpr_printf(TIO_MESSAGE_INFO,"zh_error block_id_from = -1");
+				exit(0);
+			}
+			
+			int block_id_to = grid[tmp_x_to][tmp_y_to].blocks[tmp_z_to];
 
-			int log_bram_id_to = block[grid[tmp_x_to][tmp_y_to].blocks[tmp_z_to]].log_bram_ID;
-			int phy_bram_id_to = grid[tmp_x_from][tmp_y_from].BRAM_ID;
+
+
+			int log_bram_id_from = block[block_id_from].log_bram_ID;
+			int phy_bram_id_from = grid[tmp_x_from][tmp_y_from].BRAM_ID;
+
+			
+			int phy_bram_id_to = grid[tmp_x_to][tmp_y_to].BRAM_ID;
+			int log_bram_id_to = -1;
+			if(block_id_to != OPEN)
+			{
+				log_bram_id_to = block[block_id_to].log_bram_ID;
+			}
+
 
 			addr_pin from_to;
 			addr_pin to_from;
 
 
-			if(log_bram_id_to != OPEN)
+			if(block_id_to != OPEN)
 			{
-				float cost_from_old = (*placer_opts.p_log_brams).BRAM_LIST[log_bram_id_to].cost;
+				float cost_from_old = (*placer_opts.p_log_brams).BRAM_LIST[log_bram_id_from].cost;
 				int error = 0;
 				float cost_from_new = load_phy_info_to_log(placer_opts.p_phy_brams,placer_opts.p_log_brams,phy_bram_id_to,log_bram_id_from,placer_opts.up_limit,&from_to,&error);
 				if (error == 1)
@@ -1537,14 +1554,16 @@ static enum swap_result try_swap(float t, float *cost, float *bb_cost, float *ti
 				}
 				else if(keep_switch == ACCEPTED)
 				{
+					vpr_printf(TIO_MESSAGE_INFO,"%d-%d\n",tmp_x_from,tmp_y_from);
+					vpr_printf(TIO_MESSAGE_INFO,"%d-%d\n",tmp_x_to,tmp_y_to);
 					(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id_from].D_port = from_to;
-					(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id_to].D_port = to_from;
+					(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id_to].D_port = to_from;	
 				}
 				
 			}
 			else
 			{
-				float cost_from_old = (*placer_opts.p_log_brams).BRAM_LIST[log_bram_id_to].cost;
+				float cost_from_old = (*placer_opts.p_log_brams).BRAM_LIST[log_bram_id_from].cost;
 				int error = 0;
 				float cost_from_new = load_phy_info_to_log(placer_opts.p_phy_brams,placer_opts.p_log_brams,phy_bram_id_to,log_bram_id_from,placer_opts.up_limit,&from_to,&error);
 				if (error == 1)
@@ -1557,6 +1576,8 @@ static enum swap_result try_swap(float t, float *cost, float *bb_cost, float *ti
 				}
 				else if(keep_switch == ACCEPTED)
 				{
+					vpr_printf(TIO_MESSAGE_INFO,"%d-%d\n",tmp_x_from,tmp_y_from);
+					vpr_printf(TIO_MESSAGE_INFO,"%d-%d\n",tmp_x_to,tmp_y_to);
 					(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id_from].D_port = from_to;
 				}
 			}
@@ -1573,78 +1594,58 @@ static enum swap_result try_swap(float t, float *cost, float *bb_cost, float *ti
 
 			if (keep_switch == ACCEPTED)
 			{
+				*cost = *cost + delta_c;
+				*bb_cost = *bb_cost + bb_delta_c;
+		
+				if (place_algorithm == NET_TIMING_DRIVEN_PLACE
+						|| place_algorithm == PATH_TIMING_DRIVEN_PLACE) {
+					/*update the point_to_point_timing_cost and point_to_point_delay_cost 
+					* values from the temporary values */
+					*timing_cost = *timing_cost + timing_delta_c;
+					*delay_cost = *delay_cost + delay_delta_c;
 
+					update_td_cost();
+				}
 
-				if (keep_switch == ACCEPTED) {
-					*cost = *cost + delta_c;
-					*bb_cost = *bb_cost + bb_delta_c;
-			
-					if (place_algorithm == NET_TIMING_DRIVEN_PLACE
-							|| place_algorithm == PATH_TIMING_DRIVEN_PLACE) {
-						/*update the point_to_point_timing_cost and point_to_point_delay_cost 
-						* values from the temporary values */
-						*timing_cost = *timing_cost + timing_delta_c;
-						*delay_cost = *delay_cost + delay_delta_c;
+				/* update net cost functions and reset flags. */
+				for (inet_affected = 0; inet_affected < num_nets_affected; inet_affected++) {
+					inet = ts_nets_to_update[inet_affected];
 
-						update_td_cost();
+					bb_coords[inet] = ts_bb_coord_new[inet];
+					if (clb_net[inet].num_sinks >= SMALL_NET)
+						bb_num_on_edges[inet] = ts_bb_edge_new[inet];
+				
+					net_cost[inet] = temp_net_cost[inet];
+
+					/* negative temp_net_cost value is acting as a flag. */
+					temp_net_cost[inet] = -1;
+					bb_updated_before[inet] = NOT_UPDATED_YET;
+				}
+
+				/* Update clb data structures since we kept the move. */
+				/* Swap physical location */
+				for (iblk = 0; iblk < blocks_affected.num_moved_blocks; iblk++) {
+
+					x_to = blocks_affected.moved_blocks[iblk].xnew;
+					y_to = blocks_affected.moved_blocks[iblk].ynew;
+					z_to = blocks_affected.moved_blocks[iblk].znew;
+
+					x_from = blocks_affected.moved_blocks[iblk].xold;
+					y_from = blocks_affected.moved_blocks[iblk].yold;
+					z_from = blocks_affected.moved_blocks[iblk].zold;
+
+					b_from = blocks_affected.moved_blocks[iblk].block_num;
+
+					grid[x_to][y_to].blocks[z_to] = b_from;
+
+					if (blocks_affected.moved_blocks[iblk].swapped_to_empty == TRUE) {
+						grid[x_to][y_to].usage++;
+						grid[x_from][y_from].usage--;
+						grid[x_from][y_from].blocks[z_from] = -1;
 					}
+				
+				} // Finish updating clb for all blocks
 
-					/* update net cost functions and reset flags. */
-					for (inet_affected = 0; inet_affected < num_nets_affected; inet_affected++) {
-						inet = ts_nets_to_update[inet_affected];
-
-						bb_coords[inet] = ts_bb_coord_new[inet];
-						if (clb_net[inet].num_sinks >= SMALL_NET)
-							bb_num_on_edges[inet] = ts_bb_edge_new[inet];
-					
-						net_cost[inet] = temp_net_cost[inet];
-
-						/* negative temp_net_cost value is acting as a flag. */
-						temp_net_cost[inet] = -1;
-						bb_updated_before[inet] = NOT_UPDATED_YET;
-					}
-
-					/* Update clb data structures since we kept the move. */
-					/* Swap physical location */
-					for (iblk = 0; iblk < blocks_affected.num_moved_blocks; iblk++) {
-
-						x_to = blocks_affected.moved_blocks[iblk].xnew;
-						y_to = blocks_affected.moved_blocks[iblk].ynew;
-						z_to = blocks_affected.moved_blocks[iblk].znew;
-
-						x_from = blocks_affected.moved_blocks[iblk].xold;
-						y_from = blocks_affected.moved_blocks[iblk].yold;
-						z_from = blocks_affected.moved_blocks[iblk].zold;
-
-						b_from = blocks_affected.moved_blocks[iblk].block_num;
-
-						grid[x_to][y_to].blocks[z_to] = b_from;
-
-						if (blocks_affected.moved_blocks[iblk].swapped_to_empty == TRUE) {
-							grid[x_to][y_to].usage++;
-							grid[x_from][y_from].usage--;
-							grid[x_from][y_from].blocks[z_from] = -1;
-						}
-					
-					} // Finish updating clb for all blocks
-
-				} else { /* Move was rejected.  */
-						/* Reset the net cost function flags first. */
-						for (inet_affected = 0; inet_affected < num_nets_affected; inet_affected++) {
-							inet = ts_nets_to_update[inet_affected];
-							temp_net_cost[inet] = -1;
-							bb_updated_before[inet] = NOT_UPDATED_YET;
-						}
-
-						/* Restore the block data structures to their state before the move. */
-						for (iblk = 0; iblk < blocks_affected.num_moved_blocks; iblk++) {
-							b_from = blocks_affected.moved_blocks[iblk].block_num;
-
-							block[b_from].x = blocks_affected.moved_blocks[iblk].xold;
-							block[b_from].y = blocks_affected.moved_blocks[iblk].yold;
-							block[b_from].z = blocks_affected.moved_blocks[iblk].zold;
-						}
-					}
 			}
 			else{
 
@@ -1663,7 +1664,6 @@ static enum swap_result try_swap(float t, float *cost, float *bb_cost, float *ti
 					block[b_from].y = blocks_affected.moved_blocks[iblk].yold;
 					block[b_from].z = blocks_affected.moved_blocks[iblk].zold;
 				}
-				
 			}
 		}
 		/* Resets the num_moved_blocks, but do not free blocks_moved array. Defensive Coding */
@@ -3035,8 +3035,15 @@ static void initial_placement_blocks(int * free_locations, enum e_pad_loc_type p
 					assert (grid[x][y].blocks[z] == OPEN);
 					assert (phy_bram_id!=-1);
 					assert (log_bram_id!=-1);
+					
 					(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id].cost = load_phy_info_to_log(placer_opts.p_phy_brams,placer_opts.p_log_brams,phy_bram_id,log_bram_id,placer_opts.up_limit,&tmp_D_port,&error);
 					try_num--;
+					// vpr_printf(TIO_MESSAGE_INFO,"    %d    \n",error);
+					if(error == 1)
+					{
+						
+						int a = 0;
+					}
 				}while(error !=0  && try_num > 0);
 
 				if (error == 1)
@@ -3046,12 +3053,12 @@ static void initial_placement_blocks(int * free_locations, enum e_pad_loc_type p
 				}
 				else
 				{
+					vpr_printf(TIO_MESSAGE_INFO,"init_ %d - %d  %s\n",x,y,(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id].name);
+					
 					(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id].D_port = tmp_D_port;
-
 
 					grid[x][y].blocks[z] = iblk;
 					grid[x][y].usage++;
-
 
 					block[iblk].x = x;
 					block[iblk].y = y;
@@ -3795,8 +3802,8 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 					}
 				}
 			}
-			long double total_num = w_wirte +b_wirte + 0.00001;
-			float exp_write_ratio = b_wirte/total_num;
+			long double total_num = (w_wirte+0.00001) +b_wirte + 0.00001;
+			float exp_write_ratio = (w_wirte+0.00001)/total_num;
 			l_vecs.l_vec[l_num].w_node = exp_write_ratio;		//期望写率
 			l_vecs.l_vec[l_num].b_node = (1-exp_write_ratio);//w_wirte/total_num;		
 			int v_add_num = 0;
@@ -3844,7 +3851,7 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 							Min_num_pos = tmp_v_add_num;
 							strcpy(Min_name,tmp_name);
 							pin_flag = tmp_pin_flag;
-							strcpy((*tmp_D_port).pins[l_num].pin_name,Min_name);
+							strcpy((*tmp_D_port).pins[0].pin_name,Min_name);
 						}
 					}
 					else
@@ -3889,9 +3896,10 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 				}
 				
 			}
-			tmp_pin.pins[Min_num_pos].used = 1;
+
 			if (pin_flag == 2)
 			{
+				tmp_pin.pins[Min_num_pos].used = 1;
 				l_vecs.l_vec[0].w_node = tmp_pin.pins[Min_num_pos].pin_ratio;
 				valid_real_pin_num--;
 			}
@@ -3923,11 +3931,11 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 						float coefficient = 1.0;
 						int A[33];
 						memset(A,0,sizeof(A));
-						d_2_b(tmp_j,A);
+						d_2_b(tmp_j,valid_add_num,A);
 						for (tmp_lev_count = 0 ; tmp_lev_count < l_num ;tmp_lev_count++)
 						{
 							float tmp_coefficient = 0.0;
-							if(A[valid_add_num-tmp_lev_count-1]==0)
+							if(A[tmp_lev_count]==1)
 							{
 								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
 							}
@@ -3947,11 +3955,12 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 						int tmp_lev_count = 0;
 						float coefficient = 1.0;
 						int A[33];
-						d_2_b(tmp_j,A);
+						memset(A,0,sizeof(A));
+						d_2_b(tmp_j,valid_add_num,A);
 						for (tmp_lev_count = 0 ; tmp_lev_count < l_num ;tmp_lev_count++)
 						{
 							float tmp_coefficient = 0.0;
-							if(A[valid_add_num-tmp_lev_count-1]==0)
+							if(A[tmp_lev_count]==1)
 							{
 								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
 							}
@@ -3966,8 +3975,8 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 					}
 				}
 			}
-			long double total_num = w_wirte +b_wirte + 0.00001;
-			float exp_write_ratio = (b_wirte+ 0.00001)/total_num;
+			long double total_num = (w_wirte+0.00001) +(b_wirte + 0.00001);
+			float exp_write_ratio = (w_wirte+ 0.00001)/total_num;
 			l_vecs.l_vec[l_num].w_node = exp_write_ratio;		//期望写率
 			// l_vecs.l_vec[l_num].b_node = w_wirte/total_num;		
 			int v_add_num = 0;
@@ -4062,9 +4071,10 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 				
 			}
 			
-			tmp_pin.pins[Min_num_pos].used = 1;
+			// tmp_pin.pins[Min_num_pos].used = 1;
 			if (pin_flag == 2)
 			{
+				tmp_pin.pins[Min_num_pos].used = 1;				
 				l_vecs.l_vec[l_num].w_node = tmp_pin.pins[Min_num_pos].pin_ratio;
 				valid_real_pin_num--;
 			}
@@ -4104,11 +4114,11 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 				float coefficient = 1.0;
 				int A[33];
 				memset(A,0,sizeof(A));
-				d_2_b(tmp_j,A);
+				d_2_b(tmp_j,valid_add_num,A);
 				for (tmp_lev_count = 0 ; tmp_lev_count < l_num+1 ;tmp_lev_count++)
 				{
 					float tmp_coefficient = 0.0;
-					if(A[valid_add_num-tmp_lev_count-1]==0)
+					if(A[tmp_lev_count]==1)
 					{
 						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
 					}
@@ -4120,10 +4130,15 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 				}
 				if(coefficient != 0)
 				{
-					float tmp = (1-((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num/up_limit));
-					if(tmp < 0)
+					float tmp = (1-((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num/(double)up_limit));
+					// if((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num != 0)
+					// {
+					// 	// vpr_printf(TIO_MESSAGE_INFO,"\n%d----%ld----%d\n",log_bram_id,(*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num,tmp_j);
+					// 	int a = 0;
+					// }
+					if((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num > up_limit)
 					{
-						*error = 1;
+						(*error) = 1;
 						return 0;
 					}
 					cost = cost + fabs((coefficient/tmp)-1);
@@ -4143,11 +4158,12 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 				int tmp_lev_count = 0;
 				float coefficient = 1.0;
 				int A[33];
-				d_2_b(tmp_j,A);
+				memset(A,0,sizeof(A));
+				d_2_b(tmp_j,valid_add_num,A);
 				for (tmp_lev_count = 0 ; tmp_lev_count <  l_num+1 ;tmp_lev_count++)
 				{
 					float tmp_coefficient = 0.0;
-					if(A[valid_add_num-tmp_lev_count-1]==0)
+					if(A[tmp_lev_count]==1)
 					{
 						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
 					}
@@ -4159,8 +4175,13 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 				}
 				if(coefficient != 0)
 				{
-					float tmp = (1-((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num/up_limit));
-					if(tmp < 0)
+					float tmp = (1-((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num/(double)up_limit));
+					// if((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num != 0)
+					// {
+					// 	// vpr_printf(TIO_MESSAGE_INFO,"\n%d----%ld----%d\n",phy_bram_id,(*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num,tmp_j);
+					// 	int a = 0;
+					// }
+					if((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num > up_limit)
 					{
 						(*error) = 1;
 						return 0;
@@ -4178,7 +4199,7 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 			}
 		}
 	}
-	vpr_printf(TIO_MESSAGE_INFO,"cost  %f    avg_ %f     v_write_ %d   \n",cost,(cost/v_write_num),v_write_num);
+	// vpr_printf(TIO_MESSAGE_INFO,"cost  %f    avg_ %f     v_write_ %d   \n",cost,(cost/v_write_num),v_write_num);
 	// vpr_printf(TIO_MESSAGE_INFO,"---");
 	*error = 0;
 	return (cost/v_write_num);
@@ -4186,21 +4207,42 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 
 
 
-int d_2_b(int n,int *A)
+int d_2_b(int n,int bit_num,int *A)
 {
 	int a[33];
 	memset(a,0,sizeof(a));
 	int i = 0;
-	while (n>0)
+	if(n==0)
 	{
-		a[i] = n % 2;
-		i = i + 1;
-		n = n / 2;
+		a[0]=0;
+		i = i+1;
 	}
-	// for (i--; i >= 0; i--)
-	// vpr_printf(TIO_MESSAGE_INFO,"%d", a[i]);
-	// vpr_printf(TIO_MESSAGE_INFO,"\n");
-	memcpy(A,a,sizeof(a));
-	return i;
+	else
+	{
+		while (n>0)
+		{
+			a[i] = n % 2;
+			i = i + 1;
+			n = n / 2;
+		}
+	}
+    int b[33];
+  	memset(b,0,sizeof(b));
+  	int tmp_i = bit_num - i;
+  	int tmp_k = (i-1);
+  	int tmp_j = 0;
+  	for (tmp_j = 0;tmp_j<bit_num;tmp_j++)
+		{
+			if(tmp_j<tmp_i)
+				{
+					b[tmp_j] = 0;
+				}
+			else
+				{
+					b[tmp_j]=a[tmp_k--];
+				}
+		}  
+	memcpy(A,b,sizeof(b));
+	return bit_num;
 }
 

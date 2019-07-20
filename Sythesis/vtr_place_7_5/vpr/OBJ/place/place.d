@@ -10,7 +10,9 @@ OBJ/place/place.o: SRC/place/place.c /usr/include/stdc-predef.h \
  /usr/include/_G_config.h /usr/include/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
- /usr/include/x86_64-linux-gnu/bits/sys_errlist.h /usr/include/math.h \
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio2.h /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/x86_64-linux-gnu/bits/huge_val.h \
@@ -19,7 +21,8 @@ OBJ/place/place.o: SRC/place/place.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/inf.h \
  /usr/include/x86_64-linux-gnu/bits/nan.h \
  /usr/include/x86_64-linux-gnu/bits/mathdef.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls.h /usr/include/assert.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+ /usr/include/x86_64-linux-gnu/bits/mathinline.h /usr/include/assert.h \
  ../libarchfpga/include/util.h /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
@@ -31,9 +34,12 @@ OBJ/place/place.o: SRC/place/place.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/select.h \
  /usr/include/x86_64-linux-gnu/bits/sigset.h \
  /usr/include/x86_64-linux-gnu/bits/time.h \
+ /usr/include/x86_64-linux-gnu/bits/select2.h \
  /usr/include/x86_64-linux-gnu/sys/sysmacros.h \
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib.h \
  ../printhandler/SRC/TIO_InputOutputHandlers/TIO_PrintHandlerExtern.h \
  SRC/base/vpr_types.h ../libarchfpga/include/arch_types.h \
  ../libarchfpga/include/logic_types.h ../libarchfpga/include/util.h \
@@ -73,7 +79,7 @@ OBJ/place/place.o: SRC/place/place.c /usr/include/stdc-predef.h \
  ../libarchfpga/include/read_xml_arch_file.h \
  ../libarchfpga/include/arch_types.h SRC/base/ReadOptions.h \
  SRC/base/OptionTokens.h SRC/util/vpr_utils.h SRC/place/place_macro.h \
- /usr/include/string.h
+ /usr/include/string.h /usr/include/x86_64-linux-gnu/bits/string3.h
 
 /usr/include/stdc-predef.h:
 
@@ -107,6 +113,10 @@ OBJ/place/place.o: SRC/place/place.c /usr/include/stdc-predef.h \
 
 /usr/include/x86_64-linux-gnu/bits/sys_errlist.h:
 
+/usr/include/x86_64-linux-gnu/bits/stdio.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:
+
 /usr/include/math.h:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
@@ -126,6 +136,8 @@ OBJ/place/place.o: SRC/place/place.c /usr/include/stdc-predef.h \
 /usr/include/x86_64-linux-gnu/bits/mathdef.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathinline.h:
 
 /usr/include/assert.h:
 
@@ -159,13 +171,19 @@ OBJ/place/place.o: SRC/place/place.c /usr/include/stdc-predef.h \
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
 
+/usr/include/x86_64-linux-gnu/bits/select2.h:
+
 /usr/include/x86_64-linux-gnu/sys/sysmacros.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/alloca.h:
 
+/usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:
 
 ../printhandler/SRC/TIO_InputOutputHandlers/TIO_PrintHandlerExtern.h:
 
@@ -274,3 +292,5 @@ SRC/util/vpr_utils.h:
 SRC/place/place_macro.h:
 
 /usr/include/string.h:
+
+/usr/include/x86_64-linux-gnu/bits/string3.h:
