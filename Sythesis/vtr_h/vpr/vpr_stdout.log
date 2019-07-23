@@ -1,0 +1,407 @@
+________________________________________________________________________
+                       VPR - The Next Generation                        
+                     Version 0.A15.0 (Linux X86/64)                     
+            This is free open source code under MIT license.            
+________________________________________________________________________
+
+VPR FPGA Placement and Routing.
+Version: Version 7.0
+Compiled: Nov 25 2018.
+University of Toronto
+vpr@eecg.utoronto.ca
+This is free open source code under MIT license.
+
+Architecture file: /home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml
+Circuit name: /home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/boundtop.blif
+
+Building complex block graph.
+WARNING(1): io[0].clock[0] unconnected pin in architecture.
+Loop for doall = 0, init_parse took 6e-06 seconds.
+Loop for doall = 0 took 0.008733 seconds.
+Loop for doall = 1, init_parse took 0.011236 seconds.
+Loop for doall = 1 took 0.01062 seconds.
+Swept away 0 nets with no fanout.
+Net is a constant generator: top^tm3_sram_addr~18.
+WARNING(2): logical_block #5144 with output top^tm3_sram_addr~18 has only 0 pin.
+WARNING(3): Block contains output -- may be a constant generator.
+Net is a constant generator: n2240.
+WARNING(4): logical_block #5229 with output n2240 has only 0 pin.
+WARNING(5): Block contains output -- may be a constant generator.
+Net is a constant generator: n3090.
+WARNING(6): logical_block #5253 with output n3090 has only 0 pin.
+WARNING(7): Block contains output -- may be a constant generator.
+Net is a constant generator: n3175.
+WARNING(8): logical_block #5254 with output n3175 has only 0 pin.
+WARNING(9): Block contains output -- may be a constant generator.
+Net is a constant generator: n3700.
+WARNING(10): logical_block #5256 with output n3700 has only 0 pin.
+WARNING(11): Block contains output -- may be a constant generator.
+Net is a constant generator: n4105.
+WARNING(12): logical_block #5257 with output n4105 has only 0 pin.
+WARNING(13): Block contains output -- may be a constant generator.
+Net is a constant generator: n4885.
+WARNING(14): logical_block #5258 with output n4885 has only 0 pin.
+WARNING(15): Block contains output -- may be a constant generator.
+Net is a constant generator: n4890.
+WARNING(16): logical_block #5259 with output n4890 has only 0 pin.
+WARNING(17): Block contains output -- may be a constant generator.
+Net is a constant generator: n4895.
+WARNING(18): logical_block #5260 with output n4895 has only 0 pin.
+WARNING(19): Block contains output -- may be a constant generator.
+Net is a constant generator: n4900.
+WARNING(20): logical_block #5261 with output n4900 has only 0 pin.
+WARNING(21): Block contains output -- may be a constant generator.
+Net is a constant generator: n5105.
+WARNING(22): logical_block #5263 with output n5105 has only 0 pin.
+WARNING(23): Block contains output -- may be a constant generator.
+Net is a constant generator: n5110.
+WARNING(24): logical_block #5264 with output n5110 has only 0 pin.
+WARNING(25): Block contains output -- may be a constant generator.
+Net is a constant generator: n5115.
+WARNING(26): logical_block #5265 with output n5115 has only 0 pin.
+WARNING(27): Block contains output -- may be a constant generator.
+Net is a constant generator: n5540.
+WARNING(28): logical_block #5267 with output n5540 has only 0 pin.
+WARNING(29): Block contains output -- may be a constant generator.
+Net is a constant generator: n5945.
+WARNING(30): logical_block #5268 with output n5945 has only 0 pin.
+WARNING(31): Block contains output -- may be a constant generator.
+Net is a constant generator: n6735.
+WARNING(32): logical_block #5269 with output n6735 has only 0 pin.
+WARNING(33): Block contains output -- may be a constant generator.
+Net is a constant generator: n6740.
+WARNING(34): logical_block #5270 with output n6740 has only 0 pin.
+WARNING(35): Block contains output -- may be a constant generator.
+Net is a constant generator: n6745.
+WARNING(36): logical_block #5271 with output n6745 has only 0 pin.
+WARNING(37): Block contains output -- may be a constant generator.
+Net is a constant generator: n6750.
+WARNING(38): logical_block #5272 with output n6750 has only 0 pin.
+WARNING(39): Block contains output -- may be a constant generator.
+Net is a constant generator: n10555.
+WARNING(40): logical_block #5275 with output n10555 has only 0 pin.
+WARNING(41): Block contains output -- may be a constant generator.
+Net is a constant generator: n10559.
+WARNING(42): logical_block #5276 with output n10559 has only 0 pin.
+WARNING(43): Block contains output -- may be a constant generator.
+Net is a constant generator: n10563.
+WARNING(44): logical_block #5277 with output n10563 has only 0 pin.
+WARNING(45): Block contains output -- may be a constant generator.
+Net is a constant generator: n10567.
+WARNING(46): logical_block #5278 with output n10567 has only 0 pin.
+WARNING(47): Block contains output -- may be a constant generator.
+Net is a constant generator: n10571.
+WARNING(48): logical_block #5279 with output n10571 has only 0 pin.
+WARNING(49): Block contains output -- may be a constant generator.
+Net is a constant generator: n10575.
+WARNING(50): logical_block #5280 with output n10575 has only 0 pin.
+WARNING(51): Block contains output -- may be a constant generator.
+Net is a constant generator: n10579.
+WARNING(52): logical_block #5281 with output n10579 has only 0 pin.
+WARNING(53): Block contains output -- may be a constant generator.
+Net is a constant generator: n10583.
+WARNING(54): logical_block #5282 with output n10583 has only 0 pin.
+WARNING(55): Block contains output -- may be a constant generator.
+Net is a constant generator: n10587.
+WARNING(56): logical_block #5283 with output n10587 has only 0 pin.
+WARNING(57): Block contains output -- may be a constant generator.
+Net is a constant generator: n10591.
+WARNING(58): logical_block #5284 with output n10591 has only 0 pin.
+WARNING(59): Block contains output -- may be a constant generator.
+Net is a constant generator: n10595.
+WARNING(60): logical_block #5285 with output n10595 has only 0 pin.
+WARNING(61): Block contains output -- may be a constant generator.
+Net is a constant generator: n10599.
+WARNING(62): logical_block #5286 with output n10599 has only 0 pin.
+WARNING(63): Block contains output -- may be a constant generator.
+Net is a constant generator: n10603.
+WARNING(64): logical_block #5287 with output n10603 has only 0 pin.
+WARNING(65): Block contains output -- may be a constant generator.
+Net is a constant generator: n10607.
+WARNING(66): logical_block #5288 with output n10607 has only 0 pin.
+WARNING(67): Block contains output -- may be a constant generator.
+Net is a constant generator: n10611.
+WARNING(68): logical_block #5289 with output n10611 has only 0 pin.
+WARNING(69): Block contains output -- may be a constant generator.
+Net is a constant generator: n10615.
+WARNING(70): logical_block #5290 with output n10615 has only 0 pin.
+WARNING(71): Block contains output -- may be a constant generator.
+Net is a constant generator: n10619.
+WARNING(72): logical_block #5291 with output n10619 has only 0 pin.
+WARNING(73): Block contains output -- may be a constant generator.
+Net is a constant generator: n10623.
+WARNING(74): logical_block #5292 with output n10623 has only 0 pin.
+WARNING(75): Block contains output -- may be a constant generator.
+Net is a constant generator: n10627.
+WARNING(76): logical_block #5293 with output n10627 has only 0 pin.
+WARNING(77): Block contains output -- may be a constant generator.
+Net is a constant generator: n10631.
+WARNING(78): logical_block #5294 with output n10631 has only 0 pin.
+WARNING(79): Block contains output -- may be a constant generator.
+Net is a constant generator: n10635.
+WARNING(80): logical_block #5295 with output n10635 has only 0 pin.
+WARNING(81): Block contains output -- may be a constant generator.
+Net is a constant generator: n10639.
+WARNING(82): logical_block #5296 with output n10639 has only 0 pin.
+WARNING(83): Block contains output -- may be a constant generator.
+Net is a constant generator: n10643.
+WARNING(84): logical_block #5297 with output n10643 has only 0 pin.
+WARNING(85): Block contains output -- may be a constant generator.
+Net is a constant generator: n10647.
+WARNING(86): logical_block #5298 with output n10647 has only 0 pin.
+WARNING(87): Block contains output -- may be a constant generator.
+Net is a constant generator: n10651.
+WARNING(88): logical_block #5299 with output n10651 has only 0 pin.
+WARNING(89): Block contains output -- may be a constant generator.
+Net is a constant generator: n10655.
+WARNING(90): logical_block #5300 with output n10655 has only 0 pin.
+WARNING(91): Block contains output -- may be a constant generator.
+0 unconnected blocks in input netlist.
+Removed 77 LUT buffers.
+Sweeped away 77 nodes.
+BLIF circuit stats:
+	45 LUTs of size 0
+	0 LUTs of size 1
+	681 LUTs of size 2
+	461 LUTs of size 3
+	360 LUTs of size 4
+	289 LUTs of size 5
+	1218 LUTs of size 6
+	275 of type input
+	192 of type output
+	1671 of type latch
+	3054 of type names
+	0 of type dual_port_ram
+	32 of type single_port_ram
+	0 of type multiply
+Timing analysis: ON
+Circuit netlist file: /home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/boundtop.net
+Circuit placement file: /home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/boundtop.place
+Circuit routing file: /home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/boundtop.route
+Circuit SDC file: /home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/boundtop.sdc
+Operation: RUN_FLOW
+
+Packer: DISABLED
+Placer: ENABLED
+Router: DISABLED
+PlacerOpts.place_freq: PLACE_ONCE
+PlacerOpts.place_algorithm: PATH_TIMING_DRIVEN_PLACE
+PlacerOpts.pad_loc_type: FREE
+PlacerOpts.place_cost_exp: 1.000000
+PlacerOpts.inner_loop_recompute_divider: 0
+PlacerOpts.recompute_crit_iter: 1
+PlacerOpts.timing_tradeoff: 0.500000
+PlacerOpts.td_place_exp_first: 1.000000
+PlacerOpts.td_place_exp_last: 8.000000
+PlaceOpts.seed: 1
+AnnealSched.type: AUTO_SCHED
+AnnealSched.inner_num: 1.000000
+
+RoutingArch.directionality: UNI_DIRECTIONAL
+RoutingArch.switch_block_type: WILTON
+RoutingArch.Fs: 3
+
+Begin parsing packed FPGA netlist file.
+Finished parsing packed FPGA netlist file.
+Netlist generated from file '/home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/boundtop.net'.
+n4885 is a constant generator.
+n4890 is a constant generator.
+n5945 is a constant generator.
+n5540 is a constant generator.
+n3700 is a constant generator.
+n4105 is a constant generator.
+n5110 is a constant generator.
+n3090 is a constant generator.
+n5105 is a constant generator.
+n2240 is a constant generator.
+n6745 is a constant generator.
+n6740 is a constant generator.
+n6735 is a constant generator.
+n10643 is a constant generator.
+n10627 is a constant generator.
+n10631 is a constant generator.
+n10587 is a constant generator.
+n10583 is a constant generator.
+n10591 is a constant generator.
+n10651 is a constant generator.
+n10635 is a constant generator.
+n10639 is a constant generator.
+n10571 is a constant generator.
+n10555 is a constant generator.
+n10559 is a constant generator.
+n10619 is a constant generator.
+n10623 is a constant generator.
+n10575 is a constant generator.
+n10579 is a constant generator.
+n10567 is a constant generator.
+n10647 is a constant generator.
+n6750 is a constant generator.
+n4900 is a constant generator.
+n4895 is a constant generator.
+n10595 is a constant generator.
+n10563 is a constant generator.
+n10611 is a constant generator.
+n10607 is a constant generator.
+n10615 is a constant generator.
+top^tm3_sram_addr~18 is a constant generator.
+n10655 is a constant generator.
+n10603 is a constant generator.
+n10599 is a constant generator.
+n5115 is a constant generator.
+n3175 is a constant generator.
+
+Netlist num_nets: 2200
+Netlist num_blocks: 701
+Netlist <EMPTY> blocks: 0.
+Netlist clb blocks: 233.
+Netlist mult_36 blocks: 0.
+Netlist memory blocks: 1.
+Netlist inputs pins: 275
+Netlist output pins: 192
+
+The circuit will be mapped into a 50 x 50 array of clbs.
+
+Resource usage...
+	Netlist      0	blocks of type: <EMPTY>
+	Architecture 30	blocks of type: <EMPTY>
+	Netlist      467	blocks of type: io
+	Architecture 1600	blocks of type: io
+	Netlist      233	blocks of type: clb
+	Architecture 1850	blocks of type: clb
+	Netlist      0	blocks of type: mult_36
+	Architecture 72	blocks of type: mult_36
+	Netlist      1	blocks of type: memory
+	Architecture 56	blocks of type: memory
+
+
+SDC file '/home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/boundtop.sdc' blank or not found.
+
+Defaulting to: constrain all 0 inputs and 0 outputs on the netlist clock.
+Optimize this clock to run as fast as possible.
+Computing delta_io_to_io lookup matrix, may take a few seconds, please wait...
+Computing delta_io_to_clb lookup matrix, may take a few seconds, please wait...
+Computing delta_clb_to_io lookup matrix, may take a few seconds, please wait...
+Computing delta_clb_to_clb lookup matrix, may take a few seconds, please wait...
+
+There are 5518 point to point connections in this circuit.
+
+Initial placement cost: 1.01113 bb_cost: 1133.97 td_cost: 3.39542e-06 delay_cost: 7.36007e-06
+
+--------- --------- ----------- ----------- ----------- ----------- -------- -------- ------- ------- ------- --------- -------
+        T      Cost  Av BB Cost  Av TD Cost  Av Tot Del  P to P Del    d_max  Ac Rate Std Dev R limit     Exp Tot Moves   Alpha
+--------- --------- ----------- ----------- ----------- ----------- -------- -------- ------- ------- ------- --------- -------
+  0.19954   0.97623     1123.41 2.48194e-06 7.26376e-06 1.33383e-09  18.6398   0.9987  0.0203 51.0000  1.0000      6225  0.5000
+  0.09977    1.0211     1118.99 2.38079e-06 7.30402e-06 1.25127e-09  18.5388   0.9973  0.0228 51.0000  1.0000     12450  0.5000
+  0.04988   0.96399     1107.75 2.33047e-06 7.28054e-06  1.3316e-09  20.3500   0.9955  0.0186 51.0000  1.0000     18675  0.5000
+  0.02494   0.94904     1108.99 2.52352e-06 7.10662e-06 1.33063e-09  17.4550   0.9865  0.0143 51.0000  1.0000     24900  0.5000
+  0.01247   0.97674     1090.11 2.58001e-06 7.06601e-06 1.28332e-09  16.4317   0.9782  0.0119 51.0000  1.0000     31125  0.5000
+  0.00624   0.94772     1069.83 2.23925e-06 6.89081e-06 1.27129e-09  18.5039   0.9516  0.0187 51.0000  1.0000     37350  0.9000
+  0.00561   0.92459     1059.36 2.35363e-06 6.71145e-06  1.2972e-09  16.7876   0.9480  0.0258 51.0000  1.0000     43575  0.9000
+  0.00505   0.99232     1046.82 2.59252e-06   6.746e-06 1.20603e-09  14.1226   0.9367  0.0174 51.0000  1.0000     49800  0.9000
+  0.00455    0.9896     1043.31 2.08451e-06 6.63404e-06 1.18676e-09  18.2362   0.9332  0.0233 51.0000  1.0000     56025  0.9000
+  0.00409    1.0125        1032 2.38813e-06 6.68879e-06 1.18181e-09  15.2601   0.9296  0.0281 51.0000  1.0000     62250  0.9000
+  0.00368    0.9729     1025.79 2.51739e-06 6.56143e-06 1.19876e-09  14.5096   0.9216  0.0202 51.0000  1.0000     68475  0.9000
+  0.00331   0.97668     1031.21 2.31063e-06 6.53176e-06 1.19462e-09  15.1872   0.9105  0.0144 51.0000  1.0000     74700  0.9000
+  0.00298   0.94735     1015.06 2.36092e-06 6.55058e-06 1.22007e-09  15.7098   0.9062  0.0193 51.0000  1.0000     80925  0.9000
+  0.00268   0.95055     965.735 2.32731e-06 6.13994e-06 1.14054e-09  13.8320   0.8882  0.0289 51.0000  1.0000     87150  0.9000
+  0.00242   0.96922     963.863 2.40488e-06 6.17978e-06 1.14888e-09  13.2860   0.8707  0.0233 51.0000  1.0000     93375  0.9000
+  0.00217    0.9767     946.736 2.24087e-06 6.02577e-06  1.0908e-09  13.6964   0.8575  0.0262 51.0000  1.0000     99600  0.9000
+  0.00196   0.97023      903.19 2.02693e-06  5.7146e-06 1.05289e-09  13.5609   0.8320  0.0123 51.0000  1.0000    105825  0.9000
+  0.00176   0.94453     863.409 2.00147e-06 5.49227e-06 1.03934e-09  12.9668   0.8101  0.0210 51.0000  1.0000    112050  0.9000
+  0.00158   0.95774     837.823 1.91936e-06 5.31433e-06   9.759e-10  12.1796   0.7892  0.0193 51.0000  1.0000    118275  0.9500
+  0.00151   0.96507     818.206  1.6745e-06 5.20174e-06  9.5867e-10  14.0314   0.7868  0.0247 51.0000  1.0000    124500  0.9500
+  0.00143   0.98455       779.9 1.99757e-06 4.98299e-06 9.01005e-10  10.1727   0.7536  0.0119 51.0000  1.0000    130725  0.9500
+  0.00136   0.94561     749.441 1.67346e-06 4.76275e-06 8.89647e-10  11.3988   0.7287  0.0154 51.0000  1.0000    136950  0.9500
+  0.00129   0.99093       758.1 1.71286e-06 4.80265e-06 8.73313e-10  11.1214   0.7396  0.0215 51.0000  1.0000    143175  0.9500
+  0.00123   0.98279     722.554 1.68759e-06 4.60361e-06 8.42142e-10  10.8883   0.7195  0.0137 51.0000  1.0000    149400  0.9500
+  0.00117   0.95633     701.607  1.6567e-06 4.44888e-06 8.26417e-10  10.4241   0.7107  0.0163 51.0000  1.0000    155625  0.9500
+  0.00111   0.96378     670.116 1.57965e-06 4.31468e-06 8.00859e-10  10.3721   0.6945  0.0153 51.0000  1.0000    161850  0.9500
+  0.00105   0.98253     672.287 1.60495e-06   4.303e-06 7.78221e-10   9.8820   0.6924  0.0175 51.0000  1.0000    168075  0.9500
+  0.00100   0.96572     635.824 1.51332e-06 4.11888e-06 7.62802e-10   9.9080   0.6553  0.0166 51.0000  1.0000    174300  0.9500
+  0.00095   0.99841     612.999 1.26453e-06 4.02895e-06 7.22917e-10  11.2765   0.6517  0.0047 51.0000  1.0000    180525  0.9500
+  0.00090   0.96204     590.658  1.5578e-06 3.89568e-06 7.24208e-10   8.8238   0.6382  0.0134 51.0000  1.0000    186750  0.9500
+  0.00086   0.97974     585.348  1.6058e-06 3.88456e-06 7.08775e-10   8.2817   0.6329  0.0091 51.0000  1.0000    192975  0.9500
+  0.00081   0.97561     578.595 1.43547e-06 3.80023e-06 6.98101e-10   9.2044   0.6209  0.0113 51.0000  1.0000    199200  0.9500
+  0.00077   0.97151     557.366 1.45334e-06 3.66865e-06 6.73643e-10   8.4837   0.6262  0.0194 51.0000  1.0000    205425  0.9500
+  0.00073   0.99025     536.981 1.39755e-06 3.55133e-06 6.44464e-10   8.2493   0.6167  0.0059 51.0000  1.0000    211650  0.9500
+  0.00070    0.9755     522.617 1.38724e-06  3.5203e-06 6.54576e-10   8.5007   0.6019  0.0111 51.0000  1.0000    217875  0.9500
+  0.00066   0.97789      507.53 1.36653e-06 3.43632e-06  6.2914e-10   8.2557   0.5827  0.0144 51.0000  1.0000    224100  0.9500
+  0.00063   0.98234     500.212 1.25491e-06 3.40337e-06 6.19901e-10   8.7807   0.5838  0.0077 51.0000  1.0000    230325  0.9500
+  0.00060   0.97713     489.963 1.26727e-06 3.33329e-06 6.15731e-10   8.3912   0.5613  0.0122 51.0000  1.0000    236550  0.9500
+  0.00057   0.99003     478.016 1.23741e-06 3.28227e-06 5.95356e-10   8.3482   0.5555  0.0079 51.0000  1.0000    242775  0.9500
+  0.00054   0.97563     471.698 1.28755e-06 3.25731e-06  5.9803e-10   7.8491   0.5590  0.0073 51.0000  1.0000    249000  0.9500
+  0.00051   0.98204     460.939 1.29253e-06 3.20289e-06 5.85355e-10   7.6445   0.5327  0.0083 51.0000  1.0000    255225  0.9500
+  0.00049   0.99766     458.874 1.24809e-06 3.17082e-06 5.75183e-10   7.7800   0.5107  0.0037 51.0000  1.0000    261450  0.9500
+  0.00046   0.98404     454.434 1.26885e-06 3.14074e-06 5.72715e-10   7.4255   0.5142  0.0058 51.0000  1.0000    267675  0.9500
+  0.00044   0.99049     448.216  1.2483e-06 3.12774e-06 5.67833e-10   7.4621   0.5015  0.0071 51.0000  1.0000    273900  0.9500
+  0.00042   0.98331     439.073 1.25288e-06 3.09711e-06 5.63526e-10   7.3735   0.4978  0.0073 51.0000  1.0000    280125  0.9500
+  0.00040   0.98389     432.455 1.24159e-06 3.05739e-06 5.58051e-10   7.3330   0.4837  0.0060 51.0000  1.0000    286350  0.9500
+  0.00038      0.98     425.081 1.21152e-06 3.03765e-06 5.53497e-10   7.3995   0.4517  0.0071 51.0000  1.0000    292575  0.9500
+  0.00036    0.9893     420.561 1.19989e-06 3.01179e-06 5.47637e-10   7.3330   0.4519  0.0048 51.0000  1.0000    298800  0.9500
+  0.00034    0.9849     411.521 1.20453e-06   2.994e-06 5.43565e-10   7.1975   0.4419  0.0065 51.0000  1.0000    305025  0.9500
+  0.00032   0.99061     402.365  1.2262e-06 2.97223e-06 5.38557e-10   6.9579   0.4286  0.0064 51.0000  1.0000    311250  0.9500
+  0.00031   0.98962     393.858 1.13895e-06 2.91932e-06 5.33181e-10   6.9264   0.4312  0.0041 50.4183  1.0814    317475  0.9500
+  0.00029   0.98345     392.523 1.09836e-06 2.88683e-06  5.2975e-10   6.7909   0.4514  0.0071 49.9728  1.1438    323700  0.9500
+  0.00028   0.98343     390.441 1.17078e-06 2.87835e-06 5.26796e-10   6.7218   0.4175  0.0062 50.5428  1.0640    329925  0.9500
+  0.00026   0.98959      387.11 1.04526e-06 2.87118e-06 5.22049e-10   6.7389   0.4138  0.0032 49.4061  1.2231    336150  0.9500
+  0.00025   0.98382     382.145 9.19055e-07 2.84423e-06 5.20217e-10   6.7389   0.4034  0.0069 48.1124  1.4043    342375  0.9500
+  0.00024   0.99382     380.228 7.96743e-07 2.83997e-06  5.1366e-10   6.7389   0.4141  0.0026 46.3502  1.6510    348600  0.9500
+  0.00023   0.98982     375.938 6.76124e-07 2.82024e-06 5.15547e-10   7.0555   0.3995  0.0050 45.1515  1.8188    354825  0.9500
+  0.00021   0.99019     372.708 6.35704e-07 2.82055e-06 5.12537e-10   6.7845   0.3891  0.0054 43.3236  2.0747    361050  0.9500
+  0.00020   0.99342     368.579 5.58343e-07    2.81e-06 5.09597e-10   6.7845   0.3992  0.0067 41.1174  2.3836    367275  0.9500
+  0.00019   0.99338     364.653 5.09176e-07 2.77347e-06 5.02639e-10   6.7218   0.3902  0.0053 39.4397  2.6184    373500  0.9500
+  0.00018   0.99276     359.904 4.65223e-07 2.76629e-06 5.03154e-10   6.7218   0.3841  0.0027 37.4756  2.8934    379725  0.9500
+  0.00017   0.98771     356.111 4.18826e-07 2.75131e-06 5.00727e-10   6.7389   0.3912  0.0051 35.3806  3.1867    385950  0.9500
+  0.00017   0.99765     351.898 3.66631e-07 2.75365e-06 4.96719e-10   6.8744   0.3782  0.0019 33.6528  3.4286    392175  0.9500
+  0.00016   0.99623     351.031 3.40646e-07 2.74002e-06 5.04481e-10   6.8744   0.3852  0.0018 31.5715  3.7200    398400  0.9500
+  0.00015   0.99318     347.504 3.19881e-07 2.72294e-06  4.9428e-10   6.8744   0.3868  0.0029 29.8420  3.9621    404625  0.9500
+  0.00014   0.99173     344.681 2.86813e-07 2.72177e-06 4.97519e-10   7.0099   0.3749  0.0028 28.2552  4.1843    410850  0.9500
+  0.00014   0.99767     345.304 2.83306e-07 2.72578e-06 4.92765e-10   6.8744   0.3827  0.0032 26.4169  4.4416    417075  0.9500
+  0.00013   0.99249     340.883   3.011e-07 2.74669e-06 4.94882e-10   6.6033   0.3754  0.0039 24.9019  4.6537    423300  0.9500
+  0.00012   0.99184     335.611 2.85502e-07 2.68595e-06 4.96689e-10   6.6033   0.3733  0.0024 23.2938  4.8789    429525  0.9500
+  0.00012   0.99474     332.891 2.72024e-07 2.68031e-06  4.8184e-10   6.6033   0.3854  0.0031 21.7409  5.0963    435750  0.9500
+  0.00011   0.99725      330.85 2.40247e-07  2.6791e-06 4.88897e-10   6.7389   0.3719  0.0017 20.5534  5.2625    441975  0.9500
+  0.00010   0.99767      329.56 2.30543e-07 2.68091e-06 4.81616e-10   6.7389   0.3743  0.0026 19.1535  5.4585    448200  0.9500
+  0.00010   0.99452     325.587 2.37725e-07 2.65437e-06 4.81657e-10   6.6033   0.3950  0.0037 17.8951  5.6347    454425  0.9500
+  0.00009   0.99399     321.663  2.5852e-07 2.64222e-06 4.78702e-10   6.4678   0.3693  0.0040 17.0901  5.7474    460650  0.9500
+  0.00009   0.99473     318.802 2.45454e-07 2.62413e-06 4.81326e-10   6.4678   0.3841  0.0029 15.8822  5.9165    466875  0.9500
+  0.00009   0.99353     315.263 2.37541e-07 2.62138e-06 4.75975e-10   6.4678   0.3961  0.0030 14.9943  6.0408    473100  0.9500
+  0.00008   0.99746     312.411 2.33699e-07  2.6022e-06 4.70166e-10   6.4678   0.3679  0.0016 14.3367  6.1329    479325  0.9500
+  0.00008    0.9962     308.277 2.30365e-07 2.58393e-06 4.67902e-10   6.4678   0.3838  0.0024 13.3026  6.2776    485550  0.9500
+  0.00007   0.99102     303.715 2.13649e-07  2.5847e-06 4.65868e-10   6.4938   0.3862  0.0032 12.5547  6.3823    491775  0.9500
+  0.00007   0.99411       300.3 2.21573e-07 2.56261e-06 4.65757e-10   6.4938   0.3810  0.0026 11.8791  6.4769    498000  0.9500
+  0.00007   0.99266     296.803 1.84902e-07 2.54042e-06 4.61477e-10   6.6033   0.3651  0.0038 11.1787  6.5750    504225  0.9500
+  0.00006   0.99637     294.716 1.77191e-07  2.5423e-06 4.63939e-10   6.6033   0.3753  0.0021 10.3419  6.6921    510450  0.9500
+  0.00006   0.99372      291.85 1.75688e-07 2.50863e-06 4.58437e-10   6.6033   0.3727  0.0032  9.6724  6.7859    516675  0.9500
+  0.00006   0.99173     288.365 1.73507e-07 2.49563e-06 4.52084e-10   6.6033   0.3717  0.0029  9.0213  6.8770    522900  0.9500
+  0.00005   0.99549     286.253 1.87002e-07 2.50406e-06 4.58596e-10   6.4938   0.3775  0.0017  8.4054  6.9632    529125  0.9500
+  0.00005   0.99183     283.849 2.20326e-07 2.51933e-06 4.57809e-10   6.1968   0.3926  0.0036  7.8802  7.0368    535350  0.9500
+  0.00005    0.9914      280.99 1.88248e-07 2.47117e-06 4.54108e-10   6.3323   0.3855  0.0045  7.5067  7.0891    541575  0.9500
+  0.00005   0.99333     278.668 2.00333e-07 2.46805e-06 4.46031e-10   6.3063   0.3520  0.0040  7.0979  7.1463    547800  0.9500
+  0.00004   0.99062     276.019 1.89091e-07 2.45959e-06 4.45908e-10   6.3152   0.3775  0.0049  6.4731  7.2338    554025  0.9500
+  0.00004   0.99446     272.769 1.95035e-07  2.4244e-06  4.4328e-10   6.2423   0.3664  0.0027  6.0686  7.2904    560250  0.9500
+  0.00004   0.99489      270.74 1.88272e-07 2.41299e-06 4.34679e-10   6.2423   0.3889  0.0026  5.6221  7.3529    566475  0.9500
+  0.00004   0.99268     268.885 1.72523e-07 2.41955e-06 4.37019e-10   6.3583   0.3725  0.0041  5.3349  7.3931    572700  0.9500
+  0.00004   0.99343     266.471 1.69508e-07 2.39541e-06 4.38717e-10   6.3583   0.4045  0.0036  4.9749  7.4435    578925  0.9500
+  0.00003   0.99762     265.486 2.12789e-07 2.38664e-06 4.30599e-10   6.0872   0.3982  0.0009  4.7983  7.4682    585150  0.9500
+  0.00003   0.99666      265.14 2.07862e-07 2.37075e-06 4.29611e-10   6.0872   0.3888  0.0016  4.5979  7.4963    591375  0.9500
+  0.00003   0.99584     262.708 1.99716e-07 2.38245e-06 4.30964e-10   6.1132   0.3677  0.0024  4.3623  7.5293    597600  0.9500
+  0.00003   0.99876     261.692 1.72143e-07 2.37974e-06 4.27345e-10   6.2488   0.3571  0.0009  4.0469  7.5734    603825  0.9500
+  0.00003    0.9963     261.577 1.90462e-07 2.36763e-06 4.31053e-10   6.1132   0.4096  0.0024  3.7115  7.6204    610050  0.9500
+  0.00003   0.99727     261.064 1.88755e-07 2.36853e-06 4.30921e-10   6.0872   0.4000  0.0017  3.5988  7.6362    616275  0.9500
+  0.00002   0.99907       260.4 1.77856e-07 2.37174e-06 4.30106e-10   6.0872   0.3741  0.0004  3.4548  7.6563    622500  0.9500
+  0.00002   0.99725     260.138 1.78047e-07 2.37787e-06 4.28082e-10   6.0872   0.3680  0.0019  3.2273  7.6882    628725  0.9500
+  0.00002   0.99865     259.492 1.75614e-07 2.38602e-06 4.30436e-10   6.0872   0.4217  0.0005  2.9950  7.7207    634950  0.9500
+  0.00002   0.99772     258.723 1.72434e-07 2.37498e-06 4.32015e-10   6.0872   0.4167  0.0015  2.9402  7.7284    641175  0.9500
+  0.00002   0.99766     257.679 1.72603e-07 2.35947e-06 4.29959e-10   6.0872   0.4064  0.0012  2.8717  7.7380    647400  0.9500
+  0.00002   0.99862     256.983 1.72273e-07 2.36633e-06 4.27078e-10   6.0872   0.3918  0.0006  2.7753  7.7515    653625  0.9500
+  0.00002   0.99847     256.795 1.72222e-07 2.34309e-06 4.24354e-10   6.0872   0.3740  0.0006  2.6415  7.7702    659850  0.9500
+  0.00002   0.99831     256.487 1.72928e-07  2.3607e-06 4.28271e-10   6.0872   0.3688  0.0009  2.4671  7.7946    666075  0.9500
+  0.00002   0.99898     256.471 1.78441e-07 2.34922e-06 4.26637e-10   6.0442   0.3598  0.0003  2.2916  7.8192    672300  0.9500
+  0.00002   0.99885     256.305 1.69882e-07 2.36241e-06 4.27796e-10   6.0872   0.3592  0.0004  2.1079  7.8449    678525  0.9500
+  0.00001   0.99872     256.115 1.79369e-07 2.36686e-06 4.29812e-10   6.0442   0.4286  0.0005  1.9375  7.8687    684750  0.9500
+  0.00001   0.99913     255.963  1.7789e-07 2.36244e-06 4.29535e-10   6.0442   0.4050  0.0004  1.9154  7.8718    690975  0.9500
+  0.00001   0.99926     255.915 1.78946e-07 2.34862e-06 4.25345e-10   6.0442   0.3974  0.0002  1.8484  7.8812    697200  0.9500
+  0.00001   0.99852     255.916 1.77693e-07 2.35052e-06 4.25807e-10   6.0442   0.3836  0.0006  1.7697  7.8922    703425  0.9500
+  0.00001   0.99893     255.424 1.78602e-07 2.34558e-06 4.25261e-10   6.0442   0.3820  0.0007  1.6699  7.9062    709650  0.9500
+  0.00001   0.99921     255.203 1.76879e-07 2.34976e-06  4.2542e-10   6.0442   0.3833  0.0004  1.5731  7.9198    715875  0.9500
