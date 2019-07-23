@@ -10,6 +10,7 @@ benchmark_src_path = E_root_path+E_path+benchmark+"/src/"
 benchmark_res_path = E_root_path+E_path+benchmark+"/res/"
 benchmark_pre_info_src_path = E_root_path+E_path+benchmark+"/src/pre_info_src/"
 benchmark_BRAM_path = E_root_path+E_path+benchmark+"/res/BRAM/"
+BRAM_path = E_root_path+E_path+benchmark+"/res/BRAM/e_2_bram"
 folder_path = benchmark_src_path+"ace_pool/"
 log_file_path = benchmark_pre_info_src_path + benchmark  + "_log.txt"
 phy_file_path = benchmark_pre_info_src_path + benchmark  + "_phy.txt"
@@ -180,8 +181,9 @@ def get_log_init(log_file_path,pin_dict,brams):
     log_file.close()
 
 
-def CREAT_BRAM_POS(grid_path,phy_file_path):
+def CREAT_BRAM_POS(grid_path,phy_file_path,BRAM_path):
     phy_file = open(phy_file_path,'w')
+    bram_file = open(BRAM_path,'w')
     arr = []
     arc_read = open(grid_path)
     for line_ in arc_read:
@@ -199,11 +201,13 @@ def CREAT_BRAM_POS(grid_path,phy_file_path):
                 flag = 1
                 new_con = j + 1
             if (arr[row_t - 1 - j][i] == "e"):
-                str_tmp = str(i) + " " + str(new_con)+" 0.0\n"
+                str_tmp = str(i) + " " + str(new_con)+" 0\n"
                 arr[row_t - 1 - j][i] = str_tmp
                 if ((flag == 7 or flag == 2)):
                     phy_file.write(str_tmp)
+                    bram_file.write(str_tmp)
             flag += 1
+    bram_file.close()
     phy_file.close()
 
 
@@ -220,4 +224,4 @@ if __name__=="__main__":
         CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)
         get_log_init(log_file_path, pin_dict, brams)
     if (STAGR == CREAT_PHY_POS):
-        CREAT_BRAM_POS(grid_path,phy_file_path)
+        CREAT_BRAM_POS(grid_path,phy_file_path,BRAM_path)

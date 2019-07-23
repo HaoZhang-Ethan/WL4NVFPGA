@@ -4,9 +4,9 @@ import os
 
 E_0 = 0     #细粒度写均衡
 E_1 = 1     #对比实验VPR原始
-E_2 = 2     # 读粒度写均衡
+E_2 = 2     #粗粒度写均衡
 
-E = 0
+E = 1
 if(E == E_0):
     E_path = "s_run/"
 elif(E == E_1):
@@ -32,6 +32,8 @@ place_file = E_root_path+E_path+benchmark+"/src/pre_info_src/"+benchmark+".place
 info_file_path = E_root_path+E_path+benchmark+"/src/LU8PEEng.info_"
 addr_hit_num_path = E_root_path+E_path+benchmark+"/res/address/"
 forbid_file_path = benchmark_res_path+"forbid_pos"
+e_3_bram_file_path = benchmark_BRAM_path+"e_2_bram"
+phy_file_path = benchmark_pre_info_src_path + benchmark  + "_phy.txt"
 #ace
 add_pre_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/ace_pool/"
 #tool_path
@@ -45,7 +47,7 @@ if(E == E_0):
 elif(E == E_1):
     vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_e_1_7_15/vpr/vpr"
 elif(E == E_2):
-    vpr = "_______"
+    vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_h/vpr/vpr"
 
 
 
@@ -232,7 +234,7 @@ class INIT_LIST:
 #     print("get address pin info")
 #
 
-def GET_ADDR_WRITE_NUM(inits,info_file_path):
+def GET_ADDR_WRITE_NUM(inits,info_file_path,E):
     NO = -1
     Flag = NO
     flag = NO
@@ -453,6 +455,44 @@ def record_2(path,num,cur_limit):
 
 
 
+def e_3_get_build_dict(file_path,opt):
+    INT = 1
+    FLOAT = 2
+    bram_pos_dict = {}
+    bram_file = open(file_path)
+    for line in bram_file:
+        if(len(line)>1):
+            line_ = line.split()
+        tmp_pos = line_[0]+"_"+line_[1]
+        if (opt == INT):
+            bram_pos_dict[tmp_pos] = int(line_[2])
+        if (opt == FLOAT):
+            bram_pos_dict[tmp_pos] = float(line_[2])
+    bram_file.close()
+    return bram_pos_dict
+def update_e_3_phy(file_path,num_dict):
+    file = open(file_path,'w')
+    for key in num_dict.keys():
+        tmp_write_num = str(num_dict[key])
+        tmp_str = key.replace("_"," ")+" "+tmp_write_num+"\n"
+        file.write(tmp_str)
+    file.close()
+def update_e_3_phy_dict(cur_limit,bram_pos_dict):
+    phy_ratio_dict = {}
+    for key in bram_pos_dict.keys():
+        tmp_write_num = int(bram_pos_dict[key])
+        if(tmp_write_num == 0):
+            phy_ratio_dict[key] = 0
+        else:
+            tmp = tmp_write_num/cur_limit
+            if(tmp > 1 ):
+                phy_ratio_dict[key] = 1
+            else:
+                phy_ratio_dict[key] = tmp
+    return phy_ratio_dict
+
+
+
 if(E == E_0):
 
 
@@ -490,7 +530,7 @@ if(E == E_0):
                 pos_dict = {}
                 BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
                 inits = INIT_LIST()
-                GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_")
+                GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_",E)
                 update_Flag = 1
                 while (update_Flag):
                     print("times  =  " + str(times))
@@ -545,7 +585,7 @@ elif(E == E_1):
             pos_dict = {}
             BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
             inits = INIT_LIST()
-            GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info")
+            GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info",E)
             update_Flag = 1
             while (update_Flag):
                 print("times  =  " + str(times))
@@ -607,3 +647,73 @@ elif(E == E_1):
         if (flag != 1):
             break
             print("end")
+elif(E == E_2):
+    if(os.path.exists(cur_limit_path)==1):
+        print("continue\n")
+        cur_limit,times,sythesis_time = get_init_info(cur_limit_path)
+        cur_limit = cur_limit - ratio * MAX_WRITE_NUM
+    else:
+        print("new test\n")
+        cur_limit = begin_limit + ratio * MAX_WRITE_NUM
+        times = 0
+        sythesis_time = 0
+        file = open(record_2_path,'w')
+        file.write("")
+        file.close()
+
+    bram_pos_dict = e_3_get_build_dict(e_3_bram_file_path,1)
+    # write_num_dict = e_3_get_build_dict(phy_file_path,2)
+    while (cur_limit < MAX_WRITE_NUM +1):
+        record_1(cur_limit_path, cur_limit, times, sythesis_time)
+        phy_ratio_dict = update_e_3_phy_dict(cur_limit, bram_pos_dict)
+        update_e_3_phy(phy_file_path, phy_ratio_dict)
+        cmd = vpr + " " + xml + " " + blif + " " + nodisply + " " + place + ">" + benchmark_res_path + "vpr.out"
+        os.system(cmd)
+        flag = os.path.exists(place_file)
+        if (flag == 1):
+            old_tmies = times
+            sythesis_time += 1
+            GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path, benchmark)
+            pos_dict = {}
+            BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
+            inits = INIT_LIST()
+            GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info",E_1)
+            update_Flag = 1
+            while (update_Flag):
+                print("times  =  " + str(times))
+                times += 1
+                for init_ in range(inits.init_num):
+                    write_num_path = write_num_path_pre + str(init_) + ".hit"
+                    write_num = open(write_num_path)
+                    name_flag = 0
+                    init_name = ""
+                    for line_ in write_num:
+                        if (name_flag == 1):
+                            init_name = line_.replace("\n", "")
+                            name_flag = 0
+                            continue
+                        elif (name_flag == 2):
+                            init_write_num = int(line_.replace("\n", ""))
+                            break
+                        if (line_.find("mem_name") != -1):
+                            name_flag = 1
+                        elif (line_.find("add_begin") != -1):
+                            name_flag = 2
+                    write_num.close()
+                    BRAM_file_path = pos_dict[init_name]
+                    BRAM_file_path = BRAM_file_path.replace("mem", "")
+                    bram_pos_dict[BRAM_file_path] = bram_pos_dict[BRAM_file_path] + init_write_num
+                    # tmp_ratio = bram_pos_dict[BRAM_file_path]/cur_limit
+                    # if(tmp_ratio > 1):
+                    #     tmp_ratio = 1
+                    # write_num_dict[BRAM_file_path] = tmp_ratio
+                    if(bram_pos_dict[BRAM_file_path] > cur_limit):
+                        update_Flag = 0
+                update_e_3_phy(e_3_bram_file_path, bram_pos_dict)
+            # update_e_3_phy(phy_file_path, write_num_dict)
+            mv_place_cmd = "mv " + place_file + " " + place_res_path + str(sythesis_time) + ".place"
+            os.system(mv_place_cmd)
+            new_tmies = times
+            record_2(record_2_path, new_tmies - old_tmies, cur_limit)
+        if (flag != 1):
+            cur_limit = cur_limit + ratio * MAX_WRITE_NUM

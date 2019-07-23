@@ -10,13 +10,13 @@
 ENABLE_GRAPHICS = true
 # can be true or false
 
-export BUILD_TYPE = debug#release
+export BUILD_TYPE = debug#release#
 # can be debug or release - this option gets inherited by the library libarchfpga 
 # by default, though libarchfpga's build type can be set independently in libarchfpga's Makefile.
 
 COMPILER = g++
 
-OPTIMIZATION_LEVEL_FOR_RELEASE_BUILD = -O0# -O3 # 
+OPTIMIZATION_LEVEL_FOR_RELEASE_BUILD = -O3 #  -O0#
 # can be -O0 (no optimization) to -O3 (full optimization), or -Os (optimize space)
 
 #############################################################################################
