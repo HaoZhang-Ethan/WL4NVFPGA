@@ -6,7 +6,7 @@ E_0 = 0     #细粒度写均衡
 E_1 = 1     #对比实验VPR原始
 E_2 = 2     #粗粒度写均衡
 
-E = 1
+E = 0
 if(E == E_0):
     E_path = "s_run/"
 elif(E == E_1):
@@ -572,7 +572,7 @@ if(E == E_0):
 elif(E == E_1):
     sythesis_time = 0
     times = 0
-    cur_limit = begin_limit + ratio * MAX_WRITE_NUM
+    cur_limit = MAX_WRITE_NUM
     forbid_list = []
     while (1):
         record_1(cur_limit_path, cur_limit, times, sythesis_time)
@@ -665,7 +665,7 @@ elif(E == E_2):
     # write_num_dict = e_3_get_build_dict(phy_file_path,2)
     while (cur_limit < MAX_WRITE_NUM +1):
         record_1(cur_limit_path, cur_limit, times, sythesis_time)
-        phy_ratio_dict = update_e_3_phy_dict(cur_limit, bram_pos_dict)
+        phy_ratio_dict = update_e_3_phy_dict( cur_limit, bram_pos_dict)
         update_e_3_phy(phy_file_path, phy_ratio_dict)
         cmd = vpr + " " + xml + " " + blif + " " + nodisply + " " + place + ">" + benchmark_res_path + "vpr.out"
         os.system(cmd)
