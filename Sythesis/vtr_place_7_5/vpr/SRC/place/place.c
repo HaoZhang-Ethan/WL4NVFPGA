@@ -3802,7 +3802,7 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 					}
 				}
 			}
-			long double total_num = (w_wirte+0.00001) +b_wirte + 0.00001;
+			long double total_num = (w_wirte+0.00001) +(b_wirte + 0.00001);
 			float exp_write_ratio = (w_wirte+0.00001)/total_num;
 			l_vecs.l_vec[l_num].w_node = exp_write_ratio;		//期望写率
 			l_vecs.l_vec[l_num].b_node = (1-exp_write_ratio);//w_wirte/total_num;		
@@ -3900,16 +3900,16 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 			if (pin_flag == 2)
 			{
 				tmp_pin.pins[Min_num_pos].used = 1;
-				l_vecs.l_vec[0].w_node = tmp_pin.pins[Min_num_pos].pin_ratio;
+				l_vecs.l_vec[0].w_node =(1.0 - tmp_pin.pins[Min_num_pos].pin_ratio);
 				valid_real_pin_num--;
 			}
 			else if (pin_flag == 1)
 			{
-				l_vecs.l_vec[0].w_node = 1;
+				l_vecs.l_vec[0].w_node = 1.0-1;
 			}
 			else
 			{
-				l_vecs.l_vec[0].w_node = 0;
+				l_vecs.l_vec[0].w_node = 1.0-0;
 			}
 			l_vecs.l_vec[0].b_node = (1.0-l_vecs.l_vec[0].w_node);
 		}
@@ -4075,16 +4075,16 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 			if (pin_flag == 2)
 			{
 				tmp_pin.pins[Min_num_pos].used = 1;				
-				l_vecs.l_vec[l_num].w_node = tmp_pin.pins[Min_num_pos].pin_ratio;
+				l_vecs.l_vec[l_num].w_node = (1.0-tmp_pin.pins[Min_num_pos].pin_ratio);
 				valid_real_pin_num--;
 			}
 			else if (pin_flag == 1)
 			{
-				l_vecs.l_vec[l_num].w_node = 1;
+				l_vecs.l_vec[l_num].w_node = (1.0-1);
 			}
 			else
 			{
-				l_vecs.l_vec[l_num].w_node = 0;
+				l_vecs.l_vec[l_num].w_node = (1.0-0);
 			}
 			l_vecs.l_vec[l_num].b_node = (1.0-l_vecs.l_vec[l_num].w_node);
 		}
