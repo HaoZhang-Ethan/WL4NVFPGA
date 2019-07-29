@@ -3905,11 +3905,11 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 			}
 			else if (pin_flag == 1)
 			{
-				l_vecs.l_vec[0].w_node = 1.0-1;
+				l_vecs.l_vec[0].w_node = 0;
 			}
 			else
 			{
-				l_vecs.l_vec[0].w_node = 1.0-0;
+				l_vecs.l_vec[0].w_node = 1;
 			}
 			l_vecs.l_vec[0].b_node = (1.0-l_vecs.l_vec[0].w_node);
 		}
@@ -3937,11 +3937,11 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 							float tmp_coefficient = 0.0;
 							if(A[tmp_lev_count]==1)
 							{
-								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
+								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
 							}
 							else
 							{
-								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
+								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
 							}
 							coefficient = coefficient*tmp_coefficient;
 						}
@@ -3962,11 +3962,11 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 							float tmp_coefficient = 0.0;
 							if(A[tmp_lev_count]==1)
 							{
-								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
+								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
 							}
 							else
 							{
-								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
+								tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
 							}
 							coefficient = coefficient*tmp_coefficient;
 						}
@@ -4120,11 +4120,11 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 					float tmp_coefficient = 0.0;
 					if(A[tmp_lev_count]==1)
 					{
-						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
+						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
 					}
 					else
 					{
-						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
+						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
 					}
 					coefficient = coefficient*tmp_coefficient;
 				}
@@ -4165,11 +4165,11 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 					float tmp_coefficient = 0.0;
 					if(A[tmp_lev_count]==1)
 					{
-						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
+						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
 					}
 					else
 					{
-						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
+						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
 					}
 					coefficient = coefficient*tmp_coefficient;
 				}

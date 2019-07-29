@@ -251,7 +251,7 @@ def CREAT_LOG_PIN_FILE(benchmark_pre_info_src_path,benchmark,brams):
     init_info.close()
 
 
-# CREAT_INIT_INFO_FILE("/home/zhlab/BRAM/s_run_e_1/LU8PEEng/src/pre_info_src/","LU8PEEng",brams)
+# CREAT_INIT_INFO_FILE("/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/","LU8PEEng",brams)
 
 
 
@@ -319,7 +319,7 @@ if __name__=="__main__":
         # grid_path = sys.argv[2]
         grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/60x60.arch"
         # benchmark_BRAM_path = sys.argv[3]
-        benchmark_BRAM_path = "/home/zhlab/BRAM/s_run_e_1/LU8PEEng/res/BRAM/"
+        benchmark_BRAM_path = "/home/zhlab/BRAM/s_run/LU8PEEng/res/BRAM/"
         # MEM_COL = int(sys.argv[4])
         MEM_COL = 64
         # MEM_ROW = int(sys.argv[5])
@@ -335,24 +335,24 @@ if __name__=="__main__":
         # get_act_path = sys.argv[2]
         get_act_path = "/home/zhlab/BRAM/ace_test/getact/getPIs"
         # benchmark_res_path = sys.argv[3]
-        benchmark_src_path = "/home/zhlab/BRAM/s_run_e_1/LU8PEEng/src/"
+        benchmark_src_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/"
         # TEST_NUM = int(sys.argv[4])
         TEST_NUM = 1000
         # benchmark = sys.argv[5]
         benchmark = "LU8PEEng"
         # benchmark_pre_info_src_path = sys.argv[6]
-        benchmark_pre_info_src_path = "/home/zhlab/BRAM/s_run_e_1/LU8PEEng/src/pre_info_src/"
+        benchmark_pre_info_src_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/"
         CREAT_RAND_ACT(get_act_path, benchmark_src_path, TEST_NUM, benchmark, benchmark_pre_info_src_path)
         CORRECTION(benchmark_src_path+"act_pool/",TEST_NUM)
     elif (STAGR == Pin_set_1):
         # vtr_release_path = sys.argv[2]
         vtr_release_path = "/home/zhlab/BRAM/vtr/vtr_release/vpr/vpr"
         # benchmark_pre_info_src_path = sys.argv[3]
-        benchmark_pre_info_src_path = "/home/zhlab/BRAM/s_run_e_1/LU8PEEng/src/pre_info_src/"
+        benchmark_pre_info_src_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/"
         # benchmark = sys.argv[4]
         benchmark = "LU8PEEng"
         # arch_file_path = sys.argv[5]
-        arch_file_path = "/home/zhlab/BRAM/s_run_e_1/LU8PEEng/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml"
+        arch_file_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml"
         CREAT_INIT_FILE(vtr_release_path, benchmark_pre_info_src_path, benchmark, arch_file_path)
         brams = BRAMS()
         CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams ,1 )
@@ -360,13 +360,13 @@ if __name__=="__main__":
         # vtr_release_path = sys.argv[2]
         vtr_release_path = "/home/zhlab/BRAM/vtr/vtr_release/vpr/vpr"
         # benchmark_pre_info_src_path = sys.argv[3]
-        benchmark_pre_info_src_path = "/home/zhlab/BRAM/s_run_e_1/LU8PEEng/src/pre_info_src/"
+        benchmark_pre_info_src_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/"
         # benchmark = sys.argv[4]
         benchmark = "LU8PEEng"
         # arch_file_path = sys.argv[5]
-        arch_file_path = "/home/zhlab/BRAM/s_run_e_1/LU8PEEng/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml"
+        arch_file_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml"
         # benchmark_src_path = sys.argv[6]
-        benchmark_src_path = "/home/zhlab/BRAM/s_run_e_1/LU8PEEng/src/"
+        benchmark_src_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/"
         # CREAT_INIT_FILE(vtr_release_path, benchmark_pre_info_src_path, benchmark, arch_file_path)
         brams = BRAMS()
         CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)

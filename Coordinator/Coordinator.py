@@ -435,15 +435,19 @@ def get_init_info(cur_limit_path):
         elif(line.find("sythesis_time")!=-1):
             line_ = line.split()
             sythesis_time = int(line_[2])
+        elif(line.find("E_limit")!= -1):
+            line_ = line.split()
+            E_limit = int(line_[2])
     cur_limit_file.close()
-    return cur_limit,times,sythesis_time
+    return cur_limit,times,sythesis_time,E_limit
 
 
-def record_1(path,cur_limit,times,sythesis_time):
+def record_1(path,cur_limit,times,sythesis_time,E_limit):
     cur_limit_file = open(path, 'w')
     cur_limit_file.write("cur_limit = " + str(int(cur_limit)));
     cur_limit_file.write("\ntimes = " + str(times));
     cur_limit_file.write("\nsythesis_time = " + str(sythesis_time));
+    cur_limit_file.write("\nE_limit = "+str(E_limit));
     cur_limit_file.close()
 
 
@@ -492,14 +496,25 @@ def update_e_3_phy_dict(cur_limit,bram_pos_dict):
     return phy_ratio_dict
 
 
+# 判断综合效率
+def Effic_fun(Effic,Effic_num,E_limit):
+    if (Effic_num < 10):
+        return 0     # 采样不多不足以判断，返回0
+    else:
+        sum = 0
+        for It_Effic in range(0,10):
+            sum += Effic[It_Effic]
+        if ((sum/10) < E_limit):
+            return 1 # 此时利用率不高，提升up_limit
 
 if(E == E_0):
 
 
     if(os.path.exists(cur_limit_path)==1):
         print("continue\n")
-        cur_limit,times,sythesis_time = get_init_info(cur_limit_path)
+        cur_limit,times,sythesis_time,E_limit = get_init_info(cur_limit_path)
         cur_limit = cur_limit - ratio * MAX_WRITE_NUM
+
     else:
         print("new test\n")
         cur_limit = begin_limit + ratio * MAX_WRITE_NUM
@@ -508,9 +523,12 @@ if(E == E_0):
         file = open(record_2_path,'w')
         file.write("")
         file.close()
-
+        E_limit = 0
+    Effic_num = 0
+    Effic = [0]*10
+    E_flag = 0
     while(cur_limit < MAX_WRITE_NUM +1):
-            record_1(cur_limit_path, cur_limit, times, sythesis_time)
+            record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
 
 
             cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place + " " + "***" + str(int(cur_limit))+">"+benchmark_res_path+"vpr.out"
@@ -518,8 +536,10 @@ if(E == E_0):
             os.system(cmd)
             flag = os.path.exists(place_file)
             if (flag == 1):
+
                 old_tmies = times
                 sythesis_time += 1
+                Effic_num += 1
 
                 cmd_transfrom = "python /home/zhlab/FPGA_NVBRAM/SRC/Simulator/S_transform.py"
                 os.system(cmd_transfrom)
@@ -559,15 +579,22 @@ if(E == E_0):
                             update_Flag = 0
 
                 new_tmies = times
+                if(sythesis_time == 1 or E_flag == 1):
+                    E_limit = (new_tmies-old_tmies)
+                    E_flag = 0
+
+                Effic[sythesis_time%10] = new_tmies-old_tmies
+
                 record_2(record_2_path, new_tmies-old_tmies,cur_limit)
 
                 mv_place_cmd = "mv " + place_file + " " +place_res_path + str(sythesis_time)+".place"
                 os.system(mv_place_cmd)
 
-                record_1(cur_limit_path, cur_limit, times, sythesis_time)
+                record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
 
-            if(flag != 1):
+            if(flag != 1 or Effic_fun(Effic,Effic_num,int(E_limit/4))):#
                 cur_limit = cur_limit + ratio * MAX_WRITE_NUM
+                E_flag = 1
 
 elif(E == E_1):
     sythesis_time = 0
@@ -650,7 +677,7 @@ elif(E == E_1):
 elif(E == E_2):
     if(os.path.exists(cur_limit_path)==1):
         print("continue\n")
-        cur_limit,times,sythesis_time = get_init_info(cur_limit_path)
+        cur_limit,times,sythesis_time,E_limit = get_init_info(cur_limit_path)
         cur_limit = cur_limit - ratio * MAX_WRITE_NUM
     else:
         print("new test\n")
@@ -660,17 +687,22 @@ elif(E == E_2):
         file = open(record_2_path,'w')
         file.write("")
         file.close()
+        Effic_num = 0
 
+    Effic_num = 0
+    Effic = [0]*10
+    E_flag = 0
     bram_pos_dict = e_3_get_build_dict(e_3_bram_file_path,1)
     # write_num_dict = e_3_get_build_dict(phy_file_path,2)
     while (cur_limit < MAX_WRITE_NUM +1):
-        record_1(cur_limit_path, cur_limit, times, sythesis_time)
+        record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
         phy_ratio_dict = update_e_3_phy_dict( cur_limit, bram_pos_dict)
         update_e_3_phy(phy_file_path, phy_ratio_dict)
         cmd = vpr + " " + xml + " " + blif + " " + nodisply + " " + place + ">" + benchmark_res_path + "vpr.out"
         os.system(cmd)
         flag = os.path.exists(place_file)
         if (flag == 1):
+
             old_tmies = times
             sythesis_time += 1
             GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path, benchmark)
@@ -710,10 +742,18 @@ elif(E == E_2):
                     if(bram_pos_dict[BRAM_file_path] > cur_limit):
                         update_Flag = 0
                 update_e_3_phy(e_3_bram_file_path, bram_pos_dict)
+
+
             # update_e_3_phy(phy_file_path, write_num_dict)
             mv_place_cmd = "mv " + place_file + " " + place_res_path + str(sythesis_time) + ".place"
             os.system(mv_place_cmd)
             new_tmies = times
+            if (sythesis_time == 1 or E_flag == 1):
+                E_limit = (new_tmies - old_tmies)
+                E_flag = 0
+            Effic[sythesis_time % 10] = new_tmies - old_tmies
             record_2(record_2_path, new_tmies - old_tmies, cur_limit)
-        if (flag != 1):
+            record_1(cur_limit_path, cur_limit, times, sythesis_time, E_limit)
+        if (flag != 1 or Effic_fun(Effic,Effic_num,int(E_limit/4))):
             cur_limit = cur_limit + ratio * MAX_WRITE_NUM
+            E_flag = 1
