@@ -436,7 +436,7 @@ void try_place(struct s_placer_opts placer_opts,
 
 	initial_placement(placer_opts.pad_loc_type, placer_opts.pad_loc_file,placer_opts);
 	init_draw_coords((float) width_fac);
-	// char tmp_name[200] = "/home/zhlab/BRAM/s_run/LU8PEEng/res/test";
+	// char tmp_name[200] = "/home/zhlab/BRAM/s_run/boundtop/res/test";
 	// print_place_pin(tmp_name,placer_opts.p_log_brams);
 	/* Storing the number of pins on each type of block makes the swap routine *
 	 * slightly more efficient.                                                */
@@ -3662,7 +3662,7 @@ void update_mem_phy(BRAMS_phy * p_phy_brams,Array * p_Arrays) {
 				{
 					if (k == 0 || m_flag == 6)
 					{						
-						char mem_path[100] = "/home/zhlab/BRAM/s_run/LU8PEEng/res/BRAM/";
+						char mem_path[100] = "/home/zhlab/BRAM/s_run/boundtop/res/BRAM/";
 						char b[4];  
 						sprintf(b, "%d_",i);
 						strcat(mem_path,b);
@@ -3706,7 +3706,7 @@ void update_pin_dict(char * pin_dict_path,pin_dict * p_pin_dict_inits)
 	int len;             
 	if((fp = fopen(pin_dict_path,"r")) == NULL)
 	{
-		perror("fail to read");
+		perror("fail to read pin_dict");
 		exit (1) ;
 	}
 	while (fgets(buf, MAX_LINE, (FILE*)fp) != NULL)

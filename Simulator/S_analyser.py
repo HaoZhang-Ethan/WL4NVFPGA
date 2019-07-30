@@ -45,6 +45,6 @@ def build_pin_dict(src_pach,folder_path):
     pin_dict_file.close()
 
 if __name__=="__main__":
-    src_pach = "/home/zhlab/BRAM/s_run/LU8PEEng/src/"
-    folder_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/ace_pool/"
+    src_pach = "/home/zhlab/BRAM/s_run/boundtop/src/"
+    folder_path = "/home/zhlab/BRAM/s_run/boundtop/src/ace_pool/"
     build_pin_dict(src_pach,folder_path)

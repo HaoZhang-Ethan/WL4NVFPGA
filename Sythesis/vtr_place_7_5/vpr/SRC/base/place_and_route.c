@@ -72,7 +72,7 @@ void place_and_route(enum e_operation operation,
 	//zh_lab
 	//创建pin_写频率词典
 	pin_dict pin_dict_inits={0};
-	update_pin_dict("/home/zhlab/BRAM/s_run/LU8PEEng/src/pin_dict",&pin_dict_inits);
+	update_pin_dict("/home/zhlab/BRAM/s_run/boundtop/src/pin_dict",&pin_dict_inits);
 
 	//创建BRAM phy cell 存储队列
 	Array * p_Arrays = (Array *)malloc(MAX_BRAM_NUM * sizeof(Array));
@@ -87,7 +87,7 @@ void place_and_route(enum e_operation operation,
 	BRAMS_log log_brams;
 	log_brams.BRAM_num = 0;
 	placer_opts.p_log_brams = &log_brams;
-	load_log_BRAMS_info("/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng_log_pin.info",&log_brams);
+	load_log_BRAMS_info("/home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/boundtop_log_pin.info",&log_brams);
 	match_log_bram_id(&log_brams);
 	//加载pin脚信息
 	load_log_pin_info(&pin_dict_inits,&log_brams);

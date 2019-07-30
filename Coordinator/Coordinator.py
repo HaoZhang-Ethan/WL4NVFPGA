@@ -16,7 +16,7 @@ elif(E == E_2):
 
 
 
-benchmark = "LU8PEEng"
+benchmark = "boundtop"
 E_root_path = "/home/zhlab/BRAM/"
 benchmark_src_path = E_root_path+E_path+benchmark+"/src/"
 benchmark_res_path = E_root_path+E_path+benchmark+"/res/"
@@ -541,7 +541,7 @@ if(E == E_0):
                 sythesis_time += 1
                 Effic_num += 1
 
-                cmd_transfrom = "python /home/zhlab/FPGA_NVBRAM/SRC/Simulator/S_transform.py"
+                cmd_transfrom = "python /home/zhlab/FPGA_NVBRAM/SRC/Simulator/S_transform.py "+ E_path+" "+benchmark
                 os.system(cmd_transfrom)
                 mv_place_pin = "mv "+benchmark_pre_info_src_path+benchmark+".place_pin"+" "+ benchmark_res_path+"place_pin/"
                 mv_place_pin = mv_place_pin + str(sythesis_time) + ".place_pin"

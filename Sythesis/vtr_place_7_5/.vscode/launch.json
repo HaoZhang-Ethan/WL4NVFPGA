@@ -10,8 +10,8 @@
             "request": "launch",
             "program": "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_place_7_5/vpr/vpr",
             "args": [
-                "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml",
-                "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.blif",
+                "/home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml",
+                "/home/zhlab/BRAM/s_run/boundtop/src/pre_info_src/boundtop.blif",
                 "--nodisp",
                 "-place",
                 "***10000"

@@ -147,80 +147,86 @@ def CREAT_INFO_FILE(brams,benchmark_src_path,benchmark):
     info_file.close()
 
 
-# benchmark_pre_info_src_path = sys.argv[3]
-benchmark_pre_info_src_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/"
-# benchmark = sys.argv[4]
-benchmark = "LU8PEEng"
-# arch_file_path = sys.argv[5]
+if __name__=="__main__":
+
+    E_path = sys.argv[1]
+    benchmark = sys.argv[2]
+    # E_path = "s_run/"
+    # benchmark = "boundtop"
+    # benchmark_pre_info_src_path = sys.argv[3]
+    benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"
+    # benchmark = sys.argv[4]
+    # benchmark = "LU8PEEng"
+    # arch_file_path = sys.argv[5]
 
 
-brams = BRAMS()
-CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)
+    brams = BRAMS()
+    CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)
 
-# print("")
+    # print("")
 
-place_pin_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.place_pin"
-place_pin_file = open(place_pin_path)
-tmp_bram = BRAMS()
-
-
-BRAM_counter = -1
-BRAM_num = 0
-valid = 0;
-flag_get_pin = -1
-for line in place_pin_file:
-    line_ = line.split()
-    if (flag_get_pin > 0 ):
-        tmp_bram.list[BRAM_counter].port_c_A[valid - flag_get_pin] = line_[0]
-        flag_get_pin -= 1
-
-    if(line_[0] == "0"):
-        BRAM_num = int(line_[2])
-        continue
-
-    if(line_[0] == "1"):
-        BRAM_counter += 1
-        tmp_bram.list[BRAM_counter].name = line_[2]
-        continue
-    if(line_[0] == "2"):
-        tmp_bram.list[BRAM_counter].mode = line_[2]
-        continue
-    if(line_[0] == "3"):
-        tmp_bram.list[BRAM_counter].dual = line_[2]
-        continue
-    if(line_[0] == "4"):
-        tmp_bram.list[BRAM_counter].valid = int(line_[2])
-        valid = int(line_[2])
-        flag_get_pin = valid
-        continue
-tmp_bram.num = BRAM_num
-# print("")
-pin_dict = {}
+    place_pin_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"+benchmark+".place_pin"
+    place_pin_file = open(place_pin_path)
+    tmp_bram = BRAMS()
 
 
-for i in range(0,BRAM_num):
-    name = tmp_bram.list[i].name
-    for j in range(0,brams.num):
-        if (brams.list[j].name == name):
-            pin_dict.clear()
-            for k in range(0,15):
-                pin_name = brams.list[j].port_a_A[k]
-                for x in range(0,tmp_bram.list[i].valid):
-                    if(pin_name == tmp_bram.list[i].port_c_A[x]):
-                        pin_dict[k] = x
+    BRAM_counter = -1
+    BRAM_num = 0
+    valid = 0;
+    flag_get_pin = -1
+    for line in place_pin_file:
+        line_ = line.split()
+        if (flag_get_pin > 0 ):
+            tmp_bram.list[BRAM_counter].port_c_A[valid - flag_get_pin] = line_[0]
+            flag_get_pin -= 1
 
-            brams.list[j].port_a_A = tmp_bram.list[i].port_c_A.copy()
-            if(brams.list[j].dual == 1):
-                brams.list[j].port_c_A = tmp_bram.list[i].port_c_A.copy()
-                for num_ in pin_dict.keys():
-                    brams.list[j].port_c_A[pin_dict[num_]] = brams.list[j].port_b_A[num_]
-                brams.list[j].port_b_A = brams.list[j].port_c_A.copy()
+        if(line_[0] == "0"):
+            BRAM_num = int(line_[2])
+            continue
 
-# print("");
+        if(line_[0] == "1"):
+            BRAM_counter += 1
+            tmp_bram.list[BRAM_counter].name = line_[2]
+            continue
+        if(line_[0] == "2"):
+            tmp_bram.list[BRAM_counter].mode = line_[2]
+            continue
+        if(line_[0] == "3"):
+            tmp_bram.list[BRAM_counter].dual = line_[2]
+            continue
+        if(line_[0] == "4"):
+            tmp_bram.list[BRAM_counter].valid = int(line_[2])
+            valid = int(line_[2])
+            flag_get_pin = valid
+            continue
+    tmp_bram.num = BRAM_num
+    # print("")
+    pin_dict = {}
+
+
+    for i in range(0,BRAM_num):
+        name = tmp_bram.list[i].name
+        for j in range(0,brams.num):
+            if (brams.list[j].name == name):
+                pin_dict.clear()
+                for k in range(0,15):
+                    pin_name = brams.list[j].port_a_A[k]
+                    for x in range(0,tmp_bram.list[i].valid):
+                        if(pin_name == tmp_bram.list[i].port_c_A[x]):
+                            pin_dict[k] = x
+
+                brams.list[j].port_a_A = tmp_bram.list[i].port_c_A.copy()
+                if(brams.list[j].dual == 1):
+                    brams.list[j].port_c_A = tmp_bram.list[i].port_c_A.copy()
+                    for num_ in pin_dict.keys():
+                        brams.list[j].port_c_A[pin_dict[num_]] = brams.list[j].port_b_A[num_]
+                    brams.list[j].port_b_A = brams.list[j].port_c_A.copy()
+
+    # print("");
 
 
 
-benchmark_src_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/"
+    benchmark_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/"
 
-CREAT_INFO_FILE(brams,benchmark_src_path,benchmark)
+    CREAT_INFO_FILE(brams,benchmark_src_path,benchmark)
 
