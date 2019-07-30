@@ -2,7 +2,56 @@
 
 import os
 
-def build_pin_dict(src_pach,folder_path):
+
+CLK = 5000
+pin_num = 300
+
+
+
+
+# Pin_set
+MAX_INIT = 200
+MAX_ADD_PIN = 15
+
+class BRAM:
+    def __init__(self):
+        self.name = ""
+        self.mode = ""
+        self.dual = 0
+        self.port_a_we = ""
+        self.port_b_we = ""
+        self.port_a_A = ["" for i in range(MAX_ADD_PIN )]
+        self.port_b_A = ["" for i in range(MAX_ADD_PIN )]
+class BRAMS:
+    def __init__(self):
+        self.num = 0
+        self.list = []
+        for i in range(0, MAX_INIT):  # 构造实例列表s
+            self.list.append(BRAM())
+
+def if_valid(str_name):
+    str_name_tmp = str_name.lower()
+    if(str_name_tmp.find("gnd")):
+        return -1
+    elif(str_name_tmp.find("vcc")):
+        return 1
+    elif(len(str_name_tmp)>4):
+        return 2
+    else:
+        return 0
+
+
+
+
+
+
+    # for It_bram in range (0,brams.num):
+    #     if brams.list[It_bram].dual == 0:
+    #         we_line = brams.list[It_bram].port_a_we
+    #         if (if_valid(we_line)==2):
+
+def build_pin_dict(src_pach,folder_path,brams):
+
     filenames = os.listdir(folder_path)
     pin_dict = {}
     #建立词频词典
@@ -44,7 +93,91 @@ def build_pin_dict(src_pach,folder_path):
         pin_dict_file.write(tmp_str)
     pin_dict_file.close()
 
+
+
+
+def CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path,benchmark,brams,Write):
+    net_file_path = benchmark_pre_info_src_path+benchmark+".net"
+    init_info_path = benchmark_pre_info_src_path + benchmark +"_init.info"
+    net_file = open(net_file_path)
+    flag = 0
+    for line in net_file:
+        if (flag == 1):
+            # print(line)
+            add_1_begin = line.find("<port name=\"addr1\">")
+            add_2_begin = line.find("<port name=\"addr2\">")
+            we_1_begin = line.find("<port name=\"we1\">")
+            we_2_begin = line.find("<port name=\"we2\">")
+            stop_flag = line.find("</inputs>")
+            if(add_1_begin!=-1):
+                brams.list[brams.num].port_a_A = line[add_1_begin+19:len(line)-8].split()
+                # print(brams.list[brams.num].port_a_A)
+            elif(add_2_begin!=-1):
+                brams.list[brams.num].port_b_A = line[add_2_begin + 19:len(line) - 8].split()
+                # print(brams.list[brams.num].port_b_A)
+            elif(we_1_begin != -1):
+                brams.list[brams.num].port_a_we = line[we_1_begin+17:len(line) - 8]
+                # print(line[we_1_begin+17:len(line) - 8])
+            elif(we_2_begin != -1):
+                brams.list[brams.num].port_b_we = line[we_2_begin + 17:len(line) - 8]
+                # print(line[we_2_begin + 17:len(line) - 8])
+            elif(stop_flag!=-1):
+                brams.num += 1
+                flag = 0
+        find_pos = line.find("mode=\"mem_")
+        if (find_pos != -1):
+            name_begin = line.find("name=\"")
+            name_end = line.find("\" instance=")
+            mode_end = line.find("\">")
+            # brams.num += 1
+            brams.list[brams.num].name = line[name_begin+6:name_end]
+            brams.list[brams.num].mode = line[find_pos+6:mode_end]
+            if (brams.list[brams.num].mode.find("dp")!= -1):
+                brams.list[brams.num].dual = 1
+            flag = 1
+            # print(line[name_begin+6:name_end])
+            # print(line[find_pos+6:mode_end])
+    net_file.close()
+    add_pin = set([])
+    for i in range(brams.num):
+        if (brams.list[i].dual == 0):
+            if (len(brams.list[i].port_a_we)>4):
+                add_pin.add(brams.list[i].port_a_we)
+                for tmp_pin in brams.list[i].port_a_A:
+                    if (len(tmp_pin) > 4 ):
+                        add_pin.add(tmp_pin)
+
+        else:
+            if (len(brams.list[i].port_a_we)>4):
+                add_pin.add(brams.list[i].port_a_we)
+                for tmp_pin in brams.list[i].port_a_A:
+                    if (len(tmp_pin) > 4 ):
+                        add_pin.add(tmp_pin)
+            if (len(brams.list[i].port_b_we)>4):
+                add_pin.add(brams.list[i].port_b_we)
+                for tmp_pin in brams.list[i].port_b_A:
+                    if (len(tmp_pin) > 4 ):
+                        add_pin.add(tmp_pin)
+    if(Write == 1):
+        init_info = open(init_info_path,'w')
+        init_info.write("ALL_ADDRESS_BEGIN\n")
+        for tmp_set in add_pin:
+            init_info.write(tmp_set+"\n")
+        init_info.write("ALL_ADDRESS_END")
+        init_info.close()
+
+
+
 if __name__=="__main__":
-    src_pach = "/home/zhlab/BRAM/s_run/boundtop/src/"
-    folder_path = "/home/zhlab/BRAM/s_run/boundtop/src/ace_pool/"
-    build_pin_dict(src_pach,folder_path)
+    E_path = "s_run/"
+    benchmark = "boundtop"
+    src_pach = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/"
+    folder_path = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/ace_pool/"
+    benchmark_pre_info_src_path = "/home/zhlab/BRAM/" + E_path + benchmark + "/src/pre_info_src/"
+
+
+    brams = BRAMS()
+    CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)
+
+
+    build_pin_dict(src_pach,folder_path,brams)

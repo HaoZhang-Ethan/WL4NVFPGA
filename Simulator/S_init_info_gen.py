@@ -192,47 +192,7 @@ def CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path,benchmark,brams,Write):
 
 
 def CREAT_LOG_PIN_FILE(benchmark_pre_info_src_path,benchmark,brams):
-    net_file_path = benchmark_pre_info_src_path+benchmark+".net"
     init_info_path = benchmark_pre_info_src_path + benchmark +"_log_pin.info"
-    net_file = open(net_file_path)
-    flag = 0
-    # for line in net_file:
-    #     if (flag == 1):
-    #         # print(line)
-    #         add_1_begin = line.find("<port name=\"addr1\">")
-    #         add_2_begin = line.find("<port name=\"addr2\">")
-    #         we_1_begin = line.find("<port name=\"we1\">")
-    #         we_2_begin = line.find("<port name=\"we2\">")
-    #         stop_flag = line.find("</inputs>")
-    #         if(add_1_begin!=-1):
-    #             brams.list[brams.num].port_a_A = line[add_1_begin+19:len(line)-8].split()
-    #             # print(brams.list[brams.num].port_a_A)
-    #         elif(add_2_begin!=-1):
-    #             brams.list[brams.num].port_b_A = line[add_2_begin + 19:len(line) - 8].split()
-    #             # print(brams.list[brams.num].port_b_A)
-    #         elif(we_1_begin != -1):
-    #             brams.list[brams.num].port_a_we = line[we_1_begin+17:len(line) - 8]
-    #             brams.list[brams.num].port_A_name = brams.list[brams.num].port_a_we
-    #             # print(line[we_1_begin+17:len(line) - 8])
-    #         elif(we_2_begin != -1):
-    #             brams.list[brams.num].port_b_we = line[we_2_begin + 17:len(line) - 8]
-    #             brams.list[brams.num].port_B_name = brams.list[brams.num].port_b_we
-    #             # print(line[we_2_begin + 17:len(line) - 8])
-    #         elif(stop_flag!=-1):
-    #             brams.num += 1
-    #             flag = 0
-    #     find_pos = line.find("mode=\"mem_")
-    #     if (find_pos != -1):
-    #         name_begin = line.find("name=\"")
-    #         name_end = line.find("\" instance=")
-    #         mode_end = line.find("\">")
-    #         brams.list[brams.num].name = line[name_begin+6:name_end]
-    #         brams.list[brams.num].mode = line[find_pos+6:mode_end]
-    #         if (brams.list[brams.num].mode.find("dp")!= -1):
-    #             brams.list[brams.num].dual = 1
-    #         flag = 1
-    # net_file.close()
-
     init_info = open(init_info_path,'w')
     # init_info.write("Begin\n")
     for bram_index in range(brams.num):
