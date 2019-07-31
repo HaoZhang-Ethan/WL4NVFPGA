@@ -281,8 +281,8 @@ elif(E == E_2):
 
 # benchmark = "boundtop"
 # benchmark =  "LU8PEEng"
-benchmark =  "LU32PEEng"
-# benchmark =  "mcml"
+# benchmark =  "LU32PEEng"
+benchmark =  "mcml"
 # benchmark =  "mkDelayWorker32B"
 # benchmark =  "mkPktMerge"
 # benchmark =  "mkSMAdapter4B"

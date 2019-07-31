@@ -31,12 +31,8 @@ class BRAMS:
 
 def if_valid(str_name):
     str_name_tmp = str_name.lower()
-    if(str_name_tmp.find("gnd")):
-        return -1
-    elif(str_name_tmp.find("vcc")):
+    if(len(str_name_tmp)>4):
         return 1
-    elif(len(str_name_tmp)>4):
-        return 2
     else:
         return 0
 
@@ -166,18 +162,96 @@ def CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path,benchmark,brams,Write):
         init_info.write("ALL_ADDRESS_END")
         init_info.close()
 
+def Read_CLK_ARRAAY(folder_path,brams):
+    filenames = os.listdir(folder_path)
+    pin_dict_flag = {}
+    pin_dict = {}
+    pin_dict_find = {}
+    #建立词频词典
+    for filename in filenames:
+        if (filename.find(".ace")!=-1):
+            file_path = folder_path+filename
+            file = open(file_path)
+            pin_num_it = 0
+            for line in file:
+                line_ = line.split()
+                pin_dict_flag[line_[0]] = 0
+                pin_dict[line_[0]] = 0
+                pin_dict_find[line_[0]] = pin_num_it
+                pin_num_it += 1
+            file.close()
+            break
+    iter_num = 0
+    for filename in filenames:
+
+        if (filename.find(".ace")!=-1):
+            CLK_ARRAY = [[0] * CLK] * pin_num
+            file_path = folder_path+filename
+            file = open(file_path)
+            pin_num_it = 0
+            for line in file:
+                line_ = line.split()
+                line_ = line_[1:]
+                CLK_ARRAY[pin_num_it] = line_
+                pin_num_it += 1
+            iter_num += 1
+            file.close()
+
+            for pin_dict_flag_ in pin_dict_flag.keys():
+                pin_dict_flag[pin_dict_flag_] = 0
+
+            for bram_it in range (0,brams.num):
+                if (brams.list[bram_it].dual == 0):
+                    we_line = brams.list[bram_it].port_a_we.replace(" ","")
+                    for pin_it in range(0,15):
+                        pin_name = brams.list[bram_it].port_a_A[pin_it].replace(" ","")
+                        if (if_valid(pin_name) == 1 and pin_dict_flag[pin_name] == 0):
+                            pin_dict_flag[pin_name] = 1
+                            for clk_ in range(0,CLK):
+                                if ((CLK_ARRAY[pin_dict_find[pin_name]][clk_] == '1') and (CLK_ARRAY[pin_dict_find[we_line]][clk_] == '1') ):
+                                    pin_dict[pin_name] += 1
+                else:
+                    we_line_a = brams.list[bram_it].port_a_we.replace(" ","")
+                    we_line_b = brams.list[bram_it].port_b_we.replace(" ","")
+                    if (if_valid(we_line_a) == 1):
+                        for pin_it in range(0, 15):
+                            pin_name = brams.list[bram_it].port_a_A[pin_it].replace(" ","")
+                            if (if_valid(pin_name) == 1 and pin_dict_flag[pin_name] == 0):
+                                pin_dict_flag[pin_name] = 1
+                                for clk_ in range(0 , CLK):
+                                    if ((CLK_ARRAY[pin_dict_find[pin_name]][clk_] == '1') and (CLK_ARRAY[pin_dict_find[we_line_a]][clk_] == '1')):
+                                        pin_dict[pin_name] += 1
+                    if (if_valid(we_line_b) == 1):
+                        for pin_it in range(0, 15):
+                            pin_name = brams.list[bram_it].port_b_A[pin_it].replace(" ","")
+                            if (if_valid(pin_name) == 1 and pin_dict_flag[pin_name] == 0):
+                                pin_dict_flag[pin_name] = 1
+                                for clk_ in range(0 , CLK):
+                                    if ((CLK_ARRAY[pin_dict_find[pin_name]][clk_] == '1') and (CLK_ARRAY[pin_dict_find[we_line_b]][clk_] == '1')):
+                                        pin_dict[pin_name] += 1
+    return pin_dict
+
+
+
+
 
 
 if __name__=="__main__":
     E_path = "s_run/"
-    benchmark = "boundtop"
+    benchmark = "LU32PEEng"
     src_pach = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/"
     folder_path = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/ace_pool/"
     benchmark_pre_info_src_path = "/home/zhlab/BRAM/" + E_path + benchmark + "/src/pre_info_src/"
 
-
     brams = BRAMS()
     CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)
+
+
+    pin_dict = Read_CLK_ARRAAY(folder_path,brams)
+    for pin_dict_key in pin_dict.keys():
+        tmp = pin_dict[pin_dict_key]
+        pin_dict[pin_dict_key] = tmp/(1000*CLK)
+
 
 
     build_pin_dict(src_pach,folder_path,brams)
