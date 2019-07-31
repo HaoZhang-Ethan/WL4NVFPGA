@@ -172,67 +172,7 @@ class INIT_LIST:
         self.init_list = []
         for i in range (0,MAX_INIT):#构造实例列表 每个实例可以代表一个BRAM块 构造500块
             self.init_list.append(INIT())
-# def CREAT_INIT(inits):
-#     info_file_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/LU8PEEng.info_"
-#     NO = -1
-#     Flag = NO
-#     flag = NO
-#     INIT_BEGIN = 1
-#     INIT_NAME = 2
-#     INIT_MODE = 3
-#     WE = 4
-#     ADDRESS_BEGIN = 5
-#     file = open(info_file_path)
-#     init_count = 0
-#     for line in file:
-#         if (line.find("INIT_END") != -1):
-#             inits.init_num = init_count
-#             break
-#         if (flag == ADDRESS_BEGIN):
-#             if (line.find("ADDRESS_END") != -1):
-#                 inits.init_list[init_count].real_add_num = real_pin_used
-#                 init_count += 1
-#                 flag = NO
-#                 continue
-#             else:
-#                 tmp_begin = line.find("]=")
-#                 key_info = line.replace("\n", "")[tmp_begin + 2:len(line)]
-#                 if key_info == "":
-#                     real_pin_used -= 1
-#                 inits.init_list[init_count].A[pin_count] = key_info
-#                 pin_count += 1
-#                 continue
-#         elif (flag == WE):
-#             inits.init_list[init_count].write_enable = line.replace("\n", "").replace(" ","")
-#             flag = NO
-#             continue
-#         elif (flag == INIT_MODE):
-#             inits.init_list[init_count].mode = line.replace("\n", "")
-#             tmp_mode_end = inits.init_list[init_count].mode.find("x")
-#             add_range = inits.init_list[init_count].mode[4:tmp_mode_end]
-#             inits.init_list[init_count].my_init(int(add_range))
-#             inits.init_list[init_count].add_num = BIT_DICT[int(add_range)]
-#             flag = NO
-#             continue
-#         elif (flag == INIT_NAME):
-#             inits.init_list[init_count].init_name = line.replace("\n", "")
-#             flag = NO
-#             continue
-#         if (Flag == INIT_BEGIN):
-#             if (line.find("INIT_NAME") != -1):
-#                 flag = INIT_NAME
-#             elif (line.find("INIT_MODE") != -1):
-#                 flag = INIT_MODE
-#             elif (line.find("WE") != -1):
-#                 flag = WE
-#             elif (line.find("ADDRESS_BEGIN") != -1):
-#                 flag = ADDRESS_BEGIN
-#                 pin_count = 0
-#                 real_pin_used = MAX_ADD_PIN
-#         if (line.find("INIT_BEGIN") != -1):
-#             Flag = INIT_BEGIN
-#     print("get address pin info")
-#
+
 
 def GET_ADDR_WRITE_NUM(inits,info_file_path,E):
     NO = -1

@@ -232,13 +232,20 @@ def Read_CLK_ARRAAY(folder_path,brams):
     return pin_dict
 
 
+def write_dict(pin_dict,src_pach):
 
+    pin_dict_path = src_pach + "pin_dict"
+    pin_dict_file = open(pin_dict_path,'w')
+    for pin in pin_dict.keys():
+        tmp_str = pin + " " + str(pin_dict[pin]) + "\n"
+        pin_dict_file.write(tmp_str)
+    pin_dict_file.close()
 
 
 
 if __name__=="__main__":
     E_path = "s_run/"
-    benchmark = "LU32PEEng"
+    benchmark = "LU8PEEng"
     src_pach = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/"
     folder_path = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/ace_pool/"
     benchmark_pre_info_src_path = "/home/zhlab/BRAM/" + E_path + benchmark + "/src/pre_info_src/"
@@ -252,6 +259,6 @@ if __name__=="__main__":
         tmp = pin_dict[pin_dict_key]
         pin_dict[pin_dict_key] = tmp/(1000*CLK)
 
+    write_dict(pin_dict, src_pach)
 
-
-    build_pin_dict(src_pach,folder_path,brams)
+    # build_pin_dict(src_pach,folder_path,brams)

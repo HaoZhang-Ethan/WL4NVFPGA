@@ -1,7 +1,7 @@
 #-*-coding:utf-8-*-
 
 
-
+import sys
 MAX_INIT = 200
 
 # 根据net创建初始布局文件

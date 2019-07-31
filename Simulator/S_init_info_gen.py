@@ -280,9 +280,9 @@ elif(E == E_2):
 
 
 # benchmark = "boundtop"
-# benchmark =  "LU8PEEng"
+benchmark =  "LU8PEEng"
 # benchmark =  "LU32PEEng"
-benchmark =  "mcml"
+# benchmark =  "mcml"
 # benchmark =  "mkDelayWorker32B"
 # benchmark =  "mkPktMerge"
 # benchmark =  "mkSMAdapter4B"
@@ -293,7 +293,7 @@ if __name__=="__main__":
     Pin_set_1 = 3
     Pin_set_2 = 4
     # STAGR = int(sys.argv[1])
-    STAGR = 3
+    STAGR = 1
     if(STAGR == BRAM_log):# 初始化BRAM文件
         # grid_path = sys.argv[2]
         grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/100x100.arch"
