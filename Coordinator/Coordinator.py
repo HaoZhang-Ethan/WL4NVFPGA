@@ -16,7 +16,7 @@ elif(E == E_2):
 
 
 
-benchmark = "boundtop"
+benchmark = "LU8PEEng"
 E_root_path = "/home/zhlab/BRAM/"
 benchmark_src_path = E_root_path+E_path+benchmark+"/src/"
 benchmark_res_path = E_root_path+E_path+benchmark+"/res/"

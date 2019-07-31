@@ -430,7 +430,12 @@ void try_place(struct s_placer_opts placer_opts,
 			directs, num_directs);
 	//zh_lab
 	//更新	phy_bram 信息
-	update_mem_phy(placer_opts.p_phy_brams,placer_opts.p_Arrays);
+	char phy_pin_path[250];
+	memset (phy_pin_path,NULL,sizeof(phy_pin_path));
+	strcpy (phy_pin_path,"/home/zhlab/BRAM/s_run/");
+	strcat (phy_pin_path,placer_opts.benchmark_name);
+	strcat (phy_pin_path,"/res/BRAM/");
+	update_mem_phy(placer_opts.p_phy_brams,placer_opts.p_Arrays,phy_pin_path);
 	placer_opts.p_phy_brams->BRAM_num ++;
 	//num +1 计数是从0开始 所以补偿一个数
 
@@ -3650,7 +3655,7 @@ static void readTxt_mem(char * mem_path,long int* p_Array)//(long int*) tmp_Arra
 }
 
 //构建 BRAMS 写次数集合 并构建物理ID与网表对应关系
-void update_mem_phy(BRAMS_phy * p_phy_brams,Array * p_Arrays) {
+void update_mem_phy(BRAMS_phy * p_phy_brams,Array * p_Arrays,char *p_mem_path) {
 	Array * tmp_p_Arrays = p_Arrays;
 	int i, j,m_flag,mem_num,k;
 	m_flag = 0;
@@ -3662,7 +3667,9 @@ void update_mem_phy(BRAMS_phy * p_phy_brams,Array * p_Arrays) {
 				{
 					if (k == 0 || m_flag == 6)
 					{						
-						char mem_path[100] = "/home/zhlab/BRAM/s_run/boundtop/res/BRAM/";
+						char mem_path[100] ;
+						memset(mem_path,NULL,sizeof(mem_path));
+						strcpy(mem_path,p_mem_path);
 						char b[4];  
 						sprintf(b, "%d_",i);
 						strcat(mem_path,b);

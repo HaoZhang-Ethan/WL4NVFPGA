@@ -6,7 +6,7 @@ void try_place(struct s_placer_opts placer_opts,
 
 //zh_lab
 void print_BRAM_info();
-void update_mem_phy(BRAMS_phy * p_phy_brams,Array * p_Arrays);
+void update_mem_phy(BRAMS_phy * p_phy_brams,Array * p_Arrays,char *p_mem_path);
 void update_pin_dict(char * pin_dict_path,pin_dict * p_pin_dict_inits);
 float char_to_float(char * test);
 long int char_to_long_int(char * test);

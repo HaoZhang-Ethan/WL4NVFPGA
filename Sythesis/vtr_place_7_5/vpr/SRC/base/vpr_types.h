@@ -780,6 +780,7 @@ struct s_placer_opts {
 	BRAMS_phy * p_phy_brams;
 	Array * p_Arrays;
 	long int up_limit;
+	char benchmark_name[50];
 
 };
 

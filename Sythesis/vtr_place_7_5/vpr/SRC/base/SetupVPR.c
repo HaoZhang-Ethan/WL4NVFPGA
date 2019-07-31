@@ -9,7 +9,7 @@
 #include "SetupVPR.h"
 #include "pb_type_graph.h"
 #include "ReadOptions.h"
-
+#include <iostream>
 static void SetupOperation(INP t_options Options,
 		OUTP enum e_operation *Operation);
 static void SetupPackerOpts(INP t_options Options, INP boolean TimingEnabled,
@@ -49,6 +49,16 @@ void SetupVPR(INP t_options *Options, INP boolean TimingEnabled,
 		t_power_opts * PowerOpts) {
 	int i, j, len;
 
+	// FIXME:
+	//找到benchmark name
+	char* find_pos = strrchr(Options->CircuitName,'/');
+	int name_len = strlen(Options->CircuitName);
+	
+	char benchmark_name[30];
+	memset(benchmark_name,NULL,sizeof(benchmark_name));
+	strncpy(benchmark_name,find_pos+1,name_len - (find_pos - Options->CircuitName)-1);
+	// printf
+	memcpy(PlacerOpts->benchmark_name,benchmark_name,sizeof(benchmark_name));
 	len = strlen(Options->CircuitName) + 6; /* circuit_name.blif/0*/
 	if (Options->out_file_prefix != NULL ) {
 		len += strlen(Options->out_file_prefix);
