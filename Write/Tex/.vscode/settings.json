@@ -110,6 +110,6 @@
 
     ],
 
-    // "latex-preview.command": "xelatex",
+    "latex-preview.command": "xelatex",
     "latex-workshop.view.pdf.viewer": "tab"
 }

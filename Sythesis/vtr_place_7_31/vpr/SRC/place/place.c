@@ -4213,7 +4213,10 @@ static float load_phy_info_to_log(BRAMS_phy * p_phy_brams, BRAMS_log * p_log_bra
 }
 
 
-
+// 十进制转二进制
+// n为原来的数
+// bit_num 是转换后的bit位数，因为要补0
+// A传递出数
 int d_2_b(int n,int bit_num,int *A)
 {
 	int a[33];

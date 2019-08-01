@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.7.29)  30 JUL 2019 21:08
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.7.29)  31 JUL 2019 22:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**1.tex
-(./1.tex
+**/home/zhlab/FPGA_NVBRAM/SRC/Write/Tex/1
+(/home/zhlab/FPGA_NVBRAM/SRC/Write/Tex/1.tex
 LaTeX2e <2018-12-01>
 (./IEEEtran.cls
 Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
@@ -82,25 +82,21 @@ LaTeX Font Warning: Font shape `TU/ptm/bx/it' undefined
 LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 332.
 Package: cite 2015/02/27  v 5.5
-)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsmath.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2018/12/01 v2.17b AMS math features
 \@mathmargin=\skip44
 
 For additional information on amsmath, use the `?' option.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
-
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsgen.sty
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks15
 \ex@=\dimen126
-))
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsbsy.sty
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen127
-)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsopn.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
 \inf@bad=\count95
@@ -140,25 +136,20 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 730.
 \mathdisplay@stack=\toks19
 LaTeX Info: Redefining \[ on input line 2844.
 LaTeX Info: Redefining \] on input line 2845.
-)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/amssymb.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-))
-(/usr/local/texlive/2019/texmf-dist/tex/latex/algorithms/algorithmic.sty
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/algorithms/algorithmic.sty
 Invalid UTF-8 byte or sequence at line 11 replaced by U+FFFD.
 Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
-
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/ifthen.sty
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/keyval.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks20
 )
@@ -168,28 +159,22 @@ Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \c@ALC@depth=\count110
 \ALC@tlm=\skip47
 \algorithmicindent=\skip48
-)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphicx.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
-
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphics.sty
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
-
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/trig.sty
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: xetex.def on input line 99.
-
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-def/xetex.def
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-def/xetex.def
 File: xetex.def 2017/06/24 v5.0h Graphics/color driver for xetex
 ))
 \Gin@req@height=\dimen135
 \Gin@req@width=\dimen136
-)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/textcomp.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2018/08/11 v2.0j Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -203,8 +188,7 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             Family '?' is the default used for unknown fonts.
 (textcomp)             See the documentation for details.
 Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
-
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1enc.def
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 )
 LaTeX Info: Redefining \oldstylenums on input line 334.
@@ -232,7 +216,6 @@ Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
 Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
 Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
 Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
-
 Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
 Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
 Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
@@ -270,11 +253,9 @@ Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
 Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
-)
-(/usr/local/texlive/2019/texmf-dist/tex/latex/xcolor/xcolor.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
-
-(/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/color.cfg
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: xetex.def on input line 225.
@@ -317,59 +298,58 @@ LaTeX Font Info:    Try loading font information for U+msa on input line 57.
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 57.
-
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Calculating math sizes for size <11> on input line 57.
 
 
 LaTeX Font Warning: Font shape `TU/ptm/m/sc' undefined
-(Font)              using `TU/ptm/m/n' instead on input line 69.
+(Font)              using `TU/ptm/m/n' instead on input line 74.
 
 
-LaTeX Warning: Reference `AA' on page 1 undefined on input line 88.
+LaTeX Warning: Reference `AA' on page 1 undefined on input line 95.
 
 
-LaTeX Warning: Reference `SCM' on page 1 undefined on input line 88.
+LaTeX Warning: Reference `SCM' on page 1 undefined on input line 95.
 
 
-LaTeX Warning: Reference `eq' on page 1 undefined on input line 122.
+LaTeX Warning: Reference `eq' on page 1 undefined on input line 129.
 
 
-LaTeX Warning: Reference `eq' on page 1 undefined on input line 122.
+LaTeX Warning: Reference `eq' on page 1 undefined on input line 129.
 
 
-LaTeX Warning: Reference `eq' on page 1 undefined on input line 122.
+LaTeX Warning: Reference `eq' on page 1 undefined on input line 129.
 
 
-LaTeX Warning: Reference `eq' on page 1 undefined on input line 123.
+LaTeX Warning: Reference `eq' on page 1 undefined on input line 130.
 
 [1
 
 
 ]
-LaTeX Font Info:    Try loading font information for TU+pcr on input line 127.
-LaTeX Font Info:    No file TUpcr.fd. on input line 127.
+LaTeX Font Info:    Try loading font information for TU+pcr on input line 134.
+LaTeX Font Info:    No file TUpcr.fd. on input line 134.
 
 
 LaTeX Font Warning: Font shape `TU/pcr/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 127.
+(Font)              using `TU/lmr/m/n' instead on input line 134.
 
 
-LaTeX Warning: Citation `b7' on page 2 undefined on input line 176.
+LaTeX Warning: Citation `b7' on page 2 undefined on input line 183.
 
 
-LaTeX Warning: Reference `fig' on page 2 undefined on input line 212.
+LaTeX Warning: Reference `fig' on page 2 undefined on input line 219.
 
 [2]
 
-LaTeX Warning: File `fig1.png' not found on input line 232.
+LaTeX Warning: File `fig1.png' not found on input line 239.
 
-./1.tex:232: Unable to load picture or PDF file 'fig1.png'.
+/home/zhlab/FPGA_NVBRAM/SRC/Write/Tex/1.tex:239: Unable to load picture or PDF file 'fig1.png'.
 <to be read again> 
                    }
-l.232 \centerline{\includegraphics{fig1.png}}
+l.239 \centerline{\includegraphics{fig1.png}}
                                              
 The requested image couldn't be read because
 it was not a recognized image format.
@@ -377,31 +357,31 @@ it was not a recognized image format.
 File: fig1.png Graphic file (type bmp)
 <fig1.png>
 
-LaTeX Warning: Citation `b1' on page 3 undefined on input line 256.
+LaTeX Warning: Citation `b1' on page 3 undefined on input line 263.
 
 
-LaTeX Warning: Citation `b2' on page 3 undefined on input line 257.
+LaTeX Warning: Citation `b2' on page 3 undefined on input line 264.
 
 
-LaTeX Warning: Citation `b3' on page 3 undefined on input line 258.
+LaTeX Warning: Citation `b3' on page 3 undefined on input line 265.
 
 
-LaTeX Warning: Citation `b3' on page 3 undefined on input line 258.
+LaTeX Warning: Citation `b3' on page 3 undefined on input line 265.
 
 
-LaTeX Warning: Citation `b3' on page 3 undefined on input line 258.
+LaTeX Warning: Citation `b3' on page 3 undefined on input line 265.
 
 
-LaTeX Warning: Citation `b3' on page 3 undefined on input line 259.
+LaTeX Warning: Citation `b3' on page 3 undefined on input line 266.
 
 
-LaTeX Warning: Citation `b4' on page 3 undefined on input line 267.
+LaTeX Warning: Citation `b4' on page 3 undefined on input line 274.
 
 
-LaTeX Warning: Citation `b5' on page 3 undefined on input line 268.
+LaTeX Warning: Citation `b5' on page 3 undefined on input line 275.
 
 
-LaTeX Warning: Citation `b6' on page 3 undefined on input line 273.
+LaTeX Warning: Citation `b6' on page 3 undefined on input line 280.
 
 
 ** Conference Paper **
@@ -426,12 +406,12 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 3459 strings out of 492909
- 49558 string characters out of 6132923
+ 3449 strings out of 492909
+ 49561 string characters out of 6132923
  131731 words of memory out of 5000000
- 7487 multiletter control sequences out of 15000+600000
- 12915 words of font info for 64 fonts, out of 8000000 for 9000
+ 7480 multiletter control sequences out of 15000+600000
+ 11370 words of font info for 58 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 30i,11n,35p,571b,290s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,11n,35p,605b,290s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on 1.pdf (3 pages).

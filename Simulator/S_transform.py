@@ -163,7 +163,7 @@ if __name__=="__main__":
     brams = BRAMS()
     CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)
 
-    # print("")
+
 
     place_pin_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"+benchmark+".place_pin"
     place_pin_file = open(place_pin_path)
@@ -200,7 +200,6 @@ if __name__=="__main__":
             flag_get_pin = valid
             continue
     tmp_bram.num = BRAM_num
-    # print("")
     pin_dict = {}
 
 
@@ -221,8 +220,6 @@ if __name__=="__main__":
                     for num_ in pin_dict.keys():
                         brams.list[j].port_c_A[pin_dict[num_]] = brams.list[j].port_b_A[num_]
                     brams.list[j].port_b_A = brams.list[j].port_c_A.copy()
-
-    # print("");
 
 
 
