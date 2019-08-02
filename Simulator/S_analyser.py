@@ -245,7 +245,7 @@ def write_dict(pin_dict,src_pach):
 
 if __name__=="__main__":
     E_path = "s_run/"
-    benchmark = "LU8PEEng"
+    benchmark = "mkPktMerge"
     src_pach = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/"
     folder_path = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/ace_pool/"
     benchmark_pre_info_src_path = "/home/zhlab/BRAM/" + E_path + benchmark + "/src/pre_info_src/"

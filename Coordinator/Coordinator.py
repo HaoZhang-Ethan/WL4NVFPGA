@@ -16,7 +16,7 @@ elif(E == E_2):
 
 
 
-benchmark = "LU8PEEng"
+benchmark = "mkPktMerge"
 E_root_path = "/home/zhlab/BRAM/"
 benchmark_src_path = E_root_path+E_path+benchmark+"/src/"
 benchmark_res_path = E_root_path+E_path+benchmark+"/res/"
@@ -29,13 +29,13 @@ place_res_path = E_root_path+E_path+benchmark+"/res/place_res/"
 xml = E_root_path+E_path+benchmark+"/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml"
 blif = E_root_path+E_path+benchmark+"/src/pre_info_src/"+benchmark+".blif"
 place_file = E_root_path+E_path+benchmark+"/src/pre_info_src/"+benchmark+".place"
-info_file_path = E_root_path+E_path+benchmark+"/src/LU8PEEng.info_"
+info_file_path = E_root_path+E_path+benchmark+"/src/"+ benchmark  + ".info_"
 addr_hit_num_path = E_root_path+E_path+benchmark+"/res/address/"
 forbid_file_path = benchmark_res_path+"forbid_pos"
 e_3_bram_file_path = benchmark_BRAM_path+"e_2_bram"
 phy_file_path = benchmark_pre_info_src_path + benchmark  + "_phy.txt"
 #ace
-add_pre_path = "/home/zhlab/BRAM/s_run/LU8PEEng/src/ace_pool/"
+add_pre_path = "/home/zhlab/BRAM/s_run/"+ benchmark  + "/src/ace_pool/"
 #tool_path
 update_path = "/home/zhlab/FPGA_NVBRAM/SRC/BRAM_writer/update"
 trigger_path = "/home/zhlab/FPGA_NVBRAM/SRC/trigger/trigger"

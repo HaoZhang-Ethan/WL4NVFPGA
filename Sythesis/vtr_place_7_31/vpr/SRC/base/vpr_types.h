@@ -150,6 +150,7 @@ typedef struct Level_{
 	float b_node;
 	int block_num;//最小写单元集合数量
 	int unit_num;//集合中最小写单元数量
+	char level_pin_name[MAX_name_len];
 }Level;
 
 typedef struct Levels_{
