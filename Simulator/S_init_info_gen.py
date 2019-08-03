@@ -78,7 +78,26 @@ def CORRECTION(benchmark_act_path,NUM):
         for list_ in list:
             file.write(list_)
         file.close()
-
+def MY_CORRECTION(benchmark_act_path,NUM,key_str,one_ratio,conv_ratio):
+    key_str = key_str.lower()
+    benchmark_act = benchmark_act_path
+    for i in range(0,NUM):
+        list = []
+        file_path = benchmark_act + str(i) + ".act"
+        file = open(file_path)
+        for line_ in file:
+            tmp_line = line_.lower()
+            if (tmp_line.find(key_str)!=-1):
+                clk_tmp = line_.split()
+                clk_str = clk_tmp[0] + " "+str(one_ratio) + " "+str(conv_ratio)+"\n"
+                list.append(clk_str)
+                continue
+            list.append(line_)
+        file.close()
+        file = open(file_path , 'w')
+        for list_ in list:
+            file.write(list_)
+        file.close()
 
 
 #Pin_set
@@ -284,8 +303,8 @@ elif(E == E_2):
 # benchmark =  "LU32PEEng"
 # benchmark =  "mcml"
 # benchmark =  "mkDelayWorker32B"
-benchmark =  "mkPktMerge"
-# benchmark =  "mkSMAdapter4B"
+# benchmark =  "mkPktMerge"
+benchmark =  "mkSMAdapter4B"
 
 if __name__=="__main__":
     BRAM_log = 1
@@ -293,7 +312,7 @@ if __name__=="__main__":
     Pin_set_1 = 3
     Pin_set_2 = 4
     # STAGR = int(sys.argv[1])
-    STAGR = 4
+    STAGR = 2
     if(STAGR == BRAM_log):# 初始化BRAM文件
         # grid_path = sys.argv[2]
         grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/100x100.arch"
@@ -323,6 +342,7 @@ if __name__=="__main__":
         benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"
         CREAT_RAND_ACT(get_act_path, benchmark_src_path, TEST_NUM, benchmark, benchmark_pre_info_src_path)
         CORRECTION(benchmark_src_path+"act_pool/",TEST_NUM)
+        MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM,"reset",0.06,0.06)
     elif (STAGR == Pin_set_1):
         # vtr_release_path = sys.argv[2]
         vtr_release_path = "/home/zhlab/BRAM/vtr/vtr_release/vpr/vpr"

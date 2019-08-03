@@ -15,7 +15,7 @@
                 "/home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.blif",
                 "--nodisp",
                 "-place",
-                "***5000"
+                "***1000"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

@@ -24,5 +24,5 @@ def CARLL_ACE(benchmark_src_path,benchmark,benchmark_pre_info_src_path,ace_path,
             os.system(mv_command)
 
 if __name__=="__main__":
-    bechmark = "mkPktMerge"
+    bechmark = "mkSMAdapter4B"
     CARLL_ACE("/home/zhlab/BRAM/s_run/"+bechmark+"/src/",bechmark,"/home/zhlab/BRAM/s_run/"+bechmark+"/src/pre_info_src/","/home/zhlab/BRAM/vtr/vtr_ace_0/ace2/ace",1000)

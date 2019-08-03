@@ -43,7 +43,7 @@ trigger_path = "/home/zhlab/FPGA_NVBRAM/SRC/trigger/trigger"
 
 
 if(E == E_0):
-    vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_place_7_5/vpr/vpr"
+    vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vpr/vpr7_5"
 elif(E == E_1):
     vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_e_1_7_15/vpr/vpr"
 elif(E == E_2):

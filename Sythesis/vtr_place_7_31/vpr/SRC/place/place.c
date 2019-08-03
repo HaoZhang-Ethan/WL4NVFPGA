@@ -3251,11 +3251,13 @@ static void initial_placement_blocks(int *free_locations, enum e_pad_loc_type pa
 			if (block[iblk].type->index == 4)
 			{
 				int error = 0;
+				int error_1 = 0;
 				int log_bram_id = -1;
 				int phy_bram_id = -1;
 				log_bram_id = block[iblk].log_bram_ID;
 				int try_num = free_locations[itype];
 				addr_pin tmp_D_port; //预映射
+				addr_pin tmp_D_port_1; //预映射
 				do
 				{
 					phy_bram_id = -1;
@@ -3268,13 +3270,13 @@ static void initial_placement_blocks(int *free_locations, enum e_pad_loc_type pa
 					assert(phy_bram_id != -1);
 					assert(log_bram_id != -1);
 
-					// (*placer_opts.p_log_brams).BRAM_LIST[log_bram_id].cost = load_phy_info_to_log(placer_opts.p_phy_brams, placer_opts.p_log_brams, phy_bram_id, log_bram_id, placer_opts.up_limit, &tmp_D_port, &error);
-					// vpr_printf(TIO_MESSAGE_INFO,"zh cost = %f\n",load_phy_info_to_log(placer_opts.p_phy_brams, placer_opts.p_log_brams, phy_bram_id, log_bram_id, placer_opts.up_limit, &tmp_D_port, &error));
+					
 					float bed_cost = 0;
 					(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id].cost = load_phy_info_to_log_2(placer_opts.p_phy_brams, placer_opts.p_log_brams, phy_bram_id, log_bram_id, placer_opts.up_limit, &tmp_D_port, &error, &bed_cost);
 					vpr_printf(TIO_MESSAGE_INFO,"best cost = %f\n",(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id].cost );
 					vpr_printf(TIO_MESSAGE_INFO,"bed_cost = %f\n",bed_cost );
-					
+				
+					vpr_printf(TIO_MESSAGE_INFO,"zh cost = %f\n",load_phy_info_to_log(placer_opts.p_phy_brams, placer_opts.p_log_brams, phy_bram_id, log_bram_id, placer_opts.up_limit, &tmp_D_port_1, &error_1));
 					try_num--;
 					// vpr_printf(TIO_MESSAGE_INFO,"    %d    \n",error);
 					if (error == 1)
@@ -4354,117 +4356,118 @@ static float load_phy_info_to_log(BRAMS_phy *p_phy_brams, BRAMS_log *p_log_brams
 			l_vecs.l_vec[l_num].b_node = (1.0 - l_vecs.l_vec[l_num].w_node);
 		}
 	}
+	float cost = computer_cost(&l_vecs, valid_add_num, add_range, p_log_brams, log_bram_id, error, up_limit);
+	// //计算cost
+	// float cost = 0.0;
+	// l_num = valid_add_num - 1;
+	// int tmp_block_num = zh_pow(2, l_num + 1);
+	// int tmp_unit_num = add_range / tmp_block_num;
 
-	//计算cost
-	float cost = 0.0;
-	l_num = valid_add_num - 1;
-	int tmp_block_num = zh_pow(2, l_num + 1);
-	int tmp_unit_num = add_range / tmp_block_num;
-
-	long double w_wirte = 0;
-	long double b_wirte = 0;
-	int tmp_i = 0;
-	int tmp_j = 0;
-	int v_write_num = 0; //有效写单元数量   写单元有逻辑写频率的数量
-	for (tmp_i = 0; tmp_i < tmp_block_num; tmp_i++)
-	{
-		if (tmp_i % 2 == 0)
-		{
-			for (tmp_j = tmp_i * tmp_unit_num; tmp_j < (tmp_i + 1) * tmp_unit_num; tmp_j++)
-			{
-				int tmp_lev_count = 0;
-				float coefficient = 1.0;
-				int A[33];
-				memset(A, 0, sizeof(A));
-				d_2_b(tmp_j, valid_add_num, A);
-				for (tmp_lev_count = 0; tmp_lev_count < l_num + 1; tmp_lev_count++)
-				{
-					float tmp_coefficient = 0.0;
-					if (A[tmp_lev_count] == 1)
-					{
-						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
-					}
-					else
-					{
-						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
-					}
-					coefficient = coefficient * tmp_coefficient;
-				}
-				if (coefficient != 0)
-				{
-					float tmp = (1 - ((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector + tmp_j)).write_num / (double)up_limit));
-					// if((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num != 0)
-					// {
-					// 	// vpr_printf(TIO_MESSAGE_INFO,"\n%d----%ld----%d\n",log_bram_id,(*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num,tmp_j);
-					// 	int a = 0;
-					// }
-					if ((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector + tmp_j)).write_num > up_limit)
-					{
-						(*error) = 1;
-						return 0;
-					}
-					cost = cost + fabs((coefficient / tmp) - 1);
-					v_write_num++;
-				}
-				else
-				{
-					cost = cost + 0;
-				}
-				// w_wirte = w_wirte + coefficient*((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num);
-			}
-		}
-		else
-		{
-			for (tmp_j = tmp_i * tmp_unit_num; tmp_j < (tmp_i + 1) * tmp_unit_num; tmp_j++)
-			{
-				int tmp_lev_count = 0;
-				float coefficient = 1.0;
-				int A[33];
-				memset(A, 0, sizeof(A));
-				d_2_b(tmp_j, valid_add_num, A);
-				for (tmp_lev_count = 0; tmp_lev_count < l_num + 1; tmp_lev_count++)
-				{
-					float tmp_coefficient = 0.0;
-					if (A[tmp_lev_count] == 1)
-					{
-						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
-					}
-					else
-					{
-						tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
-					}
-					coefficient = coefficient * tmp_coefficient;
-				}
-				if (coefficient != 0)
-				{
-					float tmp = (1 - ((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector + tmp_j)).write_num / (double)up_limit));
-					// if((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num != 0)
-					// {
-					// 	// vpr_printf(TIO_MESSAGE_INFO,"\n%d----%ld----%d\n",phy_bram_id,(*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num,tmp_j);
-					// 	int a = 0;
-					// }
-					if ((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector + tmp_j)).write_num > up_limit)
-					{
-						(*error) = 1;
-						return 0;
-					}
-					cost = cost + fabs((coefficient / tmp) - 1);
-					// cost = cost + fabs((coefficient/(1-((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num/up_limit)))-1);
-					v_write_num++;
-				}
-				else
-				{
-					cost = cost + 0;
-				}
-				// b_wirte = b_wirte + coefficient*((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num);
-				// b_wirte = b_wirte +  (*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num;
-			}
-		}
-	}
-	// vpr_printf(TIO_MESSAGE_INFO,"cost  %f    avg_ %f     v_write_ %d   \n",cost,(cost/v_write_num),v_write_num);
-	// vpr_printf(TIO_MESSAGE_INFO,"---");
-	*error = 0;
-	return (cost / v_write_num);
+	// long double w_wirte = 0;
+	// long double b_wirte = 0;
+	// int tmp_i = 0;
+	// int tmp_j = 0;
+	// int v_write_num = 0; //有效写单元数量   写单元有逻辑写频率的数量
+	// for (tmp_i = 0; tmp_i < tmp_block_num; tmp_i++)
+	// {
+	// 	if (tmp_i % 2 == 0)
+	// 	{
+	// 		for (tmp_j = tmp_i * tmp_unit_num; tmp_j < (tmp_i + 1) * tmp_unit_num; tmp_j++)
+	// 		{
+	// 			int tmp_lev_count = 0;
+	// 			float coefficient = 1.0;
+	// 			int A[33];
+	// 			memset(A, 0, sizeof(A));
+	// 			d_2_b(tmp_j, valid_add_num, A);
+	// 			for (tmp_lev_count = 0; tmp_lev_count < l_num + 1; tmp_lev_count++)
+	// 			{
+	// 				float tmp_coefficient = 0.0;
+	// 				if (A[tmp_lev_count] == 1)
+	// 				{
+	// 					tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
+	// 				}
+	// 				else
+	// 				{
+	// 					tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
+	// 				}
+	// 				coefficient = coefficient * tmp_coefficient;
+	// 			}
+	// 			if (coefficient != 0)
+	// 			{
+	// 				float tmp = (1 - ((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector + tmp_j)).write_num / (double)up_limit));
+	// 				// if((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num != 0)
+	// 				// {
+	// 				// 	// vpr_printf(TIO_MESSAGE_INFO,"\n%d----%ld----%d\n",log_bram_id,(*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num,tmp_j);
+	// 				// 	int a = 0;
+	// 				// }
+	// 				if ((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector + tmp_j)).write_num > up_limit)
+	// 				{
+	// 					(*error) = 1;
+	// 					return 0;
+	// 				}
+	// 				cost = cost + fabs((coefficient / tmp) - 1);
+	// 				v_write_num++;
+	// 			}
+	// 			else
+	// 			{
+	// 				cost = cost + 0;
+	// 			}
+	// 			// w_wirte = w_wirte + coefficient*((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num);
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		for (tmp_j = tmp_i * tmp_unit_num; tmp_j < (tmp_i + 1) * tmp_unit_num; tmp_j++)
+	// 		{
+	// 			int tmp_lev_count = 0;
+	// 			float coefficient = 1.0;
+	// 			int A[33];
+	// 			memset(A, 0, sizeof(A));
+	// 			d_2_b(tmp_j, valid_add_num, A);
+	// 			for (tmp_lev_count = 0; tmp_lev_count < l_num + 1; tmp_lev_count++)
+	// 			{
+	// 				float tmp_coefficient = 0.0;
+	// 				if (A[tmp_lev_count] == 1)
+	// 				{
+	// 					tmp_coefficient = l_vecs.l_vec[tmp_lev_count].b_node;
+	// 				}
+	// 				else
+	// 				{
+	// 					tmp_coefficient = l_vecs.l_vec[tmp_lev_count].w_node;
+	// 				}
+	// 				coefficient = coefficient * tmp_coefficient;
+	// 			}
+	// 			if (coefficient != 0)
+	// 			{
+	// 				float tmp = (1 - ((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector + tmp_j)).write_num / (double)up_limit));
+	// 				// if((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num != 0)
+	// 				// {
+	// 				// 	// vpr_printf(TIO_MESSAGE_INFO,"\n%d----%ld----%d\n",phy_bram_id,(*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num,tmp_j);
+	// 				// 	int a = 0;
+	// 				// }
+	// 				if ((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector + tmp_j)).write_num > up_limit)
+	// 				{
+	// 					(*error) = 1;
+	// 					return 0;
+	// 				}
+	// 				cost = cost + fabs((coefficient / tmp) - 1);
+	// 				// cost = cost + fabs((coefficient/(1-((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num/up_limit)))-1);
+	// 				v_write_num++;
+	// 			}
+	// 			else
+	// 			{
+	// 				cost = cost + 0;
+	// 			}
+	// 			// b_wirte = b_wirte + coefficient*((*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num);
+	// 			// b_wirte = b_wirte +  (*((*p_log_brams).BRAM_LIST[log_bram_id].p_write_unit_vector+tmp_j)).write_num;
+	// 		}
+	// 	}
+	// }
+	// // vpr_printf(TIO_MESSAGE_INFO,"cost  %f    avg_ %f     v_write_ %d   \n",cost,(cost/v_write_num),v_write_num);
+	// // vpr_printf(TIO_MESSAGE_INFO,"---");
+	// *error = 0;
+	// return (cost / v_write_num);
+	return cost;
 }
 
 // 十进制转二进制
@@ -4847,7 +4850,12 @@ float computer_cost(Levels *l_vecs, int valid_add_num, int add_range, BRAMS_log 
 						(*error) = 1;
 						return 0;
 					}
-					cost = cost + fabs((coefficient / tmp) - 1);
+					float  cur_cost = fabs((coefficient / tmp) - 1);
+					if(cur_cost < 1)
+					{
+						cur_cost = cur_cost;
+					}
+					cost = cost + cur_cost;
 					v_write_num++;
 				}
 				else
@@ -4886,7 +4894,12 @@ float computer_cost(Levels *l_vecs, int valid_add_num, int add_range, BRAMS_log 
 						(*error) = 1;
 						return 0;
 					}
-					cost = cost + fabs((coefficient / tmp) - 1);
+					float  cur_cost = fabs((coefficient / tmp) - 1);
+					if(cur_cost < 1)
+					{
+						cur_cost = cur_cost;
+					}
+					cost = cost + cur_cost;
 					v_write_num++;
 				}
 				else

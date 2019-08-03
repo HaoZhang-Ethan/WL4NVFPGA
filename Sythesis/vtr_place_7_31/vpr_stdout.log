@@ -16,10 +16,10 @@ Circuit name: /home/zhlab/BRAM/s_run/LU8PEEng/src/pre_info_src/LU8PEEng.blif
 
 Building complex block graph.
 WARNING(1): io[0].clock[0] unconnected pin in architecture.
-Loop for doall = 0, init_parse took 8e-06 seconds.
-Loop for doall = 0 took 0.0905 seconds.
-Loop for doall = 1, init_parse took 0.012097 seconds.
-Loop for doall = 1 took 0.110854 seconds.
+Loop for doall = 0, init_parse took 7e-06 seconds.
+Loop for doall = 0 took 0.102988 seconds.
+Loop for doall = 1, init_parse took 0.01452 seconds.
+Loop for doall = 1 took 0.126653 seconds.
 Swept away 1601 nets with no fanout.
 Net is a constant generator: top^mem_local_be~0.
 WARNING(2): logical_block #8263 with output top^mem_local_be~0 has only 0 pin.
@@ -1005,161 +1005,179 @@ Computing delta_clb_to_clb lookup matrix, may take a few seconds, please wait...
   /home/zhlab/BRAM/s_run/LU8PEEng/res/BRAM/98_91mem 
   98 _ 91 
 mem_num = 208
-best cost = 0.937500
-bed_cost = 0.937500
+best cost = 0.702936
+bed_cost = 35.824207
+zh cost = 1.531466
 init_ 18 - 31  top.DataTransferUnit+DTU.memcmd_fifo+cmd_store.dual_port_ram+ram_addr^out2~27
-best cost = 0.000000
-bed_cost = 0.760563
-best cost = 0.000000
-bed_cost = 0.000000
-init_ 98 - 43  top.DataTransferUnit+DTU.addr_fifo+raddress_store.dual_port_ram+ram_addr^out2~3
-best cost = 0.937500
-bed_cost = 0.937500
-init_ 2 - 25  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~215
-best cost = 0.937500
-bed_cost = 0.937500
-init_ 90 - 79  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~223
-best cost = 0.000000
-bed_cost = 0.937500
-best cost = 0.000000
-bed_cost = 0.937500
-best cost = 0.000000
-bed_cost = 0.926378
-best cost = 0.937500
-bed_cost = 0.937500
-init_ 34 - 79  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~192
-best cost = 0.937500
-bed_cost = 0.937500
-init_ 18 - 49  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~193
-best cost = 0.937500
-bed_cost = 0.937500
-init_ 58 - 85  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~194
-best cost = 0.937500
-bed_cost = 0.937500
-init_ 2 - 1  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~195
-best cost = 0.910493
-bed_cost = 0.937500
-init_ 42 - 19  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~196
-best cost = 0.937500
-bed_cost = 0.937500
-init_ 90 - 55  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~197
-best cost = 0.937500
-bed_cost = 0.937500
-init_ 42 - 1  top.DataTransferUnit+DTU.rfifo+rdata_store.dual_port_ram+ram_addr^out2~62
-best cost = 0.937500
-bed_cost = 0.937500
-init_ 2 - 49  top.DataTransferUnit+DTU.rfifo+rdata_store.dual_port_ram+ram_addr^out2~61
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 2 - 19  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~255
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 66 - 79  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~23
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 26 - 79  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~23
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 98 - 19  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~23
-best cost = 0.000000
-bed_cost = 0.983170
-best cost = 0.000000
-bed_cost = 0.983150
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 82 - 73  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~31
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 34 - 13  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~31
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 10 - 13  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~31
-best cost = 0.000000
-bed_cost = 1.075023
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 18 - 13  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~0
-best cost = 0.000000
-bed_cost = 0.968750
-best cost = 0.000000
-bed_cost = 1.041590
-init_ 74 - 37  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~0
-best cost = 0.000000
-bed_cost = 1.003167
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 2 - 67  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~0
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 98 - 85  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~1
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 74 - 67  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~1
-best cost = 0.000000
-bed_cost = 0.978563
-best cost = 0.000000
-bed_cost = 1.101175
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 74 - 79  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~1
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 10 - 73  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~2
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 82 - 85  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~2
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 2 - 79  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~2
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 74 - 73  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~3
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 90 - 73  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~3
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 82 - 13  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~3
-best cost = 0.000000
-bed_cost = 0.980404
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 26 - 13  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~4
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 74 - 13  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~4
-best cost = 0.968726
-bed_cost = 0.973794
-init_ 66 - 73  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~4
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 90 - 1  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~5
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 2 - 73  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~5
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 26 - 1  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~247
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 50 - 7  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~254
-best cost = 0.000000
-bed_cost = 1.062848
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 18 - 85  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~253
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 2 - 55  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~252
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 10 - 55  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~251
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 10 - 79  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~250
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 90 - 7  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~249
-best cost = 0.968750
-bed_cost = 0.968750
-init_ 74 - 1  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~248
+best cost = 3.524887
+bed_cost = 998.999939
+zh cost = 3.807692
+init_ 50 - 25  top.DataTransferUnit+DTU.addr_fifo+raddress_store.dual_port_ram+ram_addr^out2~3
+best cost = 0.719307
+bed_cost = 33.250195
+zh cost = 5.116398
+init_ 34 - 67  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~215
+best cost = 0.859415
+bed_cost = 34.458866
+zh cost = 3.971191
+init_ 2 - 25  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~223
+best cost = 0.741514
+bed_cost = 30.621416
+zh cost = 2.099951
+init_ 90 - 73  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~192
+best cost = 0.818829
+bed_cost = 31.263063
+zh cost = 1.757680
+init_ 42 - 49  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~193
+best cost = 0.742959
+bed_cost = 40.260693
+zh cost = 1.801747
+init_ 50 - 49  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~194
+best cost = 0.642453
+bed_cost = 31.121605
+zh cost = 2.834524
+init_ 66 - 55  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~195
+best cost = 0.667579
+bed_cost = 38.661781
+zh cost = 3.039087
+init_ 34 - 73  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~196
+best cost = 0.827366
+bed_cost = 34.089516
+zh cost = 2.447268
+init_ 18 - 43  top.DataTransferUnit+DTU.wfifo+wdata_store.dual_port_ram+ram_addr^out2~197
+best cost = 0.852663
+bed_cost = 33.224434
+zh cost = 1.480661
+init_ 90 - 55  top.DataTransferUnit+DTU.rfifo+rdata_store.dual_port_ram+ram_addr^out2~62
+best cost = 0.898529
+bed_cost = 30.258051
+zh cost = 2.747908
+init_ 90 - 37  top.DataTransferUnit+DTU.rfifo+rdata_store.dual_port_ram+ram_addr^out2~61
+best cost = 1.053065
+bed_cost = 31.966179
+zh cost = 1.279634
+init_ 74 - 43  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~255
+best cost = 1.014830
+bed_cost = 31.984041
+zh cost = 1.279249
+init_ 10 - 91  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~23
+best cost = 0.927001
+bed_cost = 27.229973
+zh cost = 1.415815
+init_ 66 - 25  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~23
+best cost = 1.091394
+bed_cost = 31.967607
+zh cost = 1.275323
+init_ 42 - 61  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~23
+best cost = 1.064074
+bed_cost = 31.985332
+zh cost = 1.172740
+init_ 2 - 19  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~31
+best cost = 0.922184
+bed_cost = 26.680405
+zh cost = 1.367898
+init_ 66 - 61  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~31
+best cost = 1.066582
+bed_cost = 31.966721
+zh cost = 2.119199
+init_ 26 - 67  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~31
+best cost = 1.057882
+bed_cost = 31.986406
+zh cost = 1.313265
+init_ 90 - 91  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~0
+best cost = 0.898834
+bed_cost = 26.754944
+zh cost = 2.556102
+init_ 50 - 61  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~0
+best cost = 1.121487
+bed_cost = 31.966505
+zh cost = 1.484093
+init_ 50 - 13  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~0
+best cost = 1.085303
+bed_cost = 31.986921
+zh cost = 1.156294
+init_ 82 - 43  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~1
+best cost = 0.995606
+bed_cost = 26.322193
+zh cost = 1.920903
+init_ 26 - 91  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~1
+best cost = 1.019838
+bed_cost = 31.967609
+zh cost = 1.138048
+init_ 10 - 13  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~1
+best cost = 1.048788
+bed_cost = 31.985348
+zh cost = 1.241323
+init_ 74 - 13  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~2
+best cost = 0.934467
+bed_cost = 26.495544
+zh cost = 1.579119
+init_ 18 - 7  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~2
+best cost = 1.089675
+bed_cost = 31.966227
+zh cost = 1.164968
+init_ 58 - 49  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~2
+best cost = 1.081249
+bed_cost = 31.986326
+zh cost = 1.185605
+init_ 66 - 91  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~3
+best cost = 0.898633
+bed_cost = 26.901585
+zh cost = 1.267278
+init_ 58 - 1  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~3
+best cost = 1.066035
+bed_cost = 31.966551
+zh cost = 1.261208
+init_ 2 - 67  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~3
+best cost = 1.044426
+bed_cost = 31.986183
+zh cost = 1.110686
+init_ 34 - 91  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~4
+best cost = 0.927206
+bed_cost = 27.486818
+zh cost = 1.237357
+init_ 74 - 19  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~4
+best cost = 1.062747
+bed_cost = 31.966938
+zh cost = 1.113934
+init_ 34 - 31  top.LU+compBlock.ram2+leftBlock0.dual_port_ram+inst1^out2~4
+best cost = 1.077460
+bed_cost = 31.986681
+zh cost = 1.179185
+init_ 58 - 13  top.LU+compBlock.ram+currentBlock0.dual_port_ram+inst1^out2~5
+best cost = 0.878204
+bed_cost = 26.626352
+zh cost = 2.405684
+init_ 82 - 91  top.LU+compBlock.ram1+currentBlock1.dual_port_ram+inst1^out2~5
+best cost = 0.959709
+bed_cost = 26.567671
+zh cost = 2.269867
+init_ 10 - 67  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~247
+best cost = 0.863359
+bed_cost = 26.844290
+zh cost = 1.714446
+init_ 82 - 19  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~254
+best cost = 0.958704
+bed_cost = 27.131649
+zh cost = 1.279290
+init_ 2 - 73  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~253
+best cost = 0.925921
+bed_cost = 26.667351
+zh cost = 1.033331
+init_ 82 - 73  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~252
+best cost = 0.893809
+bed_cost = 27.434881
+zh cost = 1.217767
+init_ 18 - 1  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~251
+best cost = 0.895751
+bed_cost = 26.855221
+zh cost = 1.186419
+init_ 74 - 49  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~250
+best cost = 0.932537
+bed_cost = 26.536217
+zh cost = 1.791913
+init_ 26 - 19  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~249
+best cost = 0.923661
+bed_cost = 27.487251
+zh cost = 1.179768
+init_ 18 - 91  top.LU+compBlock.ram3+leftBlock1.dual_port_ram+inst1^out2~248
