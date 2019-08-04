@@ -5,15 +5,16 @@ import os
 E_0 = 0     #细粒度写均衡
 E_1 = 1     #对比实验VPR原始
 E_2 = 2     #粗粒度写均衡
-
-E = 0
+E_3 = 3     #对比VPR原始_细粒度统计实验
+E = 3
 if(E == E_0):
     E_path = "s_run/"
 elif(E == E_1):
     E_path = "s_run_e_1/"
 elif(E == E_2):
     E_path = "s_run_e_2/"
-
+elif(E == E_3):
+    E_path = "s_run_e_3/"
 
 
 benchmark = "mkPktMerge"
@@ -48,7 +49,8 @@ elif(E == E_1):
     vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_e_1_7_15/vpr/vpr"
 elif(E == E_2):
     vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_h/vpr/vpr"
-
+elif(E == E_3):
+    vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_e_3_8_4/vpr/vpr"
 
 
 
@@ -67,7 +69,7 @@ COL = 2
 ROW = 256
 MEM_COL = CONF
 MEM_ROW = COL * ROW
-MAX_WRITE_NUM = 100000 #1000000      #1000000            #BRAM的最大写次数  //100000000
+MAX_WRITE_NUM = 100000 #100000 #1000000      #1000000            #BRAM的最大写次数  //100000000
 TEST_NUM = 2
 MAX_ADD_PIN = 15
 CLK = 5000
@@ -382,7 +384,7 @@ def get_init_info(cur_limit_path):
     return cur_limit,times,sythesis_time,E_limit
 
 
-def record_1(path,cur_limit,times,sythesis_time,E_limit):
+def record_1(path,cur_limit,times,sythesis_time,E_limit = 0):
     cur_limit_file = open(path, 'w')
     cur_limit_file.write("cur_limit = " + str(int(cur_limit)));
     cur_limit_file.write("\ntimes = " + str(times));
@@ -697,3 +699,75 @@ elif(E == E_2):
         if (flag != 1 or Effic_fun(Effic,Effic_num,int(E_limit/4))):
             cur_limit = cur_limit + ratio * MAX_WRITE_NUM
             E_flag = 1
+if(E == E_3):
+
+
+    sythesis_time = 0
+    times = 0
+    cur_limit = MAX_WRITE_NUM
+    forbid_list = []
+    while (1):
+            record_1(cur_limit_path, cur_limit, times, sythesis_time)
+
+            cmd = vpr + " " + xml + " " + blif + " " + nodisply + " " + place + ">" + benchmark_res_path + "vpr.out"
+            os.system(cmd)
+            flag = os.path.exists(place_file)
+            if (flag == 1):
+
+                old_tmies = times
+                sythesis_time += 1
+
+
+                GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path,benchmark)
+                pos_dict = {}
+                BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
+                inits = INIT_LIST()
+                GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_",E_0)
+                update_Flag = 1
+                while (update_Flag):
+                    print("times  =  " + str(times))
+                    times += 1
+                    for init_ in range(inits.init_num):
+                        write_num_path = write_num_path_pre+str(init_)+".hit"
+                        write_num = open(write_num_path)
+                        name_flag = 0
+                        init_name = ""
+                        for line_ in write_num:
+                            if(name_flag == 1):
+                                init_name = line_.replace("\n","")
+                                break
+                            if(line_.find("mem_name")!=-1):
+                                name_flag = 1
+                        write_num.close()
+                        BRAM_file_path = pos_dict[init_name]
+                        tmp_str_x = BRAM_file_path[BRAM_file_path.rfind("/") + 1:BRAM_file_path.rfind("_")]
+                        tmp_str_y = BRAM_file_path[BRAM_file_path.rfind("_") + 1:BRAM_file_path.rfind("mem")]
+                        tmp_str = tmp_str_x + " " + tmp_str_y + " " + "*"
+                        print("Hit = "+str(init_)+  "      BRAM_POS = " + BRAM_file_path)
+                        BRAM_file_path = benchmark_BRAM_path + BRAM_file_path
+                        command = update_path +" " + write_num_path + " " +BRAM_file_path + " "+ str(int(cur_limit))
+                        # print(command)
+                        res = str(os.system(command))
+                        print(res)
+                        if(int(res) != 0):
+                            print("Write_over")
+                            update_Flag = 0
+                            forbid_list.append(tmp_str)
+                write_forbit_file = open(forbid_file_path, 'w')
+                for forbid_list_ in forbid_list:
+                    write_forbit_file.write(forbid_list_ + "\n")
+                write_forbit_file.close()
+
+                new_tmies = times
+
+
+
+
+                mv_place_cmd = "mv " + place_file + " " +place_res_path + str(sythesis_time)+".place"
+                os.system(mv_place_cmd)
+
+                record_1(cur_limit_path, cur_limit, times, sythesis_time)
+
+            if (flag != 1):
+                break
+                print("end")

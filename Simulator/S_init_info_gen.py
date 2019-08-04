@@ -288,23 +288,24 @@ def CREAT_INFO_FILE(brams,benchmark_src_path,benchmark):
 E_0 = 0     #细粒度写均衡
 E_1 = 1     #对比实验VPR原始
 E_2 = 2     #粗粒度写均衡
-
-E = 0
+E_3 = 3     #对比VPR原始_细粒度统计实验
+E = 3
 if(E == E_0):
     E_path = "s_run/"
 elif(E == E_1):
     E_path = "s_run_e_1/"
 elif(E == E_2):
     E_path = "s_run_e_2/"
-
+elif(E == E_3):
+    E_path = "s_run_e_3/"
 
 # benchmark = "boundtop"
 # benchmark =  "LU8PEEng"
 # benchmark =  "LU32PEEng"
 # benchmark =  "mcml"
 # benchmark =  "mkDelayWorker32B"
-# benchmark =  "mkPktMerge"
-benchmark =  "mkSMAdapter4B"
+benchmark =  "mkPktMerge"
+# benchmark =  "mkSMAdapter4B"
 
 if __name__=="__main__":
     BRAM_log = 1
@@ -312,7 +313,7 @@ if __name__=="__main__":
     Pin_set_1 = 3
     Pin_set_2 = 4
     # STAGR = int(sys.argv[1])
-    STAGR = 2
+    STAGR = 1
     if(STAGR == BRAM_log):# 初始化BRAM文件
         # grid_path = sys.argv[2]
         grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/100x100.arch"

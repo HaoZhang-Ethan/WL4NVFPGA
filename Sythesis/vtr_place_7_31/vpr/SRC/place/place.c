@@ -3273,10 +3273,11 @@ static void initial_placement_blocks(int *free_locations, enum e_pad_loc_type pa
 					
 					float bed_cost = 0;
 					(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id].cost = load_phy_info_to_log_2(placer_opts.p_phy_brams, placer_opts.p_log_brams, phy_bram_id, log_bram_id, placer_opts.up_limit, &tmp_D_port, &error, &bed_cost);
-					vpr_printf(TIO_MESSAGE_INFO,"best cost = %f\n",(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id].cost );
+					vpr_printf(TIO_MESSAGE_INFO,"cost_test_begin\n" );					
+					vpr_printf(TIO_MESSAGE_INFO,"best_cost = %f\n",(*placer_opts.p_log_brams).BRAM_LIST[log_bram_id].cost );
 					vpr_printf(TIO_MESSAGE_INFO,"bed_cost = %f\n",bed_cost );
-				
-					vpr_printf(TIO_MESSAGE_INFO,"zh cost = %f\n",load_phy_info_to_log(placer_opts.p_phy_brams, placer_opts.p_log_brams, phy_bram_id, log_bram_id, placer_opts.up_limit, &tmp_D_port_1, &error_1));
+					vpr_printf(TIO_MESSAGE_INFO,"zh_cost = %f\n",load_phy_info_to_log(placer_opts.p_phy_brams, placer_opts.p_log_brams, phy_bram_id, log_bram_id, placer_opts.up_limit, &tmp_D_port_1, &error_1));
+					vpr_printf(TIO_MESSAGE_INFO,"cost_test_end\n" );	
 					try_num--;
 					// vpr_printf(TIO_MESSAGE_INFO,"    %d    \n",error);
 					if (error == 1)
