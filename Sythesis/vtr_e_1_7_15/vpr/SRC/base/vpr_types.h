@@ -650,6 +650,8 @@ struct s_placer_opts {
 	int seed;
 	float td_place_exp_last;
 	boolean doPlacement;
+	// zh_lab
+	char benchmark_name[50];
 	
 };
 

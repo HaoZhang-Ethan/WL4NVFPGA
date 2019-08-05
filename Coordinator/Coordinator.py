@@ -1,11 +1,14 @@
 #-*-coding:utf-8-*-
 
 import os
+import random
+
 
 E_0 = 0     #细粒度写均衡
 E_1 = 1     #对比实验VPR原始
 E_2 = 2     #粗粒度写均衡
 E_3 = 3     #对比VPR原始_细粒度统计实验
+E_4 = 4     #对比槐硕细粒度统计实验
 E = 3
 if(E == E_0):
     E_path = "s_run/"
@@ -15,9 +18,33 @@ elif(E == E_2):
     E_path = "s_run_e_2/"
 elif(E == E_3):
     E_path = "s_run_e_3/"
+elif(E == E_3):
+    E_path = "s_run_e_4/"
+
+#
+# benchmark = "boundtop"
+# amp_num = 10
+
+benchmark =  "LU8PEEng"
+amp_num = 1
+
+# benchmark =  "LU32PEEng"
+# amp_num = 1000
+
+# benchmark =  "mcml"
+# amp_num = 1000
+
+# benchmark =  "mkDelayWorker32B"
+# amp_num = 1000
+
+# benchmark =  "mkPktMerge"
+# amp_num = 1
+
+# benchmark =  "mkSMAdapter4B"
+# amp_num = 1000
 
 
-benchmark = "mkPktMerge"
+
 E_root_path = "/home/zhlab/BRAM/"
 benchmark_src_path = E_root_path+E_path+benchmark+"/src/"
 benchmark_res_path = E_root_path+E_path+benchmark+"/res/"
@@ -51,12 +78,14 @@ elif(E == E_2):
     vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_h/vpr/vpr"
 elif(E == E_3):
     vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_e_3_8_4/vpr/vpr"
+elif (E == E_4):
+    vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_h_4/vpr/vpr"
 
 
 
 
 
-ratio = 0.2
+ratio = 0.25
 nodisply = "--nodisp"
 place = "-place"
 time = 0
@@ -69,7 +98,7 @@ COL = 2
 ROW = 256
 MEM_COL = CONF
 MEM_ROW = COL * ROW
-MAX_WRITE_NUM = 100000 #100000 #1000000      #1000000            #BRAM的最大写次数  //100000000
+MAX_WRITE_NUM = 100000#  1000000000000     #BRAM的最大写次数  //100000000
 TEST_NUM = 2
 MAX_ADD_PIN = 15
 CLK = 5000
@@ -176,7 +205,7 @@ class INIT_LIST:
             self.init_list.append(INIT())
 
 
-def GET_ADDR_WRITE_NUM(inits,info_file_path,E):
+def GET_ADDR_WRITE_NUM(inits,info_file_path,E,Amp):
     NO = -1
     Flag = NO
     flag = NO
@@ -238,7 +267,12 @@ def GET_ADDR_WRITE_NUM(inits,info_file_path,E):
     if(E == E_0):
         for init_num in range(inits.init_num):
             tmp_res = [""] * CLK
-            for i in range(0, 2):
+
+            ace_list = []
+            ace_list.clear()
+            ace_list.append(random.randint(0, 999))
+            ace_list.append(random.randint(0, 999))
+            for i in ace_list:
                 s_file_path = add_pre_path + str(i) + ".ace"
                 s_file = open(s_file_path)
                 for line in s_file:
@@ -269,7 +303,11 @@ def GET_ADDR_WRITE_NUM(inits,info_file_path,E):
     elif (E == E_1):
         for init_num in range(inits.init_num):
             tmp_res = [""] * CLK
-            for i in range(0, 2):
+            ace_list = []
+            ace_list.clear()
+            ace_list.append(random.randint(0, 999))
+            ace_list.append(random.randint(0, 999))
+            for i in ace_list:
                 s_file_path = add_pre_path + str(i) + ".ace"
                 s_file = open(s_file_path)
                 for line in s_file:
@@ -331,7 +369,7 @@ def GET_ADDR_WRITE_NUM(inits,info_file_path,E):
             add_range = int(add_range)
             for i in range(add_range):
                 if (inits.init_list[init_num].hit_add_dict[i] != 0):
-                    count_add_hit_num_file.write(str(i) + " " + str(inits.init_list[init_num].hit_add_dict[i]) + "\n")
+                    count_add_hit_num_file.write(str(i) + " " + str(inits.init_list[init_num].hit_add_dict[i]*Amp) + "\n")
                     all_no_flag = 1
             if (all_no_flag == 0):
                 count_add_hit_num_file.write("0 0\n")
@@ -468,6 +506,7 @@ if(E == E_0):
         E_limit = 0
     Effic_num = 0
     Effic = [0]*10
+    Effic_num_begin = 0
     E_flag = 0
     while(cur_limit < MAX_WRITE_NUM +1):
             record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
@@ -492,7 +531,7 @@ if(E == E_0):
                 pos_dict = {}
                 BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
                 inits = INIT_LIST()
-                GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_",E)
+                GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_",E,amp_num)
                 update_Flag = 1
                 while (update_Flag):
                     print("times  =  " + str(times))
@@ -524,6 +563,8 @@ if(E == E_0):
                 if(sythesis_time == 1 or E_flag == 1):
                     E_limit = (new_tmies-old_tmies)
                     E_flag = 0
+                    if (sythesis_time == 1):
+                        Effic_num_begin = E_limit
 
                 Effic[sythesis_time%10] = new_tmies-old_tmies
 
@@ -534,9 +575,11 @@ if(E == E_0):
 
                 record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
 
-            if(flag != 1 or Effic_fun(Effic,Effic_num,int(E_limit/4))):#
+            if(flag != 1 or Effic_fun(Effic,Effic_num,int(Effic_num_begin/4))):#
                 cur_limit = cur_limit + ratio * MAX_WRITE_NUM
                 E_flag = 1
+                Effic_num = 0
+
 
 elif(E == E_1):
     sythesis_time = 0
@@ -554,7 +597,7 @@ elif(E == E_1):
             pos_dict = {}
             BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
             inits = INIT_LIST()
-            GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info",E)
+            GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info",E,amp_num)
             update_Flag = 1
             while (update_Flag):
                 print("times  =  " + str(times))
@@ -651,7 +694,7 @@ elif(E == E_2):
             pos_dict = {}
             BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
             inits = INIT_LIST()
-            GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info",E_1)
+            GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info",E_1,amp_num)
             update_Flag = 1
             while (update_Flag):
                 print("times  =  " + str(times))
@@ -699,7 +742,7 @@ elif(E == E_2):
         if (flag != 1 or Effic_fun(Effic,Effic_num,int(E_limit/4))):
             cur_limit = cur_limit + ratio * MAX_WRITE_NUM
             E_flag = 1
-if(E == E_3):
+elif(E == E_3):
 
 
     sythesis_time = 0
@@ -722,7 +765,7 @@ if(E == E_3):
                 pos_dict = {}
                 BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
                 inits = INIT_LIST()
-                GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_",E_0)
+                GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_",E_0,amp_num)
                 update_Flag = 1
                 while (update_Flag):
                     print("times  =  " + str(times))
@@ -771,3 +814,93 @@ if(E == E_3):
             if (flag != 1):
                 break
                 print("end")
+
+
+elif(E == E_4):
+
+
+    if(os.path.exists(cur_limit_path)==1):
+        print("continue\n")
+        cur_limit,times,sythesis_time,E_limit = get_init_info(cur_limit_path)
+        cur_limit = cur_limit - ratio * MAX_WRITE_NUM
+
+    else:
+        print("new test\n")
+        cur_limit = begin_limit + ratio * MAX_WRITE_NUM
+        times = 0
+        sythesis_time = 0
+        file = open(record_2_path,'w')
+        file.write("")
+        file.close()
+        E_limit = 0
+    Effic_num = 0
+    Effic = [0]*10
+    E_flag = 0
+    while(cur_limit < MAX_WRITE_NUM +1):
+            record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
+
+
+            cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place + " " + "***" + str(int(cur_limit))+">"+benchmark_res_path+"vpr.out"
+            # cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place +">>"+benchmark_res_path+"vpr.out"
+            os.system(cmd)
+            flag = os.path.exists(place_file)
+            if (flag == 1):
+
+                old_tmies = times
+                sythesis_time += 1
+                Effic_num += 1
+
+                cmd_transfrom = "python /home/zhlab/FPGA_NVBRAM/SRC/Simulator/S_transform.py "+ E_path+" "+benchmark
+                os.system(cmd_transfrom)
+                mv_place_pin = "mv "+benchmark_pre_info_src_path+benchmark+".place_pin"+" "+ benchmark_res_path+"place_pin/"
+                mv_place_pin = mv_place_pin + str(sythesis_time) + ".place_pin"
+                os.system(mv_place_pin)
+                GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path,benchmark)
+                pos_dict = {}
+                BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
+                inits = INIT_LIST()
+                GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_",E,amp_num)
+                update_Flag = 1
+                while (update_Flag):
+                    print("times  =  " + str(times))
+                    times += 1
+                    for init_ in range(inits.init_num):
+                        write_num_path = write_num_path_pre+str(init_)+".hit"
+                        write_num = open(write_num_path)
+                        name_flag = 0
+                        init_name = ""
+                        for line_ in write_num:
+                            if(name_flag == 1):
+                                init_name = line_.replace("\n","")
+                                break
+                            if(line_.find("mem_name")!=-1):
+                                name_flag = 1
+                        write_num.close()
+                        BRAM_file_path = pos_dict[init_name]
+                        print("Hit = "+str(init_)+  "      BRAM_POS = " + BRAM_file_path)
+                        BRAM_file_path = benchmark_BRAM_path + BRAM_file_path
+                        command = update_path +" " + write_num_path + " " +BRAM_file_path + " "+ str(int(cur_limit))
+                        # print(command)
+                        res = str(os.system(command))
+                        print(res)
+                        if(int(res) != 0):
+                            print("Write_over")
+                            update_Flag = 0
+
+                new_tmies = times
+                if(sythesis_time == 1 or E_flag == 1):
+                    E_limit = (new_tmies-old_tmies)
+                    E_flag = 0
+
+                Effic[sythesis_time%10] = new_tmies-old_tmies
+
+                record_2(record_2_path, new_tmies-old_tmies,cur_limit)
+
+                mv_place_cmd = "mv " + place_file + " " +place_res_path + str(sythesis_time)+".place"
+                os.system(mv_place_cmd)
+
+                record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
+
+            if(flag != 1 or Effic_fun(Effic,Effic_num,int(E_limit/4))):#
+                cur_limit = cur_limit + ratio * MAX_WRITE_NUM
+                E_flag = 1

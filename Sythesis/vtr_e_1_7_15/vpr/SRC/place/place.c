@@ -237,7 +237,7 @@ static void initial_placement_pl_macros(int macros_max_num_tries, int * free_loc
 static void initial_placement_blocks(int * free_locations, enum e_pad_loc_type pad_loc_type);
 
 static void initial_placement(enum e_pad_loc_type pad_loc_type,
-		char *pad_loc_file);
+		char *pad_loc_file,struct s_placer_opts placer_opts);
 
 static float comp_bb_cost(enum cost_methods method);
 
@@ -408,7 +408,7 @@ void try_place(struct s_placer_opts placer_opts,
 	//zh_lab
 
 
-	initial_placement(placer_opts.pad_loc_type, placer_opts.pad_loc_file);
+	initial_placement(placer_opts.pad_loc_type, placer_opts.pad_loc_file,placer_opts);
 	init_draw_coords((float) width_fac);
 
 	/* Storing the number of pins on each type of block makes the swap routine *
@@ -2788,7 +2788,7 @@ static void initial_placement_blocks(int * free_locations, enum e_pad_loc_type p
 }
 
 static void initial_placement(enum e_pad_loc_type pad_loc_type,
-		char *pad_loc_file) {
+		char *pad_loc_file,struct s_placer_opts placer_opts) {
 
 	/* Randomly places the blocks to create an initial placement. We rely on
 	 * the legal_pos array already being loaded.  That legal_pos[itype] is an 
@@ -2814,7 +2814,13 @@ static void initial_placement(enum e_pad_loc_type pad_loc_type,
 			grid[i][j].forbid = 0;
 		}
 	}
-	get_forbid_mem("/home/zhlab/BRAM/s_run_e_1/LU8PEEng/res/forbid_pos");
+	char log_pin_path[250];
+	memset (log_pin_path,NULL,sizeof(log_pin_path));
+	strcpy (log_pin_path,"/home/zhlab/BRAM/s_run_e_1/");
+	strcat (log_pin_path,placer_opts.benchmark_name);
+	strcat (log_pin_path,"/res/forbid_pos");
+
+	get_forbid_mem(log_pin_path);
 
 	/* We'll use the grid to record where everything goes. Initialize to the grid has no 
 	 * blocks placed anywhere.

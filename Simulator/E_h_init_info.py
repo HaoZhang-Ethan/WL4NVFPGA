@@ -218,7 +218,7 @@ STAGR = 2
 
 
 if __name__=="__main__":
-    if (STAGR == CREAT_INIT_INFO):
+    if (STAGR == CREAT_INIT_INFO):# 获取逻辑信息
         pin_dict = build_pin_dict(benchmark_src_path,folder_path)
         brams = BRAMS()
         CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)
