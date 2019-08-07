@@ -9,7 +9,7 @@ E_1 = 1     #对比实验VPR原始
 E_2 = 2     #粗粒度写均衡
 E_3 = 3     #对比VPR原始_细粒度统计实验
 E_4 = 4     #对比槐硕细粒度统计实验
-E = 3
+E = 0
 if(E == E_0):
     E_path = "s_run/"
 elif(E == E_1):
@@ -25,8 +25,8 @@ elif(E == E_3):
 # benchmark = "boundtop"
 # amp_num = 10
 
-benchmark =  "LU8PEEng"
-amp_num = 1
+# benchmark =  "LU8PEEng"
+# amp_num = 1
 
 # benchmark =  "LU32PEEng"
 # amp_num = 1000
@@ -37,8 +37,8 @@ amp_num = 1
 # benchmark =  "mkDelayWorker32B"
 # amp_num = 1000
 
-# benchmark =  "mkPktMerge"
-# amp_num = 1
+benchmark =  "mkPktMerge"
+amp_num = 1
 
 # benchmark =  "mkSMAdapter4B"
 # amp_num = 1000
@@ -492,7 +492,7 @@ if(E == E_0):
 
     if(os.path.exists(cur_limit_path)==1):
         print("continue\n")
-        cur_limit,times,sythesis_time,E_limit = get_init_info(cur_limit_path)
+        cur_limit,times,sythesis_time,Effic_num_begin = get_init_info(cur_limit_path)
         cur_limit = cur_limit - ratio * MAX_WRITE_NUM
 
     else:
@@ -573,7 +573,7 @@ if(E == E_0):
                 mv_place_cmd = "mv " + place_file + " " +place_res_path + str(sythesis_time)+".place"
                 os.system(mv_place_cmd)
 
-                record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
+                record_1(cur_limit_path, cur_limit, times, sythesis_time,Effic_num_begin)
 
             if(flag != 1 or Effic_fun(Effic,Effic_num,int(Effic_num_begin/4))):#
                 cur_limit = cur_limit + ratio * MAX_WRITE_NUM
