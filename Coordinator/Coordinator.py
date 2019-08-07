@@ -9,7 +9,8 @@ E_1 = 1     #对比实验VPR原始
 E_2 = 2     #粗粒度写均衡
 E_3 = 3     #对比VPR原始_细粒度统计实验
 E_4 = 4     #对比槐硕细粒度统计实验
-E = 0
+E_5 = 5     #动态阈值
+E = 3
 if(E == E_0):
     E_path = "s_run/"
 elif(E == E_1):
@@ -18,15 +19,16 @@ elif(E == E_2):
     E_path = "s_run_e_2/"
 elif(E == E_3):
     E_path = "s_run_e_3/"
-elif(E == E_3):
+elif(E == E_4):
     E_path = "s_run_e_4/"
-
+elif(E == E_5):
+    E_path = "s_run_e_5/"
 #
 # benchmark = "boundtop"
 # amp_num = 10
 
-# benchmark =  "LU8PEEng"
-# amp_num = 1
+benchmark =  "LU8PEEng"
+amp_num = 1
 
 # benchmark =  "LU32PEEng"
 # amp_num = 1000
@@ -37,8 +39,8 @@ elif(E == E_3):
 # benchmark =  "mkDelayWorker32B"
 # amp_num = 1000
 
-benchmark =  "mkPktMerge"
-amp_num = 1
+# benchmark =  "mkPktMerge"
+# amp_num = 1
 
 # benchmark =  "mkSMAdapter4B"
 # amp_num = 1000
@@ -57,6 +59,7 @@ place_res_path = E_root_path+E_path+benchmark+"/res/place_res/"
 xml = E_root_path+E_path+benchmark+"/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml"
 blif = E_root_path+E_path+benchmark+"/src/pre_info_src/"+benchmark+".blif"
 place_file = E_root_path+E_path+benchmark+"/src/pre_info_src/"+benchmark+".place"
+route_file = E_root_path+E_path+benchmark+"/src/pre_info_src/"+benchmark+".route"
 info_file_path = E_root_path+E_path+benchmark+"/src/"+ benchmark  + ".info_"
 addr_hit_num_path = E_root_path+E_path+benchmark+"/res/address/"
 forbid_file_path = benchmark_res_path+"forbid_pos"
@@ -67,7 +70,8 @@ add_pre_path = "/home/zhlab/BRAM/s_run/"+ benchmark  + "/src/ace_pool/"
 #tool_path
 update_path = "/home/zhlab/FPGA_NVBRAM/SRC/BRAM_writer/update"
 trigger_path = "/home/zhlab/FPGA_NVBRAM/SRC/trigger/trigger"
-
+performance_path = benchmark_src_path+"performance.txt"
+res_path = benchmark_res_path+"vpr.out"
 
 
 if(E == E_0):
@@ -80,6 +84,8 @@ elif(E == E_3):
     vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_e_3_8_4/vpr/vpr"
 elif (E == E_4):
     vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vtr_h_4/vpr/vpr"
+elif (E == E_5 ):
+    vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vpr/vpr7_5"
 
 
 
@@ -88,6 +94,8 @@ elif (E == E_4):
 ratio = 0.25
 nodisply = "--nodisp"
 place = "-place"
+route_opt = "--route_chan_width 250"
+seed = "--seed"
 time = 0
 begin_limit = 0
 
@@ -436,7 +444,32 @@ def record_2(path,num,cur_limit):
     file = open(path, 'a')
     file.write(str(cur_limit)+"\t"+str(num)+"\n")
     file.close()
+#记录性能
+def record_performance(file_path,line):
+    file = open(file_path, 'a')
+    file.write(line)
+    file.close()
 
+def get_performance(res_path,performance_path,num):
+
+
+    t_logic_delay = 0
+    t_net_delay = 0
+    critical_path = 0
+
+    res_file = open(res_path)
+    for line in res_file:
+        if (line.find("Total logic delay:") != -1):
+            line_ = line.split()
+            t_logic_delay = line_[3]
+            t_net_delay = line_[8]
+        elif (line.find("Final critical path:") != -1):
+            line_ = line.split()
+            critical_path = line_[3]
+    res_file.close()
+
+    line_info =str(num)+"\t" + str(t_logic_delay) + "\t" + str(t_net_delay)+"\t"+str(critical_path)+"\n"
+    record_performance(performance_path, line_info)
 
 
 def e_3_get_build_dict(file_path,opt):
@@ -486,7 +519,101 @@ def Effic_fun(Effic,Effic_num,E_limit):
             sum += Effic[It_Effic]
         if ((sum/10) < E_limit):
             return 1 # 此时利用率不高，提升up_limit
+# 原始
+# if(E == E_0):
+#
+#
+#     if(os.path.exists(cur_limit_path)==1):
+#         print("continue\n")
+#         cur_limit,times,sythesis_time,Effic_num_begin = get_init_info(cur_limit_path)
+#         cur_limit = cur_limit - ratio * MAX_WRITE_NUM
+#
+#     else:
+#         print("new test\n")
+#         cur_limit = begin_limit + ratio * MAX_WRITE_NUM
+#         times = 0
+#         sythesis_time = 0
+#         file = open(record_2_path,'w')
+#         file.write("")
+#         file.close()
+#         E_limit = 0
+#     Effic_num = 0
+#     Effic = [0]*10
+#     Effic_num_begin = 0
+#     E_flag = 0
+#     while(cur_limit < MAX_WRITE_NUM +1):
+#             record_1(cur_limit_path, cur_limit, times, sythesis_time,Effic_num_begin)
+#
+#
+#             cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place + " " + "***" + str(int(cur_limit))+">"+benchmark_res_path+"vpr.out"
+#             # cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place +">>"+benchmark_res_path+"vpr.out"
+#             os.system(cmd)
+#             flag = os.path.exists(place_file)
+#             if (flag == 1):
+#
+#                 old_tmies = times
+#                 sythesis_time += 1
+#                 Effic_num += 1
+#
+#                 cmd_transfrom = "python /home/zhlab/FPGA_NVBRAM/SRC/Simulator/S_transform.py "+ E_path+" "+benchmark
+#                 os.system(cmd_transfrom)
+#                 mv_place_pin = "mv "+benchmark_pre_info_src_path+benchmark+".place_pin"+" "+ benchmark_res_path+"place_pin/"
+#                 mv_place_pin = mv_place_pin + str(sythesis_time) + ".place_pin"
+#                 os.system(mv_place_pin)
+#                 GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path,benchmark)
+#                 pos_dict = {}
+#                 BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
+#                 inits = INIT_LIST()
+#                 GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_",E,amp_num)
+#                 update_Flag = 1
+#                 while (update_Flag):
+#                     print("times  =  " + str(times))
+#                     times += 1
+#                     for init_ in range(inits.init_num):
+#                         write_num_path = write_num_path_pre+str(init_)+".hit"
+#                         write_num = open(write_num_path)
+#                         name_flag = 0
+#                         init_name = ""
+#                         for line_ in write_num:
+#                             if(name_flag == 1):
+#                                 init_name = line_.replace("\n","")
+#                                 break
+#                             if(line_.find("mem_name")!=-1):
+#                                 name_flag = 1
+#                         write_num.close()
+#                         BRAM_file_path = pos_dict[init_name]
+#                         print("Hit = "+str(init_)+  "      BRAM_POS = " + BRAM_file_path)
+#                         BRAM_file_path = benchmark_BRAM_path + BRAM_file_path
+#                         command = update_path +" " + write_num_path + " " +BRAM_file_path + " "+ str(int(cur_limit))
+#                         # print(command)
+#                         res = str(os.system(command))
+#                         print(res)
+#                         if(int(res) != 0):
+#                             print("Write_over")
+#                             update_Flag = 0
+#
+#                 new_tmies = times
+#                 if(sythesis_time == 1 or E_flag == 1):
+#                     E_limit = (new_tmies-old_tmies)
+#                     E_flag = 0
+#                     if (sythesis_time == 1):
+#                         Effic_num_begin = E_limit
+#
+#                 Effic[sythesis_time%10] = new_tmies-old_tmies
+#
+#                 record_2(record_2_path, new_tmies-old_tmies,cur_limit)
+#
+#                 mv_place_cmd = "mv " + place_file + " " +place_res_path + str(sythesis_time)+".place"
+#                 os.system(mv_place_cmd)
+#
+#                 record_1(cur_limit_path, cur_limit, times, sythesis_time,Effic_num_begin)
+#
+#             if(flag != 1 or Effic_fun(Effic,Effic_num,int(Effic_num_begin/4))):#
+#                 cur_limit = cur_limit + ratio * MAX_WRITE_NUM
+#                 E_flag = 1
+#                 Effic_num = 0
 
+# 增加布线
 if(E == E_0):
 
 
@@ -504,20 +631,28 @@ if(E == E_0):
         file.write("")
         file.close()
         E_limit = 0
+
     Effic_num = 0
     Effic = [0]*10
     Effic_num_begin = 0
     E_flag = 0
+    try_num = 0
+    last_suc_flag = 1
     while(cur_limit < MAX_WRITE_NUM +1):
-            record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
+            record_1(cur_limit_path, cur_limit, times, sythesis_time,Effic_num_begin)
+            if (last_suc_flag == 1):
+                try_num = 0
 
+            cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + route_opt + " " + seed +" " + str(try_num+1)+" " + "***" + str(int(cur_limit))+">"+benchmark_res_path+"vpr.out"
 
-            cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place + " " + "***" + str(int(cur_limit))+">"+benchmark_res_path+"vpr.out"
-            # cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place +">>"+benchmark_res_path+"vpr.out"
             os.system(cmd)
-            flag = os.path.exists(place_file)
-            if (flag == 1):
+            flag = os.path.exists(route_file)
 
+            if (flag == 1):
+                cmd_del_f = "rm -rf " + route_file
+                os.system(cmd_del_f)
+                get_performance(res_path, performance_path, sythesis_time)
+                last_suc_flag = 1
                 old_tmies = times
                 sythesis_time += 1
                 Effic_num += 1
@@ -574,11 +709,14 @@ if(E == E_0):
                 os.system(mv_place_cmd)
 
                 record_1(cur_limit_path, cur_limit, times, sythesis_time,Effic_num_begin)
-
-            if(flag != 1 or Effic_fun(Effic,Effic_num,int(Effic_num_begin/4))):#
+            else:
+                last_suc_flag = 0
+                try_num += 1
+            if((flag != 1 and try_num >3) or Effic_fun(Effic,Effic_num,int(Effic_num_begin/4)) ):#
                 cur_limit = cur_limit + ratio * MAX_WRITE_NUM
                 E_flag = 1
                 Effic_num = 0
+                try_num = 0
 
 
 elif(E == E_1):
@@ -586,13 +724,23 @@ elif(E == E_1):
     times = 0
     cur_limit = MAX_WRITE_NUM
     forbid_list = []
+    try_num = 0
+    last_suc_flag = 1
     while (1):
         record_1(cur_limit_path, cur_limit, times, sythesis_time)
-        # cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place + " " + "***" + str(int(cur_limit))+">>"+benchmark_res_path+"vpr.out"
-        cmd = vpr + " " + xml + " " + blif + " " + nodisply + " " + place + ">" + benchmark_res_path + "vpr.out"
+
+        if (last_suc_flag == 1):
+            try_num = 0
+
+        cmd = vpr + " " + xml + " " + blif + " " + nodisply + " " + route_opt + " " + seed +" " + str(try_num+1) +" " ">" + benchmark_res_path + "vpr.out"
         os.system(cmd)
-        flag = os.path.exists(place_file)
+        flag = os.path.exists(route_file)
+
         if (flag == 1):
+            cmd_del_f = "rm -rf " + route_file
+            os.system(cmd_del_f)
+            last_suc_flag = 1
+            get_performance(res_path, performance_path, sythesis_time)
             GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path, benchmark)
             pos_dict = {}
             BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
@@ -656,7 +804,11 @@ elif(E == E_1):
             mv_place_cmd = "mv " + place_file + " " + place_res_path + str(sythesis_time) + ".place"
             os.system(mv_place_cmd)
             sythesis_time += 1
-        if (flag != 1):
+        else:
+            last_suc_flag = 0
+            try_num += 1
+
+        if (flag != 1 and try_num > 3):
             break
             print("end")
 elif(E == E_2):
@@ -688,6 +840,7 @@ elif(E == E_2):
         flag = os.path.exists(place_file)
         if (flag == 1):
 
+            get_performance(res_path, performance_path, sythesis_time)
             old_tmies = times
             sythesis_time += 1
             GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path, benchmark)
@@ -749,13 +902,27 @@ elif(E == E_3):
     times = 0
     cur_limit = MAX_WRITE_NUM
     forbid_list = []
+    try_num = 0
+    last_suc_flag = 1
     while (1):
             record_1(cur_limit_path, cur_limit, times, sythesis_time)
 
-            cmd = vpr + " " + xml + " " + blif + " " + nodisply + " " + place + ">" + benchmark_res_path + "vpr.out"
+            if (last_suc_flag == 1):
+                try_num = 0
+
+            cmd = vpr + " " + xml + " " + blif + " " + nodisply + " " + route_opt + " " + seed + " " + str(
+                try_num + 1) + " " ">" + benchmark_res_path + "vpr.out"
             os.system(cmd)
-            flag = os.path.exists(place_file)
+            flag = os.path.exists(route_file)
+
+
             if (flag == 1):
+
+                cmd_del_f = "rm -rf " + route_file
+                os.system(cmd_del_f)
+
+                get_performance(res_path, performance_path, sythesis_time)
+                last_suc_flag = 1
 
                 old_tmies = times
                 sythesis_time += 1
@@ -811,7 +978,10 @@ elif(E == E_3):
 
                 record_1(cur_limit_path, cur_limit, times, sythesis_time)
 
-            if (flag != 1):
+            else:
+                last_suc_flag = 0
+                try_num += 1
+            if (flag != 1 and try_num > 3):
                 break
                 print("end")
 
@@ -837,15 +1007,19 @@ elif(E == E_4):
     Effic = [0]*10
     E_flag = 0
     while(cur_limit < MAX_WRITE_NUM +1):
+
+
             record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
 
 
             cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place + " " + "***" + str(int(cur_limit))+">"+benchmark_res_path+"vpr.out"
-            # cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place +">>"+benchmark_res_path+"vpr.out"
+
             os.system(cmd)
             flag = os.path.exists(place_file)
             if (flag == 1):
 
+                get_performance(res_path, performance_path, sythesis_time)
+                get_performance(res_path, performance_path, sythesis_time)
                 old_tmies = times
                 sythesis_time += 1
                 Effic_num += 1
@@ -904,3 +1078,108 @@ elif(E == E_4):
             if(flag != 1 or Effic_fun(Effic,Effic_num,int(E_limit/4))):#
                 cur_limit = cur_limit + ratio * MAX_WRITE_NUM
                 E_flag = 1
+
+
+if(E == E_5):
+
+    E = E_0
+    ratio_1 = 0.9
+    ratio_2 = 0.025
+    if(os.path.exists(cur_limit_path)==1):
+        print("continue\n")
+        cur_limit,times,sythesis_time,Effic_num_begin = get_init_info(cur_limit_path)
+        # cur_limit = cur_limit - ratio * MAX_WRITE_NUM
+
+    else:
+        print("new test\n")
+        cur_limit = begin_limit + ratio_1 * MAX_WRITE_NUM
+        times = 0
+        sythesis_time = 0
+        file = open(record_2_path,'w')
+        file.write("")
+        file.close()
+        E_limit = 0
+    Effic_num = 0
+    Effic = [0]*10
+    Effic_num_begin = 0
+    E_flag = 0
+    try_num = 0
+    last_suc_flag = 1
+    while(cur_limit < MAX_WRITE_NUM +1):
+            record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
+            if (last_suc_flag == 1):
+                try_num = 0
+
+            cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + route_opt + " " + seed +" " + str(try_num+1)+" " + "***" + str(int(cur_limit))+">"+benchmark_res_path+"vpr.out"
+            # cmd = vpr + " " + xml + " " + blif +" " + nodisply + " " + place +">>"+benchmark_res_path+"vpr.out"
+            os.system(cmd)
+            flag = os.path.exists(route_file)
+            if (flag == 1):
+
+                get_performance(res_path, performance_path, sythesis_time)
+                last_suc_flag = 1
+                old_tmies = times
+                sythesis_time += 1
+                Effic_num += 1
+
+                cmd_transfrom = "python /home/zhlab/FPGA_NVBRAM/SRC/Simulator/S_transform.py "+ E_path+" "+benchmark
+                os.system(cmd_transfrom)
+                mv_place_pin = "mv "+benchmark_pre_info_src_path+benchmark+".place_pin"+" "+ benchmark_res_path+"place_pin/"
+                mv_place_pin = mv_place_pin + str(sythesis_time) + ".place_pin"
+                os.system(mv_place_pin)
+                GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path,benchmark)
+                pos_dict = {}
+                BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
+                inits = INIT_LIST()
+                GET_ADDR_WRITE_NUM(inits,E_root_path+E_path+benchmark+"/src/"+benchmark+".info_",E,amp_num)
+                update_Flag = 1
+                while (update_Flag):
+                    print("times  =  " + str(times))
+                    times += 1
+                    for init_ in range(inits.init_num):
+                        write_num_path = write_num_path_pre+str(init_)+".hit"
+                        write_num = open(write_num_path)
+                        name_flag = 0
+                        init_name = ""
+                        for line_ in write_num:
+                            if(name_flag == 1):
+                                init_name = line_.replace("\n","")
+                                break
+                            if(line_.find("mem_name")!=-1):
+                                name_flag = 1
+                        write_num.close()
+                        BRAM_file_path = pos_dict[init_name]
+                        print("Hit = "+str(init_)+  "      BRAM_POS = " + BRAM_file_path)
+                        BRAM_file_path = benchmark_BRAM_path + BRAM_file_path
+                        command = update_path +" " + write_num_path + " " +BRAM_file_path + " "+ str(int(cur_limit))
+                        # print(command)
+                        res = str(os.system(command))
+                        print(res)
+                        if(int(res) != 0):
+                            print("Write_over")
+                            update_Flag = 0
+
+                new_tmies = times
+                if(sythesis_time == 1 or E_flag == 1):
+                    E_limit = (new_tmies-old_tmies)
+                    E_flag = 0
+                    # if (sythesis_time == 1):
+                    #     Effic_num_begin = E_limit
+
+                Effic[sythesis_time%10] = new_tmies-old_tmies
+
+                record_2(record_2_path, new_tmies-old_tmies,cur_limit)
+
+                mv_place_cmd = "mv " + place_file + " " +place_res_path + str(sythesis_time)+".place"
+                os.system(mv_place_cmd)
+
+                record_1(cur_limit_path, cur_limit, times, sythesis_time,E_limit)
+            else:
+                last_suc_flag = 0
+                try_num += 1
+            if((flag != 1 and try_num >3) or Effic_fun(Effic,Effic_num,int(E_limit/4)) ):#
+                cur_limit = cur_limit + ratio_2 * MAX_WRITE_NUM
+                E_flag = 1
+                Effic_num = 0
+                try_num = 0
+

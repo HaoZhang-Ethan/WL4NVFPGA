@@ -454,8 +454,8 @@ void free_arch(t_arch* Arch) {
 	t_model *model, *prev;
 	t_model_ports *port, *prev_port;
 	struct s_linked_vptr *vptr, *vptr_prev;
-
-	freeGrid();
+	//zh_debug
+	// freeGrid();
 	free(chan_width_x);
 	chan_width_x = NULL;
 	free(chan_width_y);

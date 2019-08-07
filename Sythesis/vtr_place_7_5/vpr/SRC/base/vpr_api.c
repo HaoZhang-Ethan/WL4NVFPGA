@@ -569,8 +569,9 @@ void free_options(t_options *options) {
 		free(options->PowerFile);
 	if (options->CmosTechFile)
 		free(options->CmosTechFile);
-	if (options->RouteFile)
-		free(options->RouteFile);
+	//zh_lab     debug
+	// if (options->RouteFile)
+	// 	free(options->RouteFile);
 	if (options->out_file_prefix)
 		free(options->out_file_prefix);
 	if (options->PinFile)

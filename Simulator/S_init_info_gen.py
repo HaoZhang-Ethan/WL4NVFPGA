@@ -4,6 +4,35 @@
 import os
 
 
+E_0 = 0     #细粒度写均衡
+E_1 = 1     #对比实验VPR原始
+E_2 = 2     #粗粒度写均衡
+E_3 = 3     #对比VPR原始_细粒度统计实验
+E_4 = 4     #对比槐硕细粒度统计实验
+E_5 = 5     #动态阈值
+E = 1
+if(E == E_0):
+    E_path = "s_run/"
+elif(E == E_1):
+    E_path = "s_run_e_1/"
+elif(E == E_2):
+    E_path = "s_run_e_2/"
+elif(E == E_3):
+    E_path = "s_run_e_3/"
+elif(E == E_4):
+    E_path = "s_run_e_4/"
+elif(E == E_5):
+    E_path = "s_run_e_5/"
+
+# benchmark = "boundtop"
+# benchmark =  "LU8PEEng"
+# benchmark =  "LU32PEEng"
+# benchmark =  "mcml"
+# benchmark =  "mkDelayWorker32B"
+benchmark =  "mkPktMerge"
+# benchmark =  "mkSMAdapter4B"
+# benchmark =  "or1200"
+
 #BRAM_log
 # 创建BRAM   x_ymem初始化文件
 def new_BRAM_file(benchmark_BRAM_path,name,MEM_ROW,MEM_COL):
@@ -285,30 +314,7 @@ def CREAT_INFO_FILE(brams,benchmark_src_path,benchmark):
     info_file.close()
 
 
-E_0 = 0     #细粒度写均衡
-E_1 = 1     #对比实验VPR原始
-E_2 = 2     #粗粒度写均衡
-E_3 = 3     #对比VPR原始_细粒度统计实验
-E_4 = 4     #对比槐硕细粒度统计实验
-E = 3
-if(E == E_0):
-    E_path = "s_run/"
-elif(E == E_1):
-    E_path = "s_run_e_1/"
-elif(E == E_2):
-    E_path = "s_run_e_2/"
-elif(E == E_3):
-    E_path = "s_run_e_3/"
-elif(E == E_4):
-    E_path = "s_run_e_4/"
 
-# benchmark = "boundtop"
-benchmark =  "LU8PEEng"
-# benchmark =  "LU32PEEng"
-# benchmark =  "mcml"
-# benchmark =  "mkDelayWorker32B"
-# benchmark =  "mkPktMerge"
-# benchmark =  "mkSMAdapter4B"
 
 if __name__=="__main__":
     BRAM_log = 1
@@ -346,7 +352,7 @@ if __name__=="__main__":
         benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"
         CREAT_RAND_ACT(get_act_path, benchmark_src_path, TEST_NUM, benchmark, benchmark_pre_info_src_path)
         CORRECTION(benchmark_src_path+"act_pool/",TEST_NUM)
-        MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM,"RST_N",0.94,0.06)
+        # MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM,"rst",0.06,0.06)
     elif (STAGR == Pin_set_1):
         # vtr_release_path = sys.argv[2]
         vtr_release_path = "/home/zhlab/BRAM/vtr/vtr_release/vpr/vpr"

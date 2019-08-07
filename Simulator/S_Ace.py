@@ -29,6 +29,7 @@ if __name__=="__main__":
     # benchmark =  "LU32PEEng"
     # benchmark =  "mcml"
     # benchmark =  "mkDelayWorker32B"
-    benchmark =  "mkPktMerge"
+    # benchmark =  "mkPktMerge"
     # benchmark =  "mkSMAdapter4B"
+    benchmark =  "or1200"
     CARLL_ACE("/home/zhlab/BRAM/s_run/"+benchmark+"/src/",benchmark,"/home/zhlab/BRAM/s_run/"+benchmark+"/src/pre_info_src/","/home/zhlab/BRAM/vtr/vtr_ace_0/ace2/ace",1000)
