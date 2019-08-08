@@ -1772,9 +1772,9 @@ static enum swap_result assess_swap(float delta_c, float t, float p1, float p2, 
 	float a1 = exp(-p1) ;
 	float a2 = exp(-p2);
 
-	/*if(p1 < 1 || p2 < 1){
+	if(p1 < 1 || p2 < 1){
 		std::cout<<"faaaaaf"<<std::endl;
-	}*/
+	}
 
 	*if_goto = 0;
 	if (delta_c <= 0) {
@@ -2966,10 +2966,6 @@ static void initial_placement_blocks(int * free_locations, enum e_pad_loc_type p
 					tmpd =  free_locations[itype];
 					if (times == tmpd){
 						std::cout<<"ffffffffffff"<<std::endl;
-						std::cout<<tmpd<<std::endl;
-						for(int aa = 0; aa< tmpd; aa++){
-							std::cout<<pbr[xx[aa]].x << "\t" <<pbr[xx[aa]].y<<std::endl;
-						}
 						exit(1);
 					}
 				}
@@ -2995,10 +2991,10 @@ static void initial_placement_blocks(int * free_locations, enum e_pad_loc_type p
 				assert (grid[x][y].blocks[z] == OPEN);
 
 				int is_mem = 0;
-				if (strcmp((*(block[iblk].type)).name,"memory") == 0){
+			/*	if (strcmp((*(block[iblk].type)).name,"memory") == 0){
 					std::cout<<block[iblk].name<<"\t"<<x<<":"<<y<<std::endl;
 					is_mem = 1;
-				}
+				}*/
 
 
 

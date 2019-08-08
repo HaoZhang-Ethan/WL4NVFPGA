@@ -10,7 +10,7 @@ E_2 = 2     #粗粒度写均衡
 E_3 = 3     #对比VPR原始_细粒度统计实验
 E_4 = 4     #对比槐硕细粒度统计实验
 E_5 = 5     #动态阈值
-E = 1
+E = -1
 if(E == E_0):
     E_path = "s_run/"
 elif(E == E_1):
@@ -27,11 +27,19 @@ elif(E == E_5):
 # benchmark = "boundtop"
 # benchmark =  "LU8PEEng"
 # benchmark =  "LU32PEEng"
-# benchmark =  "mcml"
+# benchmark =  "mcml"         # net 格式有问题需要手动修改
 # benchmark =  "mkDelayWorker32B"
-benchmark =  "mkPktMerge"
+# benchmark =  "mkPktMerge"
 # benchmark =  "mkSMAdapter4B"
 # benchmark =  "or1200"
+
+BRAM_log = 1
+Random_input = 2
+Pin_set_1 = 3
+Pin_set_2 = 4
+# STAGR = int(sys.argv[1])
+STAGR = 1
+
 
 #BRAM_log
 # 创建BRAM   x_ymem初始化文件
@@ -252,7 +260,9 @@ def CREAT_LOG_PIN_FILE(benchmark_pre_info_src_path,benchmark,brams):
             init_info.write(str(5+pin)+" A["+str(pin)+"] "+brams.list[bram_index].port_a_A[pin]+"\n")
         init_info.write("20 "+"Port_B_name "+brams.list[bram_index].port_b_we+"\n")
         for pin in range(MAX_ADD_PIN):
+            # print(str(bram_index) + "--" +str(pin)+"\n")
             init_info.write(str(21+pin)+" B["+str(pin)+"] "+brams.list[bram_index].port_b_A[pin]+"\n")
+
     # print("")
 
     # init_info.write("End")
@@ -317,12 +327,7 @@ def CREAT_INFO_FILE(brams,benchmark_src_path,benchmark):
 
 
 if __name__=="__main__":
-    BRAM_log = 1
-    Random_input = 2
-    Pin_set_1 = 3
-    Pin_set_2 = 4
-    # STAGR = int(sys.argv[1])
-    STAGR = 1
+
     if(STAGR == BRAM_log):# 初始化BRAM文件
         # grid_path = sys.argv[2]
         grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/100x100.arch"
@@ -349,6 +354,8 @@ if __name__=="__main__":
         # benchmark = sys.argv[5]
         # benchmark = "LU8PEEng"
         # benchmark_pre_info_src_path = sys.argv[6]
+        cmd_del_pin = "rm -rf "+benchmark_src_path + "pin_dict"
+        os.system(cmd_del_pin )
         benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"
         CREAT_RAND_ACT(get_act_path, benchmark_src_path, TEST_NUM, benchmark, benchmark_pre_info_src_path)
         CORRECTION(benchmark_src_path+"act_pool/",TEST_NUM)

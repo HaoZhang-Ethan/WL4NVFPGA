@@ -3,8 +3,22 @@
 import os
 
 
+CREAT_INIT_INFO = 1
+CREAT_PHY_POS = 2
+
+STAGR = 2
+
 E_path = "s_run_e_4/"
-benchmark = "mkPktMerge"
+# benchmark = "boundtop"
+# benchmark =  "LU8PEEng"
+# benchmark =  "LU32PEEng"
+# benchmark =  "mcml"         # net 格式有问题需要手动修改
+# benchmark =  "mkDelayWorker32B"
+# benchmark =  "mkPktMerge"
+# benchmark =  "mkSMAdapter4B"
+# benchmark =  "or1200"
+
+
 E_root_path = "/home/zhlab/BRAM/"
 benchmark_src_path = E_root_path+E_path+benchmark+"/src/"
 benchmark_res_path = E_root_path+E_path+benchmark+"/res/"
@@ -211,10 +225,7 @@ def CREAT_BRAM_POS(grid_path,phy_file_path,BRAM_path):
     phy_file.close()
 
 
-CREAT_INIT_INFO = 1
-CREAT_PHY_POS = 2
 
-STAGR = 2
 
 
 if __name__=="__main__":

@@ -71,7 +71,8 @@ int main(int argc, char **argv) {
 	#endif
 	
 	/* free data structures */
-	vpr_free_all(Arch, Options, vpr_setup);
+	//zh_lab_debug
+	// vpr_free_all(Arch, Options, vpr_setup);
 
 	std::cout<<"Success"<<std::endl;
 	/* Return 0 to single success to scripts */

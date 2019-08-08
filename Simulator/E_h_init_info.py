@@ -4,7 +4,15 @@ import os
 
 
 E_path = "s_run_e_2/"
-benchmark = "LU8PEEng"
+
+benchmark = "boundtop"
+# benchmark =  "LU8PEEng"
+# benchmark =  "LU32PEEng"
+# benchmark =  "mcml"
+# benchmark =  "mkDelayWorker32B"
+# benchmark =  "mkPktMerge"
+# benchmark =  "mkSMAdapter4B"
+# benchmark =  "or1200"
 E_root_path = "/home/zhlab/BRAM/"
 benchmark_src_path = E_root_path+E_path+benchmark+"/src/"
 benchmark_res_path = E_root_path+E_path+benchmark+"/res/"
@@ -14,8 +22,11 @@ BRAM_path = E_root_path+E_path+benchmark+"/res/BRAM/e_2_bram"
 folder_path = benchmark_src_path+"ace_pool/"
 log_file_path = benchmark_pre_info_src_path + benchmark  + "_log.txt"
 phy_file_path = benchmark_pre_info_src_path + benchmark  + "_phy.txt"
-grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/60x60.arch"
+grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/100x100.arch"
+CREAT_INIT_INFO = 1
+CREAT_PHY_POS = 2
 
+STAGR = 2
 
 
 MAX_INIT = 200
@@ -153,8 +164,9 @@ def get_log_init(log_file_path,pin_dict,brams):
     g_max = 0
     for it_bram in range(0,brams.num):
         if (brams.list[it_bram].dual == 0):
-            if (len(brams.list[it_bram].port_a_we.replace(" ",""))>4):
-                brams.list[it_bram].ratio = pin_dict[brams.list[it_bram].port_a_we]
+            str_key = brams.list[it_bram].port_a_we.replace(" ", "")
+            if (len(str_key)>4):
+                brams.list[it_bram].ratio = pin_dict[str_key]
             else:
                 brams.list[it_bram].ratio = 0
             if (brams.list[it_bram].ratio > g_max):
@@ -211,10 +223,7 @@ def CREAT_BRAM_POS(grid_path,phy_file_path,BRAM_path):
     phy_file.close()
 
 
-CREAT_INIT_INFO = 1
-CREAT_PHY_POS = 2
 
-STAGR = 2
 
 
 if __name__=="__main__":

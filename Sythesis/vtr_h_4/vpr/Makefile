@@ -7,16 +7,16 @@
 
 # Please note that a Mac can run the graphics if the X11 library is installed. 
 
-ENABLE_GRAPHICS = true
+ENABLE_GRAPHICS = false
 # can be true or false
 
-export BUILD_TYPE = debug#release#
+export BUILD_TYPE = release
 # can be debug or release - this option gets inherited by the library libarchfpga 
 # by default, though libarchfpga's build type can be set independently in libarchfpga's Makefile.
 
 COMPILER = g++
 
-OPTIMIZATION_LEVEL_FOR_RELEASE_BUILD = -O3 #  -O0#
+OPTIMIZATION_LEVEL_FOR_RELEASE_BUILD = -O3
 # can be -O0 (no optimization) to -O3 (full optimization), or -Os (optimize space)
 
 #############################################################################################
