@@ -5,8 +5,8 @@ import os
 
 E_path = "s_run_e_2/"
 
-benchmark = "boundtop"
-# benchmark =  "LU8PEEng"
+# benchmark = "boundtop"
+benchmark =  "LU8PEEng"
 # benchmark =  "LU32PEEng"
 # benchmark =  "mcml"
 # benchmark =  "mkDelayWorker32B"
@@ -26,7 +26,7 @@ grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/100x100.arch"
 CREAT_INIT_INFO = 1
 CREAT_PHY_POS = 2
 
-STAGR = 2
+STAGR = 1
 
 
 MAX_INIT = 200
