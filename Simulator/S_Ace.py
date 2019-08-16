@@ -24,12 +24,28 @@ def CARLL_ACE(benchmark_src_path,benchmark,benchmark_pre_info_src_path,ace_path,
             os.system(mv_command)
 
 if __name__=="__main__":
+
+    # 实验序号
+    E_0 = 0  # 细粒度写均衡
+    E_1 = 1  # 粗粒度写均衡
+    E_2 = 2  # 传统策略写均衡
+    E_3 = 3  # 不加写均衡
+
+    # # # # # # # # # #
+    E = 0
+
+
+    E_path = "e_0/"
+
+    # amp_num 为写放大系数
+
     # benchmark = "boundtop"
-    # benchmark = "LU8PEEng"
+    # benchmark =  "B1" #"LU8PEEng"
     # benchmark =  "LU32PEEng"
-    benchmark =  "mcml"
-    # benchmark =  "mkDelayWorker32B"
-    # benchmark =  "mkPktMerge"
-    # benchmark =  "mkSMAdapter4B"
-    # benchmark =  "or1200"
-    CARLL_ACE("/home/zhlab/BRAM/s_run/"+benchmark+"/src/",benchmark,"/home/zhlab/BRAM/s_run/"+benchmark+"/src/pre_info_src/","/home/zhlab/BRAM/vtr/vtr_ace_0/ace2/ace",1000)
+    # benchmark =  "mcml"
+    benchmark =  "mkDelayWorker32B"
+    # benchmark = "B2" #"mkPktMerge"
+    # benchmark = "mkSMAdapter4B"
+
+
+    CARLL_ACE("/home/zhlab/BRAM/" +E_path+benchmark+"/src/",benchmark,"/home/zhlab/BRAM/" +E_path+benchmark+"/src/pre/","/home/zhlab/BRAM/vtr/vtr_ace_0/ace2/ace",1000)

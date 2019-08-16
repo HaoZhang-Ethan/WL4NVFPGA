@@ -3,28 +3,28 @@
 import os
 
 
-CREAT_INIT_INFO = 1
+CREAT_INIT_INFO = 1   # 初始化逻辑信息
 CREAT_PHY_POS = 2
 
-STAGR = 2
+STAGR = 1
 
-E_path = "s_run_e_4/"
+E_path = "e_1/"
 # benchmark = "boundtop"
-# benchmark =  "LU8PEEng"
-# benchmark =  "LU32PEEng"
+# benchmark = "B1"# "LU8PEEng"
+# benchmark = "B3"# "LU32PEEng"
 # benchmark =  "mcml"         # net 格式有问题需要手动修改
 # benchmark =  "mkDelayWorker32B"
-# benchmark =  "mkPktMerge"
-# benchmark =  "mkSMAdapter4B"
+benchmark = "B2"# "mkPktMerge"
+# benchmark = "B4" #"mkSMAdapter4B"
 # benchmark =  "or1200"
 
 
 E_root_path = "/home/zhlab/BRAM/"
 benchmark_src_path = E_root_path+E_path+benchmark+"/src/"
 benchmark_res_path = E_root_path+E_path+benchmark+"/res/"
-benchmark_pre_info_src_path = E_root_path+E_path+benchmark+"/src/pre_info_src/"
+benchmark_pre_info_src_path = E_root_path+E_path+benchmark+"/src/pre/"
 benchmark_BRAM_path = E_root_path+E_path+benchmark+"/res/BRAM/"
-BRAM_path = E_root_path+E_path+benchmark+"/res/BRAM/e_4_bram"
+BRAM_path = E_root_path+E_path+benchmark+"/res/BRAM/e_1_bram"
 folder_path = benchmark_src_path+"ace_pool/"
 log_file_path = benchmark_pre_info_src_path + benchmark  + "_log.txt"
 phy_file_path = benchmark_pre_info_src_path + benchmark  + "_phy.txt"

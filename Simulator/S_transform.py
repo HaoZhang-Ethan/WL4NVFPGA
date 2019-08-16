@@ -1,6 +1,7 @@
 #-*-coding:utf-8-*-
 
 
+
 import sys
 MAX_INIT = 200
 
@@ -154,7 +155,7 @@ if __name__=="__main__":
     # E_path = "s_run/"
     # benchmark = "boundtop"
     # benchmark_pre_info_src_path = sys.argv[3]
-    benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"
+    benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre/"
     # benchmark = sys.argv[4]
     # benchmark = "LU8PEEng"
     # arch_file_path = sys.argv[5]
@@ -165,7 +166,7 @@ if __name__=="__main__":
 
 
 
-    place_pin_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"+benchmark+".place_pin"
+    place_pin_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre/"+benchmark+".place_pin"
     place_pin_file = open(place_pin_path)
     tmp_bram = BRAMS()
 

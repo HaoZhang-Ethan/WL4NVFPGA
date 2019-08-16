@@ -3,43 +3,51 @@
 
 import os
 
+# 实验序号
+E_0 = 0  # 细粒度写均衡
+E_1 = 1  # 粗粒度写均衡     BRAM在fin
+E_2 = 2  # 传统策略写均衡
+E_3 = 3  # 不加写均衡
 
-E_0 = 0     #细粒度写均衡
-E_1 = 1     #对比实验VPR原始
-E_2 = 2     #粗粒度写均衡
-E_3 = 3     #对比VPR原始_细粒度统计实验
-E_4 = 4     #对比槐硕细粒度统计实验
-E_5 = 5     #动态阈值
-E = -1
-if(E == E_0):
-    E_path = "s_run/"
-elif(E == E_1):
-    E_path = "s_run_e_1/"
-elif(E == E_2):
-    E_path = "s_run_e_2/"
-elif(E == E_3):
-    E_path = "s_run_e_3/"
-elif(E == E_4):
-    E_path = "s_run_e_4/"
-elif(E == E_5):
-    E_path = "s_run_e_5/"
+# # # # # # # # # #
+E = 0
+
+
+
+if (E == E_0):
+    E_path = "e_0/"
+elif (E == E_1):
+    E_path = "e_1/"
+elif (E == E_2):
+    E_path = "e_2/"
+elif (E == E_3):
+    E_path = "e_3/"
+elif (E == E_4):
+    E_path = "e_4/"
+
+
+
+# amp_num 为写放大系数
 
 # benchmark = "boundtop"
-# benchmark =  "LU8PEEng"
-# benchmark =  "LU32PEEng"
-# benchmark =  "mcml"         # net 格式有问题需要手动修改
-# benchmark =  "mkDelayWorker32B"
-# benchmark =  "mkPktMerge"
-# benchmark =  "mkSMAdapter4B"
-# benchmark =  "or1200"
+# benchmark =  "B1" #"LU8PEEng"
+# benchmark =  "B3" #"LU32PEEng"
+# benchmark =  "mcml"
+# benchmark =  "mkDelayWorker32B"  # 0.06,0.06  wciS0_MReset_n    wsiS1_MReset_n
+# benchmark = "B2" #"mkPktMerge"
+benchmark = "B4" #"mkSMAdapter4B"
 
-BRAM_log = 1
-Random_input = 2
-Pin_set_1 = 3
-Pin_set_2 = 4
+grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/100x100.arch"
+arch_name = "A1.xml" #"k6_frac_N10_mem32K_40nm_1.xml"
+
+BRAM_log = 1                    # 初始化BRAM phy 信息
+Random_input = 2                # 初始化随机激励
+Pin_set_1 = 3                   # info              有net文件
+Pin_set_2 = 4                   # log_info
 # STAGR = int(sys.argv[1])
-STAGR = 1
-
+STAGR = 4
+USER = 0
+# 构造pin_dict ana...
 
 #BRAM_log
 # 创建BRAM   x_ymem初始化文件
@@ -330,7 +338,7 @@ if __name__=="__main__":
 
     if(STAGR == BRAM_log):# 初始化BRAM文件
         # grid_path = sys.argv[2]
-        grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/100x100.arch"
+
         # benchmark_BRAM_path = sys.argv[3]
         benchmark_BRAM_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/res/BRAM/"
         # MEM_COL = int(sys.argv[4])
@@ -356,19 +364,23 @@ if __name__=="__main__":
         # benchmark_pre_info_src_path = sys.argv[6]
         cmd_del_pin = "rm -rf "+benchmark_src_path + "pin_dict"
         os.system(cmd_del_pin )
-        benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"
+        benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre/"
         CREAT_RAND_ACT(get_act_path, benchmark_src_path, TEST_NUM, benchmark, benchmark_pre_info_src_path)
         CORRECTION(benchmark_src_path+"act_pool/",TEST_NUM)
-        # MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM,"rst",0.06,0.06)
+        if (USER == 1):
+            MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM,"wciS0_MReset_n",0.06,0.06)
+            MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM, "wsiS1_MReset_n", 0.06, 0.06)
+
+
     elif (STAGR == Pin_set_1):
         # vtr_release_path = sys.argv[2]
         vtr_release_path = "/home/zhlab/BRAM/vtr/vtr_release/vpr/vpr"
         # benchmark_pre_info_src_path = sys.argv[3]
-        benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"
+        benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre/"
         # benchmark = sys.argv[4]
         # benchmark = "LU8PEEng"
         # arch_file_path = sys.argv[5]
-        arch_file_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml"
+        arch_file_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre/"+arch_name
         CREAT_INIT_FILE(vtr_release_path, benchmark_pre_info_src_path, benchmark, arch_file_path)
         brams = BRAMS()
         CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams ,1 )
@@ -376,11 +388,11 @@ if __name__=="__main__":
         # vtr_release_path = sys.argv[2]
         vtr_release_path = "/home/zhlab/BRAM/vtr/vtr_release/vpr/vpr"
         # benchmark_pre_info_src_path = sys.argv[3]
-        benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/"
+        benchmark_pre_info_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre/"
         # benchmark = sys.argv[4]
 
         # arch_file_path = sys.argv[5]
-        arch_file_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml"
+        arch_file_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/pre/"+arch_name
         # benchmark_src_path = sys.argv[6]
         benchmark_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/"
         # CREAT_INIT_FILE(vtr_release_path, benchmark_pre_info_src_path, benchmark, arch_file_path)

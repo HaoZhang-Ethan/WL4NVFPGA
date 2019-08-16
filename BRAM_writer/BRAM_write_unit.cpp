@@ -45,12 +45,16 @@ int update_mem(BRAM_write_unit * p_wirte_unit,used_mem_info * p_mem_info,BRAMs *
         for (tmp_j = 0;tmp_j<(*(p_wirte_unit+address)).unit_num;tmp_j++)
         {
             int tmp_col = (*(p_wirte_unit+address)).relocation_table_y[tmp_j];
-            // cout<<(*p_brams).Array[tmp_row][tmp_col]<<"  "<<(*p_mem_info).Array[tmp_i][1]<<endl;
-            (*p_brams).Array[tmp_row][tmp_col] += (*p_mem_info).Array[tmp_i][1];
-            if((*p_brams).Array[tmp_row][tmp_col] > up_limit)
+            // cout<<(*p_brams).Array[tmp_row][tmp_col]<<"  "<<(*p_mem_info).Array[tmp_i][1]<<endl; 
+            if((*p_mem_info).Array[tmp_i][1] > 0)
             {
-                flag = 1;
+                (*p_brams).Array[tmp_row][tmp_col] += (*p_mem_info).Array[tmp_i][1];
+                if((*p_brams).Array[tmp_row][tmp_col] > up_limit)
+                {
+                    flag = 1;
+                }
             }
+
         }
     }
     return flag;

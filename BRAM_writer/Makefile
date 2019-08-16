@@ -4,8 +4,13 @@ deps = $(shell find ./ -name "*.h")
 src = $(shell find ./ -name "*.cpp")
 obj = $(src:%.c=%.o) 
 
+# $(prom): $(obj)
+# 	$(cc) -g -O0 -o  $(prom) $(obj)
+
 $(prom): $(obj)
-	$(cc) -g -O0 -o  $(prom) $(obj)
+	$(cc) -O3 -o  $(prom) $(obj)
+
+
 
 %.o: %.c $(deps)
 	$(cc) -c $< -o $@

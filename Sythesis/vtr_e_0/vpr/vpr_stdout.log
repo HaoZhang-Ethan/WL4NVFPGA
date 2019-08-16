@@ -1,0 +1,56 @@
+________________________________________________________________________
+                       VPR - The Next Generation                        
+                     Version 0.A15.0 (Linux X86/64)                     
+            This is free open source code under MIT license.            
+________________________________________________________________________
+
+VPR FPGA Placement and Routing.
+Version: Version 7.0
+Compiled: Aug 14 2019.
+University of Toronto
+vpr@eecg.utoronto.ca
+This is free open source code under MIT license.
+
+Usage:  vpr fpga_architecture.xml circuit_name [Options ...]
+
+General Options:  [--nodisp] [--auto <int>] [--pack]
+	[--place] [--route] [--timing_analyze_only_with_net_delay <float>]
+	[--fast] [--full_stats] [--timing_analysis on | off] [--outfile_prefix <string>]
+	[--blif_file <string>][--net_file <string>][--place_file <string>]
+	[--route_file <string>][--sdc_file <string>][--echo_file on | off]
+
+Packer Options:
+	[--timing_driven_clustering on|off]
+	[--cluster_seed_type timing|max_inputs] [--alpha_clustering <float>] [--beta_clustering <float>]
+	[--allow_unrelated_clustering on|off]
+	[--connection_driven_clustering on|off] 
+
+Placer Options:
+	[--place_algorithm bounding_box | net_timing_driven | path_timing_driven]
+	[--init_t <float>] [--exit_t <float>]
+	[--alpha_t <float>] [--inner_num <float>] [--seed <int>]
+	[--place_cost_exp <float>]
+	[--place_chan_width <int>] 
+	[--fix_pins random | <file.pads>]
+	[--enable_timing_computations on | off]
+	[--block_dist <int>]
+
+Placement Options Valid Only for Timing-Driven Placement:
+	[--timing_tradeoff <float>]
+	[--recompute_crit_iter <int>]
+	[--inner_loop_recompute_divider <int>]
+	[--td_place_exp_first <float>]
+	[--td_place_exp_last <float>]
+
+Router Options:  [-max_router_iterations <int>] [-bb_factor <int>]
+	[--initial_pres_fac <float>] [--pres_fac_mult <float>]
+	[--acc_fac <float>] [--first_iter_pres_fac <float>]
+	[--bend_cost <float>] [--route_type global | detailed]
+	[--verify_binary_search] [--route_chan_width <int>]
+	[--router_algorithm breadth_first | timing_driven]
+	[--base_cost_type intrinsic_delay | delay_normalized | demand_only]
+
+Routing options valid only for timing-driven routing:
+	[--astar_fac <float>] [--max_criticality <float>]
+	[--criticality_exp <float>]
+

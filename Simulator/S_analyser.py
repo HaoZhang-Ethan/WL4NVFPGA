@@ -167,6 +167,14 @@ def Read_CLK_ARRAAY(folder_path,brams):
     pin_dict_flag = {}
     pin_dict = {}
     pin_dict_find = {}
+
+
+    ace_num = 0
+    for root, dirs, files in os.walk(folder_path):
+        for name in files:
+            if(name.find("ace") != -1):
+                ace_num += 1
+
     #建立词频词典
     for filename in filenames:
         if (filename.find(".ace")!=-1):
@@ -181,6 +189,26 @@ def Read_CLK_ARRAAY(folder_path,brams):
                 pin_num_it += 1
             file.close()
             break
+
+    we_dict = {}
+    for bram_it in range(0, brams.num):
+        if (brams.list[bram_it].dual == 0):
+            we = brams.list[bram_it].port_a_we.replace(" ","")
+            if (if_valid(we) == 1 and pin_dict_flag[we] == 0):
+                we_dict[we] = 0;
+        if (brams.list[bram_it].dual == 1):
+            we = brams.list[bram_it].port_a_we.replace(" ","")
+            if (if_valid(we) == 1 and pin_dict_flag[we] == 0):
+                we_dict[we] = 0;
+            we = brams.list[bram_it].port_b_we.replace(" ", "")
+            if (if_valid(we) == 1 and pin_dict_flag[we] == 0):
+                we_dict[we] = 0;
+
+
+
+
+
+
     iter_num = 0
     for filename in filenames:
 
@@ -208,6 +236,8 @@ def Read_CLK_ARRAAY(folder_path,brams):
                         if (if_valid(pin_name) == 1 and pin_dict_flag[pin_name] == 0):
                             pin_dict_flag[pin_name] = 1
                             for clk_ in range(0,CLK):
+                                # if (CLK_ARRAY[pin_dict_find[we_line]][clk_] == '1'):
+                                #     pin_dict[we_line] += 1
                                 if ((CLK_ARRAY[pin_dict_find[pin_name]][clk_] == '1') and (CLK_ARRAY[pin_dict_find[we_line]][clk_] == '1') ):
                                     pin_dict[pin_name] += 1
                 else:
@@ -219,6 +249,8 @@ def Read_CLK_ARRAAY(folder_path,brams):
                             if (if_valid(pin_name) == 1 and pin_dict_flag[pin_name] == 0):
                                 pin_dict_flag[pin_name] = 1
                                 for clk_ in range(0 , CLK):
+                                    # if(CLK_ARRAY[pin_dict_find[we_line_a]][clk_] == '1'):
+                                    #     pin_dict[we_line_a] += 1
                                     if ((CLK_ARRAY[pin_dict_find[pin_name]][clk_] == '1') and (CLK_ARRAY[pin_dict_find[we_line_a]][clk_] == '1')):
                                         pin_dict[pin_name] += 1
                     if (if_valid(we_line_b) == 1):
@@ -227,9 +259,86 @@ def Read_CLK_ARRAAY(folder_path,brams):
                             if (if_valid(pin_name) == 1 and pin_dict_flag[pin_name] == 0):
                                 pin_dict_flag[pin_name] = 1
                                 for clk_ in range(0 , CLK):
+                                    # if(CLK_ARRAY[pin_dict_find[we_line_b]][clk_] == '1'):
+                                    #     pin_dict[we_line_b] += 1
                                     if ((CLK_ARRAY[pin_dict_find[pin_name]][clk_] == '1') and (CLK_ARRAY[pin_dict_find[we_line_b]][clk_] == '1')):
                                         pin_dict[pin_name] += 1
-    return pin_dict
+            for we_ in we_dict.keys():
+                pin_dict[we_] = pin_dict[we_] + CLK_ARRAY[pin_dict_find[we_]].count('1')
+                # print( CLK_ARRAY[pin_dict_find[we_]].count('1'))
+
+    pin_we_dict = {}
+    # 建立Pin和we的对应关系
+    for bram_it in range(0, brams.num):
+        if (brams.list[bram_it].dual == 0):
+            we_line = brams.list[bram_it].port_a_we.replace(" ", "")
+            for pin_it in range(0, 15):
+                pin_name = brams.list[bram_it].port_a_A[pin_it].replace(" ", "")
+                if (if_valid(pin_name) == 1 and pin_dict_flag[pin_name] == 1):
+                    pin_we_dict[pin_name] = we_line
+        else:
+            we_line_a = brams.list[bram_it].port_a_we.replace(" ", "")
+            we_line_b = brams.list[bram_it].port_b_we.replace(" ", "")
+            a_num = -1
+            b_num = -1
+            if (if_valid(we_line_a) == 1):
+                a_num = pin_dict[we_line_a]
+            if (if_valid(we_line_b) == 1):
+                b_num = pin_dict[we_line_b]
+            if (a_num < b_num):
+                for pin_it in range(0, 15):
+                    pin_name = brams.list[bram_it].port_b_A[pin_it].replace(" ", "")
+                    if (if_valid(pin_name) == 1):
+                        pin_we_dict[pin_name] = we_line_b
+            else:
+                for pin_it in range(0, 15):
+                    pin_name = brams.list[bram_it].port_a_A[pin_it].replace(" ", "")
+                    if (if_valid(pin_name) == 1):
+                        pin_we_dict[pin_name] = we_line_a
+
+
+
+    res = {}
+    for pin_ in pin_we_dict.keys():
+        if (pin_dict[pin_we_dict[pin_]] == 0):
+            res[pin_] = 0
+        else:
+            res[pin_] = pin_dict[pin_]/pin_dict[pin_we_dict[pin_]]
+
+
+    Max_we = -1
+    for we_ in we_dict.keys():
+        res[we_] = pin_dict[we_]/(ace_num*CLK)
+        if (res[we_] > Max_we):
+            Max_we = res[we_]
+
+
+    if (Max_we != 0):
+        for bram_it in range(0, brams.num):
+            if (brams.list[bram_it].dual == 0):
+                we_line = brams.list[bram_it].port_a_we.replace(" ", "")
+                if (if_valid(we_line) == 1):
+                    res[brams.list[bram_it].name] = res[we_line]/Max_we
+
+            else:
+                we_line_a = brams.list[bram_it].port_a_we.replace(" ", "")
+                we_line_b = brams.list[bram_it].port_b_we.replace(" ", "")
+                a_num = -1
+                b_num = -1
+                if (if_valid(we_line_a) == 1):
+                    a_num = res[we_line_a]
+                if (if_valid(we_line_b) == 1):
+                    b_num = res[we_line_b]
+                if(b_num > a_num):
+                    res[brams.list[bram_it].name] = res[we_line_b] / Max_we
+                else:
+                    res[brams.list[bram_it].name] = res[we_line_a] / Max_we
+
+
+
+
+
+    return res
 
 
 def write_dict(pin_dict,src_pach):
@@ -244,28 +353,32 @@ def write_dict(pin_dict,src_pach):
 
 
 if __name__=="__main__":
-    E_path = "s_run/"
+    E_path = "/e_0/"
 
     # benchmark = "boundtop"
-    # benchmark = "LU8PEEng"
+    # benchmark = "B1" #"LU8PEEng"
     # benchmark =  "LU32PEEng"
-    benchmark =  "mcml"
-    # benchmark =  "mkDelayWorker32B"
-    # benchmark =  "mkPktMerge"
+    # benchmark =  "mcml"
+    benchmark =  "mkDelayWorker32B"
+    # benchmark =  "B2" #"mkPktMerge"
     # benchmark =  "mkSMAdapter4B"
     # benchmark = "or1200"
-    src_pach = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/"
-    folder_path = "/home/zhlab/BRAM/s_run/"+benchmark+"/src/ace_pool/"
-    benchmark_pre_info_src_path = "/home/zhlab/BRAM/" + E_path + benchmark + "/src/pre_info_src/"
+    src_pach = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/"
+    folder_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/ace_pool/"
+    benchmark_pre_info_src_path = "/home/zhlab/BRAM/" + E_path + benchmark + "/src/pre/"
 
     brams = BRAMS()
     CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)
 
 
+
+
+
+
     pin_dict = Read_CLK_ARRAAY(folder_path,brams)
-    for pin_dict_key in pin_dict.keys():
-        tmp = pin_dict[pin_dict_key]
-        pin_dict[pin_dict_key] = tmp/(1000*CLK)
+    # for pin_dict_key in pin_dict.keys():
+    #     tmp = pin_dict[pin_dict_key]
+    #     pin_dict[pin_dict_key] = tmp/(1000*CLK)
 
     write_dict(pin_dict, src_pach)
 
