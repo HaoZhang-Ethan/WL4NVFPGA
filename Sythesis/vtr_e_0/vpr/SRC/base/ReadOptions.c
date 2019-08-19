@@ -27,7 +27,7 @@ static char **outputFileNames = NULL;
 //**********************************
 long int option_char_to_long_int(char * test);
 int option_char_to_int(char * test);
-
+float option_char_to_float(char * test);
 /******** Function prototypes ********/
 
 static char **ReadBaseToken(INP char **Args, OUTP enum e_OptionBaseToken *Token);
@@ -273,7 +273,7 @@ void ReadOptions(INP int argc, INP char **argv, OUTP t_options * Options) {
 			char tmp_char[15];
 			memcpy(&tmp_char,(*Args),(P_find - *Args));
 			Options->up_limit =  option_char_to_long_int(tmp_char);
-			Options->min_ratio = option_char_to_int((P_find+1));
+			Options->min_ratio = option_char_to_float((P_find+1));
 
 			// vpr_printf(TIO_MESSAGE_INFO,"find%s",(*Args));
 			// printf("ss");
@@ -1002,6 +1002,12 @@ long int option_char_to_long_int(char * test)
 int option_char_to_int(char * test)
 {
 	int ftemp = atof(test);
+  	return ftemp;
+}
+
+float option_char_to_float(char * test)
+{
+	float ftemp = atof(test);
   	return ftemp;
 }
 //*************************************************

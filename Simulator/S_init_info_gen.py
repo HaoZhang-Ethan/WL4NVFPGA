@@ -29,14 +29,15 @@ elif (E == E_4):
 
 # amp_num 为写放大系数
 
-# benchmark = "boundtop"
-# benchmark =  "B1" #"LU8PEEng"
+benchmark = "B5"  #"boundtop"      pglobalreset         0.003,0.003
+# benchmark =  "B1" #"LU8PEEng" reset_n       0.96,0.04
 # benchmark =  "B3" #"LU32PEEng"
 # benchmark =  "mcml"
 # benchmark =  "mkDelayWorker32B"  # 0.06,0.06  wciS0_MReset_n    wsiS1_MReset_n
-# benchmark = "B2" #"mkPktMerge"
-benchmark = "B4" #"mkSMAdapter4B"
-
+# benchmark = "B2" #"mkPktMerge"   RST_N      0.96,0.04
+# benchmark = "B4" #"mkSMAdapter4B"    # wciS0_MReset_n    0.96,0.04
+# benchmark = "B0" # "or1200"    rst    0.003,0.003
+#
 grid_path = "/home/zhlab/BRAM/SRC_07_09/FPGA_arch/100x100.arch"
 arch_name = "A1.xml" #"k6_frac_N10_mem32K_40nm_1.xml"
 
@@ -45,8 +46,9 @@ Random_input = 2                # 初始化随机激励
 Pin_set_1 = 3                   # info              有net文件
 Pin_set_2 = 4                   # log_info
 # STAGR = int(sys.argv[1])
-STAGR = 4
-USER = 0
+STAGR = 2
+USER = 1
+TEST_NUM = 15
 # 构造pin_dict ana...
 
 #BRAM_log
@@ -358,7 +360,7 @@ if __name__=="__main__":
         # benchmark_res_path = sys.argv[3]
         benchmark_src_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/"
         # TEST_NUM = int(sys.argv[4])
-        TEST_NUM = 1000
+
         # benchmark = sys.argv[5]
         # benchmark = "LU8PEEng"
         # benchmark_pre_info_src_path = sys.argv[6]
@@ -368,8 +370,8 @@ if __name__=="__main__":
         CREAT_RAND_ACT(get_act_path, benchmark_src_path, TEST_NUM, benchmark, benchmark_pre_info_src_path)
         CORRECTION(benchmark_src_path+"act_pool/",TEST_NUM)
         if (USER == 1):
-            MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM,"wciS0_MReset_n",0.06,0.06)
-            MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM, "wsiS1_MReset_n", 0.06, 0.06)
+            MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM,"pglobalreset",0.003,0.003)
+            # MY_CORRECTION(benchmark_src_path + "act_pool/", TEST_NUM, "wsiS1_MReset_n", 0.06, 0.06)
 
 
     elif (STAGR == Pin_set_1):

@@ -31,8 +31,8 @@
 #define ROW_DEPTH 256
 
 
-static float load_phy_info_to_log(BRAMS_phy *p_phy_brams, BRAMS_log *p_log_brams, int phy_bram_id, int log_bram_id, long int up_limit, addr_pin *tmp_D_port, int *error,int min_ratio);
-static float computer_cost(Levels *l_vecs, int valid_add_num, int add_range, BRAM_log_info *tmp_init, int *error, int up_limit,int min_ratio);
+static float load_phy_info_to_log(BRAMS_phy *p_phy_brams, BRAMS_log *p_log_brams, int phy_bram_id, int log_bram_id, long int up_limit, addr_pin *tmp_D_port, int *error,float min_ratio);
+static float computer_cost(Levels *l_vecs, int valid_add_num, int add_range, BRAM_log_info *tmp_init, int *error, int up_limit,float min_ratio);
 
 
 /************** Types and defines local to place.c ***************************/
@@ -3673,7 +3673,7 @@ static void readTxt_mem(char *mem_path, long int *p_Array) //(long int*) tmp_Arr
 }
 
 
-static float load_phy_info_to_log(BRAMS_phy *p_phy_brams, BRAMS_log *p_log_brams, int phy_bram_id, int log_bram_id, long int up_limit, addr_pin *tmp_D_port, int *error,int min_ratio)
+static float load_phy_info_to_log(BRAMS_phy *p_phy_brams, BRAMS_log *p_log_brams, int phy_bram_id, int log_bram_id, long int up_limit, addr_pin *tmp_D_port, int *error,float min_ratio)
 {
 	int add_counter = 0;
 	BRAM_log_info *tmp_init;
@@ -4054,7 +4054,7 @@ static float load_phy_info_to_log(BRAMS_phy *p_phy_brams, BRAMS_log *p_log_brams
 }
 // TODO:
 // 动态粒度
-static float computer_cost(Levels *l_vecs, int valid_add_num, int add_range, BRAM_log_info *tmp_init, int *error, int up_limit ,int min_ratio)
+static float computer_cost(Levels *l_vecs, int valid_add_num, int add_range, BRAM_log_info *tmp_init, int *error, int up_limit ,float min_ratio)
 {
 	//计算cost
 	float cost = 0.0;
@@ -4101,13 +4101,11 @@ static float computer_cost(Levels *l_vecs, int valid_add_num, int add_range, BRA
 					}
 					float phy_tmp_res = (1 - ((*((*tmp_init).p_write_unit_vector+tmp_j)).write_num/(float)up_limit));
 					float  cur_cost = fabs((coefficient / phy_tmp_res) - 1);
-					if(cur_cost < 1)
+					float Minr = (phy_tmp_res/(coefficient*(*tmp_init).log_ratio));
+					if( Minr < min_ratio )//TODO:  颗粒度
 					{
-						if (cur_cost*(*tmp_init).log_ratio > (float)min_ratio) //TODO:  颗粒度
-						{
-							(*error) = 1;
-							return 0;
-						}
+						(*error) = 1;
+						return 0;
 					}
 					cost = cost + cur_cost;
 					v_write_num++;
@@ -4149,13 +4147,11 @@ static float computer_cost(Levels *l_vecs, int valid_add_num, int add_range, BRA
 						}
 					float phy_tmp_res = (1 - ((*((*tmp_init).p_write_unit_vector+tmp_j)).write_num/(float)up_limit));
 					float  cur_cost = fabs((coefficient / phy_tmp_res) - 1);
-					if(cur_cost < 1)
+					float Minr = (phy_tmp_res/(coefficient*(*tmp_init).log_ratio));
+					if( Minr < min_ratio )//TODO:  颗粒度
 					{
-						if (cur_cost*(*tmp_init).log_ratio > (float)min_ratio) //TODO:  颗粒度
-						{
-							(*error) = 1;
-							return 0;
-						}
+						(*error) = 1;
+						return 0;
 					}
 					cost = cost + cur_cost;
 					v_write_num++;

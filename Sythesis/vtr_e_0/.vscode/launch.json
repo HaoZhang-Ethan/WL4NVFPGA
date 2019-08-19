@@ -22,7 +22,7 @@
                 "--route",
                 "--seed",
                 "1",
-                "***700001*45"
+                "***700001*4.5"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

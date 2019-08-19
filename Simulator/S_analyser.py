@@ -355,20 +355,21 @@ def write_dict(pin_dict,src_pach):
 if __name__=="__main__":
     E_path = "/e_0/"
 
-    # benchmark = "boundtop"
+    benchmark = "B5" # "boundtop"
     # benchmark = "B1" #"LU8PEEng"
     # benchmark =  "LU32PEEng"
     # benchmark =  "mcml"
-    benchmark =  "mkDelayWorker32B"
+    # benchmark =  "mkDelayWorker32B"
     # benchmark =  "B2" #"mkPktMerge"
-    # benchmark =  "mkSMAdapter4B"
-    # benchmark = "or1200"
+    # benchmark =  "B4" #"mkSMAdapter4B"
+    # benchmark = "B0" # "or1200"
     src_pach = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/"
     folder_path = "/home/zhlab/BRAM/"+E_path+benchmark+"/src/ace_pool/"
     benchmark_pre_info_src_path = "/home/zhlab/BRAM/" + E_path + benchmark + "/src/pre/"
 
     brams = BRAMS()
     CREAT_INIT_INFO_FILE(benchmark_pre_info_src_path, benchmark, brams, 0)
+
 
 
 

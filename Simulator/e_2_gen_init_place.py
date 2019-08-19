@@ -2,7 +2,7 @@
 
 import os
 
-file_path = "/home/zhlab/BRAM/vtr_e_orig/mkPktMerge/mkPktMerge.place"
+file_path = "/home/zhlab/BRAM/e_2/B4/src/pre/B4.place"
 init_path = file_path[0:len(file_path)-6] + "_init.place"
 
 vec = []

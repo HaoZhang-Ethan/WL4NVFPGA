@@ -95,7 +95,7 @@ struct s_options {
 	//zh_lab
 	long int up_limit;
 	char e_path_info[MAX_name_len];
-	int min_ratio;
+	float min_ratio;
 };
 
 enum e_echo_files {

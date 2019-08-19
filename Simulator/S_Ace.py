@@ -39,13 +39,14 @@ if __name__=="__main__":
 
     # amp_num 为写放大系数
 
-    # benchmark = "boundtop"
+    benchmark = "B5" #"boundtop"
     # benchmark =  "B1" #"LU8PEEng"
-    # benchmark =  "LU32PEEng"
+    # benchmark =  #"LU32PEEng"
     # benchmark =  "mcml"
-    benchmark =  "mkDelayWorker32B"
+    # benchmark =  "mkDelayWorker32B"
     # benchmark = "B2" #"mkPktMerge"
-    # benchmark = "mkSMAdapter4B"
+    # benchmark = "B4"# "mkSMAdapter4B"
+    # benchmark = "B0" # "or1200"
 
 
     CARLL_ACE("/home/zhlab/BRAM/" +E_path+benchmark+"/src/",benchmark,"/home/zhlab/BRAM/" +E_path+benchmark+"/src/pre/","/home/zhlab/BRAM/vtr/vtr_ace_0/ace2/ace",1000)

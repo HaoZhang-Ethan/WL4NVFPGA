@@ -10,10 +10,12 @@
             "request": "launch",
             "program": "${workspaceFolder}/vpr",
             "args": [
-                "/home/zhlab/BRAM/s_run_e_2/boundtop/src/pre_info_src/k6_frac_N10_mem32K_40nm_1.xml",
-                "/home/zhlab/BRAM/s_run_e_2/boundtop/src/pre_info_src/boundtop.blif",
+                "/home/zhlab/BRAM/e_1/B1/src/pre/A1.xml",
+                "/home/zhlab/BRAM/e_1/B1/src/pre/B1.blif",
                 "--nodisp",
-                "-place"    
+                "--place",
+                "--route_chan_width",
+                "250"    
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

@@ -780,7 +780,7 @@ struct s_placer_opts {
 	BRAMS_phy * p_phy_brams;
 	Array_s * p_Arrays;
 	long int up_limit;
-	int min_ratio;
+	float min_ratio;
 	char benchmark_name[50];
 	char e_path_info[MAX_name_len];// 实验文件夹的路径
 

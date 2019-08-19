@@ -12,7 +12,7 @@ E_2 = 2  # 传统策略写均衡
 E_3 = 3  # 不加写均衡
 
 # # # # # # # # # #
-E = 1
+E = 0
 
 
 
@@ -49,8 +49,8 @@ elif (E == E_4):
 benchmark = "B2" #"mkPktMerge"
 amp_num = 10
 
-# benchmark =  "mkSMAdapter4B"
-# amp_num = 1000
+# benchmark = "B4" #"mkSMAdapter4B"
+# amp_num = 10
 
 # 路径信息
 E_root_path = "/home/zhlab/BRAM/"
@@ -80,7 +80,7 @@ performance_path = benchmark_src_path + "performance.txt"
 res_path = benchmark_res_path + "vpr.out"
 
 if (E == E_0):
-    vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vpr/vpr0"
+    vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vpr/vpr00"
 elif (E == E_1):
     vpr = "/home/zhlab/FPGA_NVBRAM/SRC/Sythesis/vpr/vpr1"
 elif (E == E_2):
@@ -94,7 +94,7 @@ elif (E == E_4):
 
 ratio = [1]       # 每个阶段上限制
 ratio_num = len(ratio)           # 阶段
-min_ratio = [50]
+min_ratio = [0.8]
 
 
 nodisply = "--nodisp"
@@ -549,7 +549,7 @@ if (E == E_0):
         if (last_suc_flag == 1):
             try_num = 0
 
-        cmd = vpr + " " + xml + " " + blif + " " + nodisply +" "+ place + " "+route+ " " + route_opt + " " + seed + " " + str(try_num + 1) + " " + "***" + str(int(cur_limit))+"*"+str(int(100/min_ratio[stage_ratio])) + "  >" + benchmark_res_path + "vpr.out"
+        cmd = vpr + " " + xml + " " + blif + " " + nodisply +" "+ place + " "+route+ " " + route_opt + " " + seed + " " + str(try_num + 1) + " " + "***" + str(int(cur_limit))+"*"+str(min_ratio[stage_ratio]) + "  >" + benchmark_res_path + "vpr.out"
         print(cmd)
         os.system(cmd)
         flag = os.path.exists(route_file)
@@ -734,6 +734,233 @@ if (E == E_1):
             # Effic[sythesis_time % 10] = new_tmies - old_tmies
             record_2(record_2_path, new_tmies - old_tmies, cur_limit)
             record_1(cur_limit_path, cur_limit, times, sythesis_time, Effic_num_begin)
+        else:
+            last_suc_flag = 0
+            try_num += 1
+
+        if ((flag != 1 and try_num > 3)):  #
+            continue_sythe_flag = 0
+            try_num = 0
+
+if (E == E_2):
+
+    if (os.path.exists(cur_limit_path) == 1):
+        print("continue\n")
+    else:
+        print("new test\n")
+
+
+    times = 0
+    sythesis_time = 0
+    file = open(record_2_path, 'w')
+    file.write("")
+    file.close()
+    E_limit = 0
+
+    Effic_num = 0
+    Effic = [0] * 10
+    Effic_num_begin = 0
+    E_flag = 0
+    try_num = 0
+    last_suc_flag = 1
+    stage_ratio = 0
+
+
+    cur_limit = MAX_WRITE_NUM
+    continue_sythe_flag = 1
+
+
+
+    bram_pos_dict = get_build_dict(e_1_bram_file_path, 1)
+
+    while ( continue_sythe_flag == 1):
+        record_1(cur_limit_path, cur_limit, times, sythesis_time, Effic_num_begin)
+        phy_ratio_dict = update_e_1_phy_dict(cur_limit, bram_pos_dict)
+        update_e_1_phy(phy_file_path, phy_ratio_dict)
+
+
+        if (last_suc_flag == 1):
+            try_num = 0
+
+        cmd = vpr + " " + xml + " " + blif + " " + nodisply +" "+ place + " "+route+ " " + route_opt + " " + seed + " " + str(try_num + 1) + "  >" + benchmark_res_path + "vpr.out"
+        print(cmd)
+        os.system(cmd)
+        flag = os.path.exists(route_file)
+
+        if (flag == 1):
+            cmd_del_f = "rm -rf " + route_file
+            os.system(cmd_del_f)
+            get_performance(res_path, performance_path, sythesis_time)
+            last_suc_flag = 1
+            old_tmies = times
+            sythesis_time += 1
+            Effic_num += 1
+
+            GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path, benchmark)
+            pos_dict = {}
+            BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
+            inits = INIT_LIST()
+            GET_ADDR_WRITE_NUM(inits, E_root_path + E_path + benchmark + "/src/" + benchmark + ".info_", E_0, amp_num)
+            update_Flag = 1
+            transfrom_hit(write_num_path_pre)
+
+
+            while (update_Flag):
+                print("times  =  " + str(times))
+                times += 1
+                for init_ in range(inits.init_num):
+                    write_num_path = write_num_path_pre + str(init_) + ".hit"
+                    write_num = open(write_num_path)
+                    name_flag = 0
+                    init_name = ""
+                    for line_ in write_num:
+                        if (name_flag == 1):
+                            init_name = line_.replace("\n", "")
+                            name_flag = 0
+                            continue
+                        elif (name_flag == 2):
+                            init_write_num = int(line_.replace("\n", ""))
+                            break
+                        if (line_.find("mem_name") != -1):
+                            name_flag = 1
+                        elif (line_.find("add_begin") != -1):
+                            name_flag = 2
+                    write_num.close()
+                    if (init_write_num > 0):
+                        BRAM_file_path = pos_dict[init_name]
+                        BRAM_file_path = BRAM_file_path.replace("mem", "")
+                        bram_pos_dict[BRAM_file_path] = bram_pos_dict[BRAM_file_path] + init_write_num
+                        if (bram_pos_dict[BRAM_file_path] > cur_limit):
+                            update_Flag = 0
+                update_e_1_phy(e_1_bram_file_path , bram_pos_dict)
+
+            mv_place_cmd = "mv " + place_file + " " + place_res_path + str(sythesis_time) + ".place"
+            os.system(mv_place_cmd)
+            new_tmies = times
+            if (sythesis_time == 1 or E_flag == 1):
+                E_limit = (new_tmies - old_tmies)
+                E_flag = 0
+                if (sythesis_time == 1):
+                    Effic_num_begin = E_limit
+            # Effic[sythesis_time % 10] = new_tmies - old_tmies
+            record_2(record_2_path, new_tmies - old_tmies, cur_limit)
+            record_1(cur_limit_path, cur_limit, times, sythesis_time, Effic_num_begin)
+        else:
+            last_suc_flag = 0
+            try_num += 1
+
+        if ((flag != 1 and try_num > 3)):  #
+            continue_sythe_flag = 0
+            try_num = 0
+
+
+
+if (E == E_3):
+
+    if (os.path.exists(cur_limit_path) == 1):
+        print("continue\n")
+    else:
+        print("new test\n")
+
+
+    times = 0
+    sythesis_time = 0
+    file = open(record_2_path, 'w')
+    file.write("")
+    file.close()
+    E_limit = 0
+
+    Effic_num = 0
+    Effic = [0] * 10
+    Effic_num_begin = 0
+    E_flag = 0
+    try_num = 0
+    last_suc_flag = 1
+    stage_ratio = 0
+
+
+    cur_limit = MAX_WRITE_NUM
+    continue_sythe_flag = 1
+
+
+
+    bram_pos_dict = get_build_dict(e_1_bram_file_path, 1)
+
+    while ( continue_sythe_flag == 1):
+        record_1(cur_limit_path, cur_limit, times, sythesis_time, Effic_num_begin)
+
+
+
+        if (last_suc_flag == 1):
+            try_num = 0
+
+        cmd = vpr + " " + xml + " " + blif + " " + nodisply +" "+ place + " "+route+ " " + route_opt + " " + seed + " " + str(try_num + 1) + "  >" + benchmark_res_path + "vpr.out"
+        print(cmd)
+        os.system(cmd)
+        flag = os.path.exists(route_file)
+
+        if (flag == 1):
+            cmd_del_f = "rm -rf " + route_file
+            os.system(cmd_del_f)
+            get_performance(res_path, performance_path, sythesis_time)
+            last_suc_flag = 1
+            old_tmies = times
+            sythesis_time += 1
+            Effic_num += 1
+
+            GET_BRAM_POS(benchmark_src_path, benchmark_pre_info_src_path, benchmark)
+            pos_dict = {}
+            BUILD_INIT_POS_DICT(pos_dict, benchmark_src_path, benchmark)
+            inits = INIT_LIST()
+            GET_ADDR_WRITE_NUM(inits, E_root_path + E_path + benchmark + "/src/" + benchmark + ".info_", E_0, amp_num)
+            update_Flag = 1
+            transfrom_hit(write_num_path_pre)
+
+
+            while (update_Flag):
+                print("times  =  " + str(times))
+                times += 1
+                for init_ in range(inits.init_num):
+                    write_num_path = write_num_path_pre + str(init_) + ".hit"
+                    write_num = open(write_num_path)
+                    name_flag = 0
+                    init_name = ""
+                    for line_ in write_num:
+                        if (name_flag == 1):
+                            init_name = line_.replace("\n", "")
+                            name_flag = 0
+                            continue
+                        elif (name_flag == 2):
+                            init_write_num = int(line_.replace("\n", ""))
+                            break
+                        if (line_.find("mem_name") != -1):
+                            name_flag = 1
+                        elif (line_.find("add_begin") != -1):
+                            name_flag = 2
+                    write_num.close()
+                    if (init_write_num > 0):
+                        BRAM_file_path = pos_dict[init_name]
+                        BRAM_file_path = BRAM_file_path.replace("mem", "")
+                        bram_pos_dict[BRAM_file_path] = bram_pos_dict[BRAM_file_path] + init_write_num
+                        if (bram_pos_dict[BRAM_file_path] > cur_limit):
+                            update_Flag = 0
+                update_e_1_phy(e_1_bram_file_path , bram_pos_dict)
+
+            mv_place_cmd = "mv " + place_file + " " + place_res_path + str(sythesis_time) + ".place"
+            os.system(mv_place_cmd)
+            new_tmies = times
+            if (sythesis_time == 1 or E_flag == 1):
+                E_limit = (new_tmies - old_tmies)
+                E_flag = 0
+                if (sythesis_time == 1):
+                    Effic_num_begin = E_limit
+            # Effic[sythesis_time % 10] = new_tmies - old_tmies
+            record_2(record_2_path, new_tmies - old_tmies, cur_limit)
+            record_1(cur_limit_path, cur_limit, times, sythesis_time, Effic_num_begin)
+            print("ok")
+            exit()
+
+
         else:
             last_suc_flag = 0
             try_num += 1

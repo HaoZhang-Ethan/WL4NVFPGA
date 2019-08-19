@@ -1390,10 +1390,10 @@ Lable:
 		}
 		assert(x_to == pbr[ipbr_to].x && y_to == pbr[ipbr_to].y);
 
-
-		if (lbr[ilbr_from].rate <= 0.02)
-			p2 = 1000;
-		else
+		//zh_lab
+		// if (lbr[ilbr_from].rate <= 0.02)
+		// 	p2 = 1000;
+		// else
 			p2 = (1 - pbr[ipbr_to].rate) / lbr[ilbr_from].rate;
 			
 
@@ -1407,9 +1407,10 @@ Lable:
 			}
 			assert(strcmp(lbr[ilbr_to].name,block[b_to].name)==0 );
 
-			if (lbr[ilbr_to].rate <= 0.02)
-				p1 = 1000;
-			else
+			//zh_lab
+			// if (lbr[ilbr_to].rate <= 0.02)
+			// 	p1 = 1000;
+			// else
 				p1 = (1 - pbr[ipbr_from].rate) / lbr[ilbr_to].rate;
 		}
 	}
