@@ -29,12 +29,6 @@ The implementation includes the following components:
 
 ## Usage
 
-To use this code, follow these steps:
-
-1. Clone the repository: `git clone https://github.com/yourusername/pearl-fpga-wear-leveling.git`
-2. Navigate to the project directory: `cd pearl-fpga-wear-leveling`
-3. Execute the main script: `python main.py`
-
 ## Evaluation
 
 The code includes an evaluation section that demonstrates the performance of C-Pearl and F-Pearl compared to traditional wear leveling (TWL). Detailed results are available in the [Results](#results) section.
