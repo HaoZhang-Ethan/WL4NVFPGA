@@ -11,7 +11,7 @@
 - [License](#license)
 
 
-## Introduction
+## Introduction 
 
 This implementation addresses the endurance problems in block random access memory (BRAM) of nonvolatile FPGAs. It proposes two wear leveling strategies - Coarse-Grained Wear Leveling (C-Pearl) and Fine-Grained Wear Leveling (F-Pearl) to enhance the FPGA's lifetime.
 
